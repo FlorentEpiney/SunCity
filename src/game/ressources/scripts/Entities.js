@@ -62,7 +62,8 @@ Entity = function(type,id,x,y,width,height,img){
 
 Player = function(){
 	var self = Actor('player','myId',50,40,50*1.5,70*1.5,Img.player,10,1);
-	self.maxMoveSpd = 10;
+	//'*5' could be removed
+	self.maxMoveSpd = 10 * 5;
 	self.pressingMouseLeft = false;
 	self.pressingMouseRight = false;
 	
