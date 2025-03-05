@@ -61,7 +61,7 @@ fetch('gameData/collision_map.json')
         Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
 
         player1 = Player(50, 50); // Starting position for player1
-        player2 = Player(100, 50); // Starting position for player2
+        player2 = Player(150, 50); // Starting position for player2
         player = player1;
         startNewGame();
 
@@ -126,13 +126,13 @@ document.onkeydown = function(event) {
     else if (event.keyCode === 87) // w
         player1.pressingUp = true;
 
-    if (event.keyCode === 39) //right arrow
+    if (event.keyCode === 54) // 6
         player2.pressingRight = true;
-    else if (event.keyCode === 40) //down arrow
+    else if (event.keyCode === 53) // 5
         player2.pressingDown = true;
-    else if (event.keyCode === 37) //left arrow
+    else if (event.keyCode === 52) // 4
         player2.pressingLeft = true;
-    else if (event.keyCode === 38) //up arrow
+    else if (event.keyCode === 56) // 9
         player2.pressingUp = true;
 
     else if (event.keyCode === 80) //p
@@ -168,11 +168,23 @@ update = function() {
 
     ctx1.clearRect(0, 0, WIDTH, HEIGHT);
     ctx2.clearRect(0, 0, WIDTH, HEIGHT);
+
+    // Draw the map and update player1 on canvas 1
     Maps.current.draw(ctx1, player1);
+    player1.update(ctx1);
+    player2.draw(ctx1);
+    ctx1.fillText(player1.hp + " Hp", 0, 30);
+    ctx1.fillText('Score: ' + score, 200, 30);
+
+    // Draw the map and update player2 on canvas 2
     Maps.current.draw(ctx2, player2);
+    player2.update(ctx2);
+    player1.draw(ctx2);
+    ctx2.fillText(player2.hp + " Hp", 0, 30);
+    ctx2.fillText('Score: ' + score, 200, 30);
+
     frameCount++;
     score++;
-
 
     Bullet.update(ctx1);
     Bullet.update(ctx2);
@@ -181,14 +193,6 @@ update = function() {
     Enemy.update(ctx1);
     Enemy.update(ctx2);
 
-    player1.update(ctx1);
-    player2.update(ctx2);
-
-    ctx1.fillText(player1.hp + " Hp", 0, 30);
-    ctx1.fillText('Score: ' + score, 200, 30);
-
-    ctx2.fillText(player2.hp + " Hp", 0, 30);
-    ctx2.fillText('Score: ' + score, 200, 30);
 }
 
 startNewGame = function() {
