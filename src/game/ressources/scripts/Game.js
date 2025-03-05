@@ -158,7 +158,6 @@
     .then(response => response.json())
     .then(response => {
         var array = response;
-        console.log(array);
         var array2D = [];
         for (var i = 0; i < 100; i++) {
             array2D[i] = [];
@@ -166,7 +165,6 @@
                 array2D[i][j] = array[i * 200 + j];
             }
         }
-        console.log(array2D);
         Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
 
         player = Player();
