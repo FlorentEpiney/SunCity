@@ -1,4 +1,3 @@
-
 var player;
 
 Entity = function(type,id,x,y,width,height,img){
@@ -11,28 +10,39 @@ Entity = function(type,id,x,y,width,height,img){
 		height:height,
 		img:img,
 	};
-	self.update = function(){
-		self.updatePosition();
-		self.draw();
+
+	// self.draw = function(ctx) {
+	// 	ctx.drawImage(self.img, self.x, self.y, self.width, self.height);
+	// }
+
+	self.update = function(ctx) {
+		self.draw(ctx);
 	}
-	self.draw = function(){
+
+	// self.update = function(ctx){
+	// 	self.updatePosition();
+	// 	self.draw(ctx);
+	// }
+	self.draw = function(ctx){
+		if (!player) return;
 		ctx.save();
 		var x = self.x - player.x;
 		var y = self.y - player.y;
-		
+
 		x += WIDTH/2;
 		y += HEIGHT/2;
-		
+
 		x -= self.width/2;
 		y -= self.height/2;
-		
+
 		ctx.drawImage(self.img,
 			0,0,self.img.width,self.img.height,
 			x,y,self.width,self.height
 		);
-		
+
 		ctx.restore();
 	}
+
 	self.getDistance = function(entity2){	//return distance (number)
 		var vx = self.x - entity2.x;
 		var vy = self.y - entity2.y;
@@ -53,23 +63,24 @@ Entity = function(type,id,x,y,width,height,img){
 			height:entity2.height,
 		}
 		return testCollisionRectRect(rect1,rect2);
-		
+
 	}
 	self.updatePosition = function(){}
 	
 	return self;
 }
 
-Player = function(){
-	var self = Actor('player','myId',50,40,50*1.5,70*1.5,Img.player,10,1);
+Player = function(startX,startY){
+	var self = Actor('player','myId',startX,startY,50*1.5,70*1.5,Img.player,10,1);
 	//'*5' could be removed
 	self.maxMoveSpd = 10 * 5;
 	self.pressingMouseLeft = false;
 	self.pressingMouseRight = false;
 	
 	var super_update = self.update;
-	self.update = function(){
-		super_update();
+	self.update = function(ctx){
+		self.updatePosition();
+		super_update(ctx);
 		if(self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp)
 			self.spriteAnimCounter += 0.2;
 		if(self.pressingMouseLeft)
@@ -84,9 +95,6 @@ Player = function(){
 		console.log("You lost! You survived for " + timeSurvived + " ms.");		
 		startNewGame();
 	}
-	
-	
-	
 	return self;
 	
 }
@@ -107,25 +115,25 @@ Actor = function(type,id,x,y,width,height,img,hp,atkSpd){
 	self.pressingLeft = false;
 	self.pressingRight = false;
 	self.maxMoveSpd = 3;
-	
-	self.draw = function(){
+
+	self.draw = function(ctx){
 		ctx.save();
 		var x = self.x - player.x;
 		var y = self.y - player.y;
-		
+
 		x += WIDTH/2;
 		y += HEIGHT/2;
-		
+
 		x -= self.width/2;
 		y -= self.height/2;
-		
+
 		var frameWidth = self.img.width/3;
 		var frameHeight = self.img.height/4;
-		
+
 		var aimAngle = self.aimAngle;
 		if(aimAngle < 0)
 			aimAngle = 360 + aimAngle;
-		
+
 		var directionMod = 3;	//draw right
 		if(aimAngle >= 45 && aimAngle < 135)	//down
 			directionMod = 2;
@@ -133,30 +141,30 @@ Actor = function(type,id,x,y,width,height,img,hp,atkSpd){
 			directionMod = 1;
 		else if(aimAngle >= 225 && aimAngle < 315)	//up
 			directionMod = 0;
-		
+
 		var walkingMod = Math.floor(self.spriteAnimCounter) % 3;//1,2
-		
+
 		ctx.drawImage(self.img,
 			walkingMod*frameWidth,directionMod*frameHeight,frameWidth,frameHeight,
 			x,y,self.width,self.height
 		);
-		
+
 		ctx.restore();
 	}
-	
+
 	self.updatePosition = function(){
 		var leftBumper = {x:self.x - 40,y:self.y};
 		var rightBumper = {x:self.x + 40,y:self.y};
 		var upBumper = {x:self.x,y:self.y - 16};
 		var downBumper = {x:self.x,y:self.y + 64};
-		
+
 		if(Maps.current.isPositionWall(rightBumper)){
 			self.x -= 5;
 		} else {
 			if(self.pressingRight)
-				self.x += self.maxMoveSpd;			
+				self.x += self.maxMoveSpd;
 		}
-		
+
 		if(Maps.current.isPositionWall(leftBumper)){
 			self.x += 5;
 		} else {
@@ -175,7 +183,7 @@ Actor = function(type,id,x,y,width,height,img,hp,atkSpd){
 			if(self.pressingUp)
 				self.y -= self.maxMoveSpd;
 		}
-		
+
 		//ispositionvalid
 		if(self.x < self.width/2)
 			self.x = self.width/2;
@@ -187,23 +195,23 @@ Actor = function(type,id,x,y,width,height,img,hp,atkSpd){
 			self.y = Maps.current.height - self.height/2;
 
 	}
-	
+
 	var super_update = self.update;
-	self.update = function(){
-		super_update();
+	self.update = function(ctx){
+		super_update(ctx);
 		self.attackCounter += self.atkSpd;
 		if(self.hp <= 0)
 			self.onDeath();
 	}
 	self.onDeath = function(){};
-	
+
 	self.performAttack = function(){
 		if(self.attackCounter > 25){	//every 1 sec
 			self.attackCounter = 0;
 			Bullet.generate(self);
 		}
 	}
-	
+
 	self.performSpecialAttack = function(){
 		if(self.attackCounter > 50){	//every 1 sec
 			self.attackCounter = 0;
@@ -226,12 +234,16 @@ Actor = function(type,id,x,y,width,height,img,hp,atkSpd){
 
 Enemy = function(id,x,y,width,height,img,hp,atkSpd){
 	var self = Actor('enemy',id,x,y,width,height,img,hp,atkSpd);
-	Enemy.list[id] = self;
-	
-	self.toRemove = false;
-	
-	var super_update = self.update; 
-	self.update = function(){
+	// Enemy.list[id] = self;
+	//
+	// self.toRemove = false;
+
+	var super_update = self.update;
+	self.update = function(ctx) {
+		super_update(ctx);
+	}
+
+	self.update = function(ctx){
 		super_update();
 		self.spriteAnimCounter += 0.2;
 		self.updateAim();
@@ -241,7 +253,7 @@ Enemy = function(id,x,y,width,height,img,hp,atkSpd){
 	self.updateAim = function(){
 		var diffX = player.x - self.x;
 		var diffY = player.y - self.y;
-		
+
 		self.aimAngle = Math.atan2(diffY,diffX) / Math.PI * 180
 	}
 	self.updateKeyPress = function(){
@@ -253,31 +265,33 @@ Enemy = function(id,x,y,width,height,img,hp,atkSpd){
 		self.pressingDown = diffY > 3;
 		self.pressingUp = diffY < -3;
 	}
-	
-	
-	var super_draw = self.draw; 
+
+
+	var super_draw = self.draw;
 	self.draw = function(){
 		super_draw();
 		var x = self.x - player.x + WIDTH/2;
 		var y = self.y - player.y + HEIGHT/2 - self.height/2 - 20;
-		
+
 		ctx.save();
 		ctx.fillStyle = 'red';
 		var width = 100*self.hp/self.hpMax;
 		if(width < 0)
 			width = 0;
 		ctx.fillRect(x-50,y,width,10);
-		
+
 		ctx.strokeStyle = 'black';
 		ctx.strokeRect(x-50,y,100,10);
-		
+
 		ctx.restore();
-	
+
 	}
-	
+
 	self.onDeath = function(){
 		self.toRemove = true;
 	}
+
+	return self;
 	
 }
 
@@ -311,9 +325,14 @@ Enemy.randomlyGenerate = function(){
 //#####
 Upgrade = function (id,x,y,width,height,category,img){
 	var self = Entity('upgrade',id,x,y,width,height,img);
-	
 	self.category = category;
-	Upgrade.list[id] = self;
+
+	var super_update = self.update;
+	self.update = function(ctx) {
+		super_update(ctx);
+	}
+	// Upgrade.list[id] = self;
+	return self;
 }
 
 Upgrade.list = {};
