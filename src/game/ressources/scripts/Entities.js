@@ -1,3 +1,5 @@
+var player;
+
 // Entity function
 Entity = function(type, id, x, y, width, height, img) {
     var self = {
@@ -20,8 +22,8 @@ Entity = function(type, id, x, y, width, height, img) {
             return;
         }
         ctx.save();
-        var x = self.x - self.x;
-        var y = self.y - self.y;
+        var x = self.x - player.x + WIDTH / 2;
+        var y = self.y - player.y + HEIGHT / 2;
 
         x += WIDTH / 2;
         y += HEIGHT / 2;
@@ -118,6 +120,41 @@ Actor = function(type, id, x, y, width, height, img, hp, atkSpd) {
         ctx.restore();
     };
 
+    self.drawAt = function(ctx, x, y) {
+        ctx.save();
+
+        x += WIDTH / 2;
+        y += HEIGHT / 2;
+
+        x -= self.width / 2;
+        y -= self.height / 2;
+
+        var frameWidth = self.img.width / 3;
+        var frameHeight = self.img.height / 4;
+
+        var aimAngle = self.aimAngle;
+        if (aimAngle < 0)
+            aimAngle = 360 + aimAngle;
+
+        var directionMod = 3; // draw right
+        if (aimAngle >= 45 && aimAngle < 135) // down
+            directionMod = 2;
+        else if (aimAngle >= 135 && aimAngle < 225) // left
+            directionMod = 1;
+        else if (aimAngle >= 225 && aimAngle < 315) // up
+            directionMod = 0;
+
+        var walkingMod = Math.floor(self.spriteAnimCounter) % 3; // 1,2
+
+        ctx.drawImage(self.img,
+            walkingMod * frameWidth, directionMod * frameHeight, frameWidth, frameHeight,
+            x, y, self.width, self.height
+        );
+
+        ctx.restore();
+    };
+
+
     self.updatePosition = function() {
         var leftBumper = { x: self.x - 40, y: self.y };
         var rightBumper = { x: self.x + 40, y: self.y };
@@ -209,9 +246,10 @@ Player = function(startX, startY) {
     };
 
     var super_draw = self.draw;
-    self.draw = function(ctx, referencePlayer) {
-        super_draw(ctx, referencePlayer);
+    self.draw = function(ctx) {
+        super_draw(ctx);
     };
+
 
     self.onDeath = function() {
         var timeSurvived = Date.now() - timeWhenGameStarted;
@@ -238,6 +276,7 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
     self.updateAim = function() {
         var diffX = player.x - self.x;
         var diffY = player.y - self.y;
+
         self.aimAngle = Math.atan2(diffY, diffX) / Math.PI * 180;
     };
 
@@ -251,8 +290,8 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
     };
 
     var super_draw = self.draw;
-    self.draw = function() {
-        super_draw();
+    self.draw = function(ctx) {
+        super_draw(ctx);
         var x = self.x - player.x + WIDTH / 2;
         var y = self.y - player.y + HEIGHT / 2 - self.height / 2 - 20;
 
@@ -363,8 +402,8 @@ Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
     self.toRemove = false;
 
     var super_update = self.update;
-    self.update = function() {
-        super_update();
+    self.update = function(ctx) {
+        super_update(ctx);
         self.timer++;
         if (self.timer > 75)
             self.toRemove = true;

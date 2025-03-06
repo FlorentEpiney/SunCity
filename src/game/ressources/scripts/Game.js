@@ -61,7 +61,7 @@ fetch('gameData/collision_map.json')
         Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
 
         player1 = Player(50, 50); // Starting position for player1
-        player2 = Player(150, 50); // Starting position for player2
+        player2 = Player(50, 50); // Starting position for player2
         player = player1;
         startNewGame();
 
@@ -169,17 +169,27 @@ update = function() {
     ctx1.clearRect(0, 0, WIDTH, HEIGHT);
     ctx2.clearRect(0, 0, WIDTH, HEIGHT);
 
-    // Draw the map and update player1 on canvas 1
-    Maps.current.draw(ctx1, player1);
+    // Draw the map and players on canvas 1 (Player 1's perspective)
     player1.update(ctx1);
-    player2.draw(ctx1);
+    player2.update(ctx2);
+    Maps.current.draw(ctx1, player1);
+    player1.draw(ctx1);
+
+    let p2_x_relative_to_p1 = player2.x - player1.x + WIDTH / 2;
+    let p2_y_relative_to_p1 = player2.y - player1.y + HEIGHT / 2;
+    player2.drawAt(ctx1, p2_x_relative_to_p1, p2_y_relative_to_p1);
+
     ctx1.fillText(player1.hp + " Hp", 0, 30);
     ctx1.fillText('Score: ' + score, 200, 30);
 
-    // Draw the map and update player2 on canvas 2
+    // Draw the map and players on canvas 2 (Player 2's perspective)
     Maps.current.draw(ctx2, player2);
-    player2.update(ctx2);
-    player1.draw(ctx2);
+    player2.draw(ctx2);
+
+    let p1_x_relative_to_p2 = player1.x - player2.x + WIDTH / 2;
+    let p1_y_relative_to_p2 = player1.y - player2.y + HEIGHT / 2;
+    player1.drawAt(ctx2, p1_x_relative_to_p2, p1_y_relative_to_p2);
+
     ctx2.fillText(player2.hp + " Hp", 0, 30);
     ctx2.fillText('Score: ' + score, 200, 30);
 
