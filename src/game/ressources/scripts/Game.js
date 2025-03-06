@@ -175,8 +175,8 @@ update = function() {
     Maps.current.draw(ctx1, player1);
     player1.draw(ctx1);
 
-    let p2_x_relative_to_p1 = player2.x - player1.x + WIDTH / 2;
-    let p2_y_relative_to_p1 = player2.y - player1.y + HEIGHT / 2;
+    let p2_x_relative_to_p1 = player2.x - player1.x;
+    let p2_y_relative_to_p1 = player2.y - player1.y;
     player2.drawAt(ctx1, p2_x_relative_to_p1, p2_y_relative_to_p1);
 
     ctx1.fillText(player1.hp + " Hp", 0, 30);
@@ -186,8 +186,8 @@ update = function() {
     Maps.current.draw(ctx2, player2);
     player2.draw(ctx2);
 
-    let p1_x_relative_to_p2 = player1.x - player2.x + WIDTH / 2;
-    let p1_y_relative_to_p2 = player1.y - player2.y + HEIGHT / 2;
+    let p1_x_relative_to_p2 = player1.x - player2.x;
+    let p1_y_relative_to_p2 = player1.y - player2.y;
     player1.drawAt(ctx2, p1_x_relative_to_p2, p1_y_relative_to_p2);
 
     ctx2.fillText(player2.hp + " Hp", 0, 30);
