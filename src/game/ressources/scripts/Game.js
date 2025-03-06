@@ -61,7 +61,7 @@ fetch('gameData/collision_map.json')
         Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
 
         player1 = Player(50, 50); // Starting position for player1
-        player2 = Player(50, 50); // Starting position for player2
+        player2 = Player(150, 50); // Starting position for player2
         player = player1;
         startNewGame();
 
