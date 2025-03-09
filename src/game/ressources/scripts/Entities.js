@@ -317,11 +317,11 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
 
 Enemy.list = {};
 
-Enemy.update = function() {
+Enemy.update = function(ctx) {
     if (frameCount % 100 === 0) // every 4 sec
         Enemy.randomlyGenerate();
     for (var key in Enemy.list) {
-        Enemy.list[key].update();
+        Enemy.list[key].update(ctx);
     }
     for (var key in Enemy.list) {
         if (Enemy.list[key].toRemove)
@@ -356,11 +356,11 @@ Upgrade = function(id, x, y, width, height, category, img) {
 
 Upgrade.list = {};
 
-Upgrade.update = function() {
+Upgrade.update = function(ctx) {
     if (frameCount % 75 === 0) // every 3 sec
         Upgrade.randomlyGenerate();
     for (var key in Upgrade.list) {
-        Upgrade.list[key].update();
+        Upgrade.list[key].update(ctx);
         var isColliding = player.testCollision(Upgrade.list[key]);
         if (isColliding) {
             if (Upgrade.list[key].category === 'score')
@@ -391,10 +391,8 @@ Upgrade.randomlyGenerate = function() {
     Upgrade(id, x, y, width, height, category, img);
 };
 
-// Bullet function
 Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
     var self = Entity('bullet', id, x, y, width, height, Img.bullet);
-
     self.timer = 0;
     self.combatType = combatType;
     self.spdX = spdX;
@@ -403,6 +401,7 @@ Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
 
     var super_update = self.update;
     self.update = function(ctx) {
+        self.updatePosition();
         super_update(ctx);
         self.timer++;
         if (self.timer > 75)
@@ -443,10 +442,10 @@ Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
 
 Bullet.list = {};
 
-Bullet.update = function() {
+Bullet.update = function(ctx) {
     for (var key in Bullet.list) {
         var b = Bullet.list[key];
-        b.update();
+        b.update(ctx);
 
         if (b.toRemove) {
             delete Bullet.list[key];

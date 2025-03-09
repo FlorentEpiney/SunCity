@@ -125,6 +125,8 @@ document.onkeydown = function(event) {
         player1.pressingLeft = true;
     else if (event.keyCode === 87) // w
         player1.pressingUp = true;
+    else if (event.keyCode === 32) // space
+        player1.performAttack();
 
     if (event.keyCode === 54) // 6
         player2.pressingRight = true;
@@ -134,6 +136,8 @@ document.onkeydown = function(event) {
         player2.pressingLeft = true;
     else if (event.keyCode === 56) // 9
         player2.pressingUp = true;
+    else if (event.keyCode === 48) // 0
+        player2.performAttack();
 
     else if (event.keyCode === 80) //p
         paused = !paused;
