@@ -336,9 +336,10 @@ Enemy.randomlyGenerate = function() {
     var width = 64 * 1.5;
     var id = Math.random();
     if (Math.random() < 0.5)
-        Enemy(id, x, y, width, height, Img.bat, 2, 1);
+        enemy = Enemy(id, x, y, width, height, Img.bat, 2, 1);
     else
-        Enemy(id, x, y, width, height, Img.bee, 1, 3);
+        enemy = Enemy(id, x, y, width, height, Img.bee, 1, 3);
+    Enemy.list[id] = enemy;
 };
 
 // Upgrade function
@@ -387,8 +388,8 @@ Upgrade.randomlyGenerate = function() {
         category = 'atkSpd';
         img = Img.upgrade2;
     }
-
-    Upgrade(id, x, y, width, height, category, img);
+    var upgrade = Upgrade(id, x, y, width, height, category, img);
+    Upgrade.list[id] = upgrade;
 };
 
 Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
