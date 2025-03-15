@@ -47,18 +47,31 @@ var player2;
 var player;
 
 // Load the collision map data
-fetch('gameData/collision_map.json')
+// fetch('gameData/collision_map.json')
+//     .then(response => response.json())
+//     .then(response => {
+//         var array = response;
+//         var array2D = [];
+//         for (var i = 0; i < 100; i++) {
+//             array2D[i] = [];
+//             for (var j = 0; j < 200; j++) {
+//                 array2D[i][j] = array[i * 200 + j];
+//             }
+//         }
+//         Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
+
+fetch('gameData/collision_map_test.json')
     .then(response => response.json())
     .then(response => {
         var array = response;
         var array2D = [];
-        for (var i = 0; i < 100; i++) {
+        for(var i = 0 ; i < 10; i++){
             array2D[i] = [];
-            for (var j = 0; j < 200; j++) {
-                array2D[i][j] = array[i * 200 + j];
+            for(var j = 0 ; j < 10; j++){
+                array2D[i][j] = array[i * 10 + j];
             }
         }
-        Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
+        Maps.current = Maps('field', 'ressources/images/map.png', array2D);
 
         player1 = Player(50, 50); // Starting position for player1
         player2 = Player(150, 50); // Starting position for player2
@@ -116,7 +129,7 @@ document.onmousemove = function(mouse) {
 
 }
 
-document.onkeydown = function(event) {
+ document.onkeydown = function(event) {
     if (event.keyCode === 68) //d
         player1.pressingRight = true;
     else if (event.keyCode === 83) //s
@@ -128,13 +141,13 @@ document.onkeydown = function(event) {
     else if (event.keyCode === 32) // space
         player1.performAttack();
 
-    if (event.keyCode === 54) // 6
+    if (event.keyCode === 39) // right arrow
         player2.pressingRight = true;
-    else if (event.keyCode === 53) // 5
+    else if (event.keyCode === 40) // down arrow
         player2.pressingDown = true;
-    else if (event.keyCode === 52) // 4
+    else if (event.keyCode === 37) // left arrow
         player2.pressingLeft = true;
-    else if (event.keyCode === 56) // 9
+    else if (event.keyCode === 38) // up arrow
         player2.pressingUp = true;
     else if (event.keyCode === 48) // 0
         player2.performAttack();
@@ -153,13 +166,13 @@ document.onkeyup = function(event) {
     else if (event.keyCode === 87) // w
         player1.pressingUp = false;
 
-   if (event.keyCode === 54) // 6
+    if (event.keyCode === 39) // right arrow
         player2.pressingRight = false;
-    else if (event.keyCode === 53) // 5
+    else if (event.keyCode === 40) // down arrow
         player2.pressingDown = false;
-    else if (event.keyCode === 52) // 4
+    else if (event.keyCode === 37) // left arrow
         player2.pressingLeft = false;
-    else if (event.keyCode === 56) // 8
+    else if (event.keyCode === 38) // up arrow
         player2.pressingUp = false;
 }
 
@@ -200,12 +213,12 @@ update = function() {
     frameCount++;
     score++;
 
-    Bullet.update(ctx1);
-    Bullet.update(ctx2);
-    Upgrade.update(ctx1);
-    Upgrade.update(ctx2);
-    Enemy.update(ctx1);
-    Enemy.update(ctx2);
+    Bullet.update(ctx1, player1);
+    Bullet.update(ctx2, player1);
+    Upgrade.update(ctx1, player1);
+    Upgrade.update(ctx2, player2);
+    Enemy.update(ctx1, ctx2, player1, player2);
+    // Enemy.update(ctx2, ctx2);
 
 }
 
