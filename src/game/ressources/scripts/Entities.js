@@ -12,11 +12,12 @@ Entity = function(type, id, x, y, width, height, img) {
         img: img,
     };
 
-    self.update = function(ctx) {
-        self.draw(ctx);
+    self.update = function(ctx, player) {
+        self.updatePosition();
+        self.draw(ctx, player);
     };
 
-    self.draw = function(ctx) {
+    self.draw = function(ctx, player) {
         if (!ctx) {
             console.error('Context is undefined in draw method');
             return;
@@ -199,8 +200,8 @@ Actor = function(type, id, x, y, width, height, img, hp, atkSpd) {
     };
 
     var super_update = self.update;
-    self.update = function(ctx) {
-        super_update(ctx);
+    self.update = function(ctx, player) {
+        super_update(ctx,player);
         self.attackCounter += self.atkSpd;
         if (self.hp <= 0)
             self.onDeath();
@@ -236,7 +237,7 @@ Player = function(startX, startY) {
     var super_update = self.update;
     self.update = function(ctx) {
         self.updatePosition();
-        super_update(ctx);
+        super_update(ctx, player);
         if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp)
             self.spriteAnimCounter += 0.2;
         if (self.pressingMouseLeft)
@@ -264,13 +265,15 @@ Player = function(startX, startY) {
 Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
     var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd);
 
+    self.directionChangeTimer = 0;
+
     var super_update = self.update;
-    self.update = function(ctx) {
-        super_update(ctx);
+    self.update = function(ctx, player) {
+        super_update(ctx, player);
         self.spriteAnimCounter += 0.2;
         self.updateAim();
         self.updateKeyPress();
-        self.performAttack();
+        // self.performAttack(); //Enemies perform attack automatically
     };
 
     self.updateAim = function() {
@@ -281,29 +284,52 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
     };
 
     self.updateKeyPress = function() {
-        var diffX = player.x - self.x;
-        var diffY = player.y - self.y;
-        self.pressingRight = diffX > 3;
-        self.pressingLeft = diffX < -3;
-        self.pressingDown = diffY > 3;
-        self.pressingUp = diffY < -3;
+        // var diffX = player.x - self.x;
+        // var diffY = player.y - self.y;
+        // self.pressingRight = diffX > 3;
+        // self.pressingLeft = diffX < -3;
+        // self.pressingDown = diffY > 3;
+        // self.pressingUp = diffY < -3;
+
+        self.directionChangeTimer += 40; // Assuming update is called every 40ms
+
+        if (self.directionChangeTimer >= 2000) {
+            self.pressingRight = Math.random() < 0.5;
+            self.pressingLeft = Math.random() < 0.5;
+            self.pressingDown = Math.random() < 0.5;
+            self.pressingUp = Math.random() < 0.5;
+            self.directionChangeTimer = 0;
+        }
     };
 
-    var super_draw = self.draw;
-    self.draw = function(ctx) {
-        super_draw(ctx);
-        var x = self.x - player.x + WIDTH / 2;
-        var y = self.y - player.y + HEIGHT / 2 - self.height / 2 - 20;
-
+    // var super_draw = self.draw;
+    self.draw = function(ctx, player) {
         ctx.save();
+        var x = self.x - player.x + WIDTH / 2;
+        var y = self.y - player.y + HEIGHT / 2 - self.height/2 -20;
+
+        x -= self.width / 2;
+        y -= self.height / 2;
+
+        var frameWidth = self.img.width / 3;
+        var frameHeight = self.img.height / 4;
+
+        var walkingMod = Math.floor(self.spriteAnimCounter) % 3; // 1,2
+
+        ctx.drawImage(self.img,
+            walkingMod * frameWidth, 0, frameWidth, frameHeight,
+            x, y, self.width, self.height
+        );
+
+        // Draw health bar
+        var healthBarX = x;
+        var healthBarY = y - 20;
         ctx.fillStyle = 'red';
         var width = 100 * self.hp / self.hpMax;
-        if (width < 0)
-            width = 0;
-        ctx.fillRect(x - 50, y, width, 10);
-
+        if (width < 0) width = 0;
+        ctx.fillRect(healthBarX - 50, healthBarY, width, 10);
         ctx.strokeStyle = 'black';
-        ctx.strokeRect(x - 50, y, 100, 10);
+        ctx.strokeRect(healthBarX - 50, healthBarY, 100, 10);
 
         ctx.restore();
     };
@@ -317,11 +343,14 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
 
 Enemy.list = {};
 
-Enemy.update = function() {
+Enemy.update = function(ctx1, ctx2, player1, player2) {
     if (frameCount % 100 === 0) // every 4 sec
         Enemy.randomlyGenerate();
     for (var key in Enemy.list) {
-        Enemy.list[key].update();
+        Enemy.list[key].update(ctx1, player1);
+        Enemy.list[key].update(ctx2, player2);
+        Enemy.list[key].draw(ctx1, player1);
+        Enemy.list[key].draw(ctx2, player2);
     }
     for (var key in Enemy.list) {
         if (Enemy.list[key].toRemove)
@@ -336,19 +365,25 @@ Enemy.randomlyGenerate = function() {
     var width = 64 * 1.5;
     var id = Math.random();
     if (Math.random() < 0.5)
-        Enemy(id, x, y, width, height, Img.bat, 2, 1);
+        enemy = Enemy(id, x, y, width, height, Img.bat, 2, 1);
     else
-        Enemy(id, x, y, width, height, Img.bee, 1, 3);
+        enemy = Enemy(id, x, y, width, height, Img.bee, 1, 3);
+    Enemy.list[id] = enemy;
 };
 
 // Upgrade function
 Upgrade = function(id, x, y, width, height, category, img) {
     var self = Entity('upgrade', id, x, y, width, height, img);
     self.category = category;
+    self.timer = 0; // Add timer property
 
     var super_update = self.update;
-    self.update = function(ctx) {
-        super_update(ctx);
+    self.update = function(ctx, player) {
+        super_update(ctx, player);
+        self.timer += 40; // Assuming update is called every 40ms
+        if (self.timer >= 20000) { // Remove upgrade after 20 seconds
+            self.toRemove = true;
+        }
     };
 
     return self;
@@ -356,11 +391,11 @@ Upgrade = function(id, x, y, width, height, category, img) {
 
 Upgrade.list = {};
 
-Upgrade.update = function() {
+Upgrade.update = function(ctx, player) {
     if (frameCount % 75 === 0) // every 3 sec
         Upgrade.randomlyGenerate();
     for (var key in Upgrade.list) {
-        Upgrade.list[key].update();
+        Upgrade.list[key].update(ctx, player);
         var isColliding = player.testCollision(Upgrade.list[key]);
         if (isColliding) {
             if (Upgrade.list[key].category === 'score')
@@ -369,6 +404,8 @@ Upgrade.update = function() {
                 player.atkSpd += 3;
             delete Upgrade.list[key];
         }
+        if (Upgrade.list[key] && Upgrade.list[key].toRemove)
+            delete Upgrade.list[key];
     }
 };
 
@@ -387,14 +424,12 @@ Upgrade.randomlyGenerate = function() {
         category = 'atkSpd';
         img = Img.upgrade2;
     }
-
-    Upgrade(id, x, y, width, height, category, img);
+    var upgrade = Upgrade(id, x, y, width, height, category, img);
+    Upgrade.list[id] = upgrade;
 };
 
-// Bullet function
 Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
     var self = Entity('bullet', id, x, y, width, height, Img.bullet);
-
     self.timer = 0;
     self.combatType = combatType;
     self.spdX = spdX;
@@ -402,10 +437,11 @@ Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
     self.toRemove = false;
 
     var super_update = self.update;
-    self.update = function(ctx) {
-        super_update(ctx);
+    self.update = function(ctx, player) {
+        self.updatePosition();
+        super_update(ctx, player);
         self.timer++;
-        if (self.timer > 75)
+        if (self.timer > 75) // Increase this value to make bullets last longer
             self.toRemove = true;
 
         if (self.combatType === 'player') { // bullet was shot by player
@@ -438,15 +474,34 @@ Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
         }
     };
 
+    self.draw = function(ctx, player) {
+        ctx.save();
+        var x = self.x - player.x + WIDTH / 2;
+        var y = self.y - player.y + HEIGHT / 2;
+
+        x -= self.width / 2;
+        y -= self.height / 2;
+
+        ctx.drawImage(self.img,
+            0, 0, self.img.width, self.img.height,
+            x, y, self.width, self.height
+        );
+
+        ctx.restore();
+    };
+
     Bullet.list[id] = self;
 };
 
 Bullet.list = {};
 
-Bullet.update = function() {
+Bullet.update = function(ctx1, ctx2, player1, player2) {
     for (var key in Bullet.list) {
         var b = Bullet.list[key];
-        b.update();
+        b.update(ctx1, player1);
+        b.update(ctx2, player2);
+        b.draw(ctx1, player1);
+        b.draw(ctx2, player2);
 
         if (b.toRemove) {
             delete Bullet.list[key];
