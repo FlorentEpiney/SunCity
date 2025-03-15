@@ -273,7 +273,7 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
         self.spriteAnimCounter += 0.2;
         self.updateAim();
         self.updateKeyPress();
-        self.performAttack();
+        // self.performAttack(); //Enemies perform attack automatically
     };
 
     self.updateAim = function() {
@@ -375,10 +375,15 @@ Enemy.randomlyGenerate = function() {
 Upgrade = function(id, x, y, width, height, category, img) {
     var self = Entity('upgrade', id, x, y, width, height, img);
     self.category = category;
+    self.timer = 0; // Add timer property
 
     var super_update = self.update;
     self.update = function(ctx, player) {
         super_update(ctx, player);
+        self.timer += 40; // Assuming update is called every 40ms
+        if (self.timer >= 20000) { // Remove upgrade after 20 seconds
+            self.toRemove = true;
+        }
     };
 
     return self;
@@ -399,6 +404,8 @@ Upgrade.update = function(ctx, player) {
                 player.atkSpd += 3;
             delete Upgrade.list[key];
         }
+        if (Upgrade.list[key] && Upgrade.list[key].toRemove)
+            delete Upgrade.list[key];
     }
 };
 
@@ -434,7 +441,7 @@ Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
         self.updatePosition();
         super_update(ctx, player);
         self.timer++;
-        if (self.timer > 75)
+        if (self.timer > 75) // Increase this value to make bullets last longer
             self.toRemove = true;
 
         if (self.combatType === 'player') { // bullet was shot by player
@@ -467,15 +474,34 @@ Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
         }
     };
 
+    self.draw = function(ctx, player) {
+        ctx.save();
+        var x = self.x - player.x + WIDTH / 2;
+        var y = self.y - player.y + HEIGHT / 2;
+
+        x -= self.width / 2;
+        y -= self.height / 2;
+
+        ctx.drawImage(self.img,
+            0, 0, self.img.width, self.img.height,
+            x, y, self.width, self.height
+        );
+
+        ctx.restore();
+    };
+
     Bullet.list[id] = self;
 };
 
 Bullet.list = {};
 
-Bullet.update = function(ctx, player) {
+Bullet.update = function(ctx1, ctx2, player1, player2) {
     for (var key in Bullet.list) {
         var b = Bullet.list[key];
-        b.update(ctx, player);
+        b.update(ctx1, player1);
+        b.update(ctx2, player2);
+        b.draw(ctx1, player1);
+        b.draw(ctx2, player2);
 
         if (b.toRemove) {
             delete Bullet.list[key];

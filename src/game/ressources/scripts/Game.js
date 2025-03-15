@@ -107,50 +107,62 @@ document.oncontextmenu = function(mouse) {
     mouse.preventDefault();
 }
 
-document.onmousemove = function(mouse) {
-    if (player1) {
-        var mouseX = mouse.clientX - document.getElementById('player1Canvas').getBoundingClientRect().left;
-        var mouseY = mouse.clientY - document.getElementById('player1Canvas').getBoundingClientRect().top;
-
-        mouseX -= WIDTH / 2;
-        mouseY -= HEIGHT / 2;
-
-        player1.aimAngle = Math.atan2(mouseY, mouseX) / Math.PI * 180;
-    }
-    if(player2){
-        mouseX = mouse.clientX - document.getElementById('player2Canvas').getBoundingClientRect().left;
-        mouseY = mouse.clientY - document.getElementById('player2Canvas').getBoundingClientRect().top;
-
-        mouseX -= WIDTH / 2;
-        mouseY -= HEIGHT / 2;
-
-        player2.aimAngle = Math.atan2(mouseY, mouseX) / Math.PI * 180;
-    }
-
-}
+// document.onmousemove = function(mouse) {  // Mouse movement aiming
+//     if (player1) {
+//         var mouseX = mouse.clientX - document.getElementById('player1Canvas').getBoundingClientRect().left;
+//         var mouseY = mouse.clientY - document.getElementById('player1Canvas').getBoundingClientRect().top;
+//
+//         mouseX -= WIDTH / 2;
+//         mouseY -= HEIGHT / 2;
+//
+//         player1.aimAngle = Math.atan2(mouseY, mouseX) / Math.PI * 180;
+//     }
+//     if(player2){
+//         mouseX = mouse.clientX - document.getElementById('player2Canvas').getBoundingClientRect().left;
+//         mouseY = mouse.clientY - document.getElementById('player2Canvas').getBoundingClientRect().top;
+//
+//         mouseX -= WIDTH / 2;
+//         mouseY -= HEIGHT / 2;
+//
+//         player2.aimAngle = Math.atan2(mouseY, mouseX) / Math.PI * 180;
+//     }
+//
+// }
 
  document.onkeydown = function(event) {
-    if (event.keyCode === 68) //d
-        player1.pressingRight = true;
-    else if (event.keyCode === 83) //s
-        player1.pressingDown = true;
-    else if (event.keyCode === 65) //a
-        player1.pressingLeft = true;
-    else if (event.keyCode === 87) // w
-        player1.pressingUp = true;
-    else if (event.keyCode === 32) // space
+     if (event.keyCode === 68) { //d
+         player1.pressingRight = true;
+         player1.aimAngle = 0;
+     } else if (event.keyCode === 83) {//s
+         player1.pressingDown = true;
+         player1.aimAngle = 90;
+     } else if (event.keyCode === 65) { //a
+         player1.pressingLeft = true;
+         player1.aimAngle = 180;
+     } else if (event.keyCode === 87){ // w
+         player1.pressingUp = true;
+         player1.aimAngle = 270;
+     }else if (event.keyCode === 81) // q
         player1.performAttack();
+    else if (event.keyCode === 69) // e
+        player1.performSpecialAttack();
 
-    if (event.keyCode === 39) // right arrow
+    if (event.keyCode === 39) { // right arrow
         player2.pressingRight = true;
-    else if (event.keyCode === 40) // down arrow
+        player2.aimAngle = 0;
+    }else if (event.keyCode === 40) { // down arrow
         player2.pressingDown = true;
-    else if (event.keyCode === 37) // left arrow
+        player2.aimAngle = 90;
+    }else if (event.keyCode === 37) { // left arrow
         player2.pressingLeft = true;
-    else if (event.keyCode === 38) // up arrow
+        player2.aimAngle = 180;
+    }else if (event.keyCode === 38) { // up arrow
         player2.pressingUp = true;
-    else if (event.keyCode === 48) // 0
+        player2.aimAngle = 270;
+    }else if (event.keyCode === 48) // 0
         player2.performAttack();
+    else if (event.keyCode === 57) // 9
+        player2.performSpecialAttack();
 
     else if (event.keyCode === 80) //p
         paused = !paused;
@@ -213,8 +225,7 @@ update = function() {
     frameCount++;
     score++;
 
-    Bullet.update(ctx1, player1);
-    Bullet.update(ctx2, player1);
+    Bullet.update(ctx1, ctx2, player1, player2);
     Upgrade.update(ctx1, player1);
     Upgrade.update(ctx2, player2);
     Enemy.update(ctx1, ctx2, player1, player2);
