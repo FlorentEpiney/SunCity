@@ -306,7 +306,7 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
     self.draw = function(ctx, player) {
         ctx.save();
         var x = self.x - player.x + WIDTH / 2;
-        var y = self.y - player.y + HEIGHT / 2;
+        var y = self.y - player.y + HEIGHT / 2 - self.height/2 -20;
 
         x -= self.width / 2;
         y -= self.height / 2;
