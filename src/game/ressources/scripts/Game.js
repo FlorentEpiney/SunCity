@@ -218,7 +218,6 @@ update = function() {
     Upgrade.update(ctx1, player1);
     Upgrade.update(ctx2, player2);
     Enemy.update(ctx1, ctx2, player1, player2);
-    // Enemy.update(ctx2, ctx2);
 
 }
 

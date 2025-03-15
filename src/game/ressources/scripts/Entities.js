@@ -13,6 +13,7 @@ Entity = function(type, id, x, y, width, height, img) {
     };
 
     self.update = function(ctx, player) {
+        self.updatePosition();
         self.draw(ctx, player);
     };
 
@@ -264,6 +265,8 @@ Player = function(startX, startY) {
 Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
     var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd);
 
+    self.directionChangeTimer = 0;
+
     var super_update = self.update;
     self.update = function(ctx, player) {
         super_update(ctx, player);
@@ -281,12 +284,22 @@ Enemy = function(id, x, y, width, height, img, hp, atkSpd) {
     };
 
     self.updateKeyPress = function() {
-        var diffX = player.x - self.x;
-        var diffY = player.y - self.y;
-        self.pressingRight = diffX > 3;
-        self.pressingLeft = diffX < -3;
-        self.pressingDown = diffY > 3;
-        self.pressingUp = diffY < -3;
+        // var diffX = player.x - self.x;
+        // var diffY = player.y - self.y;
+        // self.pressingRight = diffX > 3;
+        // self.pressingLeft = diffX < -3;
+        // self.pressingDown = diffY > 3;
+        // self.pressingUp = diffY < -3;
+
+        self.directionChangeTimer += 40; // Assuming update is called every 40ms
+
+        if (self.directionChangeTimer >= 2000) {
+            self.pressingRight = Math.random() < 0.5;
+            self.pressingLeft = Math.random() < 0.5;
+            self.pressingDown = Math.random() < 0.5;
+            self.pressingUp = Math.random() < 0.5;
+            self.directionChangeTimer = 0;
+        }
     };
 
     // var super_draw = self.draw;
@@ -335,6 +348,7 @@ Enemy.update = function(ctx1, ctx2, player1, player2) {
         Enemy.randomlyGenerate();
     for (var key in Enemy.list) {
         Enemy.list[key].update(ctx1, player1);
+        Enemy.list[key].update(ctx2, player2);
         Enemy.list[key].draw(ctx1, player1);
         Enemy.list[key].draw(ctx2, player2);
     }
