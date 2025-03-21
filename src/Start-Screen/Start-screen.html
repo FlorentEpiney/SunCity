@@ -13,8 +13,7 @@
             background: black;
         }
 
-        
-        .start-screen, .loading-screen {
+        .screen {
             position: fixed;
             top: 0;
             left: 0;
@@ -23,10 +22,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             transition: opacity 1.5s ease-in-out, filter 1.5s ease-in-out;
         }
 
-        
         .background-image {
             position: absolute;
             top: 0;
@@ -37,23 +36,12 @@
             z-index: -1;
         }
 
-        
-        .content {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-            text-align: center;
-        }
-
         h1 {
             font-size: 40px;
             margin-bottom: 20px;
+            color: white;
         }
 
-        
         button {
             padding: 12px 25px;
             font-size: 22px;
@@ -64,70 +52,202 @@
             border-radius: 8px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
             transition: transform 0.2s ease-in-out;
+            margin-top: 20px;
         }
 
         button:hover {
             transform: scale(1.1);
         }
 
-        
         .hide {
             opacity: 0;
             filter: blur(10px);
             pointer-events: none;
         }
 
-        
         .loading-screen {
             display: none;
-            justify-content: center;
-            align-items: center;
             color: white;
         }
 
         .loading-text {
-            font-size: 24px;
-	    font-weight: bold;
+            font-size: 30px;
+            font-weight: bold;
             position: absolute;
             bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
         }
+
+        .character-selection, .recap, .countdown {
+            display: none;
+            color: white;
+            text-align: center;
+        }
+
+        .characters {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .character {
+            width: 150px;
+            height: 200px;
+            background: gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .character img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .character:hover, .character.selected {
+            transform: scale(1.1);
+            border: 3px solid white;
+        }
+
+        .countdown {
+            display: none;
+            font-size: 100px;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background: black;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
 
-    
-    <div class="start-screen" id="startScreen">
+    <!-- Écran de démarrage -->
+    <div class="screen" id="startScreen">
         <img src="suncity.jpg" alt="SUN City" class="background-image">
-        <div class="content">
-            <h1>Welcome to SUN City</h1>
-            <button onclick="startGame()">START</button>
-        </div>
+        <h1>Welcome to SUN City</h1>
+        <button onclick="startGame()">START</button>
     </div>
 
-    
-    <div class="loading-screen" id="loadingScreen">
+    <!-- Écran de chargement -->
+    <div class="screen loading-screen" id="loadingScreen">
         <img src="suncity.jpg" alt="SUN City" class="background-image">
         <p class="loading-text">LOADING...</p>
     </div>
 
-    <script>
-        function startGame() {
-            let startScreen = document.getElementById("startScreen");
-            let loadingScreen = document.getElementById("loadingScreen");
+    <!-- Sélection du personnage -->
+    <div class="screen character-selection" id="characterSelection">
+        <h1 id="selectionTitle">Player 1: Choose Your Character</h1>
+        <div class="characters">
+            <div class="character" onclick="selectCharacter(this, 'Player 1', 'julio.jpg')">
+                <img src="julio.jpg" alt="Player 1">
+            </div>
+            <div class="character" onclick="selectCharacter(this, 'Player 2', 'florent.jpg')">
+                <img src="florent.jpg" alt="Player 2">
+            </div>
+        </div>
+        <button onclick="continueToNextStep()">CONTINUE</button>
+    </div>
 
-            startScreen.classList.add("hide");
+    <!-- Récapitulatif des choix -->
+    <div class="screen recap" id="recapScreen">
+        <h1>Players Ready!</h1>
+        <p><strong>Player 1:</strong> <img id="recapP1" width="100"></p>
+        <p><strong>Player 2:</strong> <img id="recapP2" width="100"></p>
+        <button onclick="startCountdown()">CONTINUE</button>
+    </div>
+
+    <!-- Compte à rebours -->
+    <div class="countdown" id="countdown"></div>
+
+    <script>
+        let step = 1;
+        let selectedPlayers = { player1: null, player2: null };
+
+        function startGame() {
+            document.getElementById("startScreen").classList.add("hide");
             setTimeout(() => {
-                startScreen.style.display = "none";
-                loadingScreen.style.display = "flex"; 
-            }, 1500);
-            
-            
+                document.getElementById("startScreen").style.display = "none";
+                document.getElementById("loadingScreen").style.display = "flex";
+            }, 1000);
+
             setTimeout(() => {
-                loadingScreen.style.opacity = "0";
-                setTimeout(() => loadingScreen.style.display = "none", 1000);
-            }, 5000);
+                document.getElementById("loadingScreen").classList.add("hide");
+                setTimeout(() => {
+                    document.getElementById("loadingScreen").style.display = "none";
+                    document.getElementById("characterSelection").style.display = "flex";
+                }, 1000);
+            }, 3000);
+        }
+
+        function selectCharacter(element, player, imgSrc) {
+            let characters = document.querySelectorAll(".character");
+            characters.forEach(char => char.classList.remove("selected"));
+            element.classList.add("selected");
+
+            if (step === 1) {
+                selectedPlayers.player1 = imgSrc;
+            } else {
+                selectedPlayers.player2 = imgSrc;
+            }
+        }
+
+        function continueToNextStep() {
+            if (step === 1 && selectedPlayers.player1 === null) {
+                alert("Player 1 must choose a character!");
+                return;
+            }
+            if (step === 2 && selectedPlayers.player2 === null) {
+                alert("Player 2 must choose a character!");
+                return;
+            }
+
+            if (step === 1) {
+                step++;
+                document.getElementById("selectionTitle").innerText = "Player 2: Choose Your Character";
+            } else {
+                document.getElementById("characterSelection").classList.add("hide");
+                setTimeout(() => {
+                    document.getElementById("characterSelection").style.display = "none";
+                    showRecapScreen();
+                }, 1000);
+            }
+        }
+
+        function showRecapScreen() {
+            document.getElementById("recapP1").src = selectedPlayers.player1;
+            document.getElementById("recapP2").src = selectedPlayers.player2;
+            document.getElementById("recapScreen").style.display = "flex";
+        }
+
+        function startCountdown() {
+            document.getElementById("recapScreen").classList.add("hide");
+            setTimeout(() => {
+                document.getElementById("recapScreen").style.display = "none";
+                let countdownScreen = document.getElementById("countdown");
+                countdownScreen.style.display = "flex";
+                let count = 3;
+                countdownScreen.innerText = count;
+                let interval = setInterval(() => {
+                    count--;
+                    countdownScreen.innerText = count > 0 ? count : "GO!";
+                    if (count < 0) clearInterval(interval);
+                }, 1000);
+            }, 1000);
         }
     </script>
 
