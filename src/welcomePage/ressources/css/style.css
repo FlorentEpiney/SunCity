@@ -197,6 +197,26 @@ footer #logo {
     margin-top: 10px;
 }
 
+/*Table Loyaout ONLY */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+td, th {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+tr:not(:first-child):hover { /*Exclude the first-child I dont want it with the hover prop. */
+    background-color: var(--hover-color);
+}
+
+
+
 /* Buttons */
 /*
 button {
