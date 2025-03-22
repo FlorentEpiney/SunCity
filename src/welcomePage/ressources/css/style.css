@@ -112,7 +112,6 @@ header ul li a:hover {
    
 }
 
-
 /*MAIN*/
 /*Main section style */
 main {
@@ -124,6 +123,7 @@ main {
 }
 /*main adaption to one screen */
 main {
+    position: relative; 
     flex-grow: 1; /* Makes the main section take up remaining space */
     overflow: auto; /* Allows content to scroll inside if necessary */
     padding: 20px;
@@ -131,6 +131,7 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    padding-right: 300px;
 }
 
 
@@ -158,7 +159,25 @@ p {
     text-align: justify;
     line-height: 1.6;
   }
-  
+
+/*ASIDE*/
+aside {
+    position: absolute; /* Position relative to main */
+    right: 1em;
+    top: 0;
+    bottom: 0;
+    margin: auto 0; /* Vertical centering */
+    height: fit-content;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    z-index: 1000;
+    width: 250px;
+   
+}
+
+
 
 /*FOOTER*/
 /*footer box*/
