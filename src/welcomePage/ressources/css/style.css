@@ -1,9 +1,32 @@
 /* =====================================================
+   Global Variables
+   ===================================================== */
+
+
+
+/* =====================================================
    Base Styling
    ===================================================== */
 
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,400i,700|Roboto+Slab:700');
+
+
+/* =====================================================
+   General Reset
+   ===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Montserrat, sans-serif;
+}
+
+
+
+
+
+
 
 /* Apply default font styles */
 body {
@@ -30,7 +53,7 @@ header h1 {
   background-image: url("../images/header_background.png");
   background-size: cover;
   background-position: center;
-  padding: 1em 2em;
+  padding: 1em 1em;
   text-shadow:
     0 0 5px rgba(255, 255, 255, 0.8),
     0 0 10px rgba(255, 255, 255, 0.6),
@@ -48,7 +71,7 @@ nav ul {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 60px;
+  height: 40px;
   gap: 1em;
   padding-left: 2em;
 }
@@ -74,8 +97,8 @@ nav ul li a {
     color: white;
     font-weight: bold;
     padding: 0 1em;
-    height: 60px;
-    line-height: 60px;
+    height: 40px;
+    line-height: 40px;
     display: flex;
     align-items: center;
   }
@@ -83,8 +106,8 @@ nav ul li a {
   nav ul li.active a {
     background-color: #f8f8f8; /* Light background to match page */
     color: #004080;            /* Keep dark blue text */
-    height: 60px;              /* Exactly matches navbar */
-    line-height: 60px;
+    height: 40px;              /* Exactly matches navbar */
+    line-height: 40px;
     display: flex;
     align-items: center;
     border-radius: 0;
@@ -95,13 +118,14 @@ nav ul li a {
 /* Navigation hover effect */
 nav ul li a:hover {
   background-color: #0059b3;
-  border-radius: 6px;
+  border-radius: 0;
 }
 
-.hamburger img {
-  width: 24px;
-  height: 24px;
-  vertical-align: middle;
+/* =====================================================
+   Hamburger Menu
+   ===================================================== */
+.hamburger {
+    display: none;
 }
 
 /* =====================================================
@@ -224,16 +248,19 @@ aside p, aside li {
    Footer
    ===================================================== */
 
-footer {
-  text-align: center;
-  padding: 2em 0;
-  background-color: #004080;
-  margin-top: 3em;
-}
-
-#logo {
-  width: 120px;
-}
+   footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    padding: 2em;
+    background-color: #004080;
+    margin-top: 3em;
+  }
+  
+  #logo {
+    height: 70px;
+  }
 
 /* =====================================================
    Responsive Design
