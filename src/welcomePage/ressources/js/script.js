@@ -83,3 +83,14 @@ function updateTimeDisplay(spanElement, minutes) {
     spanElement.textContent = `${totalHours}h ${remainingMinutes}m`;
     console.log(`Updated span text to: ${totalHours}h ${remainingMinutes}m`);
 }
+
+/* function for burger menu in vertical mode */
+document.addEventListener("DOMContentLoaded", () => {
+    const burger = document.querySelector("li.hamburger");
+    const navList = burger.parentElement;
+  
+    burger.addEventListener("click", () => {
+      navList.classList.toggle("open");
+    });
+  });
+  
