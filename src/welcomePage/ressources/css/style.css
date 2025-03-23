@@ -1,8 +1,48 @@
 /* =====================================================
    Global Variables
    ===================================================== */
+   :root {
+    /* Colors */
+    --color-background: #f8f8f8;
+    --color-background-text: #ffffff;
+    --color-primary: #004080;
+    --color-primary-light: #0059b3;
+    --color-text: #333333;
+    --color-muted: #888888;
+    --color-link: #0066cc;
+    --color-border-light: #cccccc;
 
+    /* Typography */
+    --font-primary: Montserrat, sans-serif;
+    --font-secondary: 'Roboto Slab', serif;
+    --font-weight-bold: 700;
 
+    /* Font Sizes */
+    --font-size-small: 0.9em;
+    --font-size-base: 1rem;
+    --font-size-large: 1.2rem;
+    --font-size-xl: 2.4rem;
+
+    /* Spacing */
+    --spacing-sm: 0.5em;
+    --spacing-md: 1em;
+    --spacing-ml: 1.5em;
+    --spacing-lg: 2em;
+
+    /* Sizing */
+    --size-logo: 70px;
+    --size-small: 20px;
+    --size-medium: 40px;
+    --size-large: 60px;
+
+    /* Shadows & Radius */
+    --box-shadow-light: 0 2px 5px rgba(0,0,0,0.1);
+    --box-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius-sm: 6px;
+    --border-radius-lg: 10px;
+
+    
+}
 
 /* =====================================================
    Base Styling
@@ -11,7 +51,6 @@
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,400i,700|Roboto+Slab:700');
 
-
 /* =====================================================
    General Reset
    ===================================================== */
@@ -19,21 +58,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Montserrat, sans-serif;
+    font-family: var(--font-primary);
 }
-
-
-
-
-
-
 
 /* Apply default font styles */
 body {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #f8f8f8;
-  color: #333;
+  font-family: var(--font-primary);
+  background-color: var(--color-background);
+  color: var(--color-text);
   line-height: 1.6;
 }
 
@@ -42,13 +75,13 @@ body {
    ===================================================== */
 
 header {
-  color: white;
+  color: var(--color-background-text);
   padding: 0;
 }
 
 header h1 {
   margin: 0;
-  font-size: 2.4rem;
+  font-size: var(--font-size-xl);
   text-align: left;
   background-image: url("../images/header_background.png");
   background-size: cover;
@@ -61,7 +94,7 @@ header h1 {
 }
 
 nav {
-  background-color: #004080;
+  background-color: var(--color-primary);
 }
 
 nav ul {
@@ -71,9 +104,9 @@ nav ul {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 40px;
-  gap: 1em;
-  padding-left: 2em;
+  height: var(--size-medium);
+  gap: var(--spacing-md);
+  padding-left: var(--spacing-lg);
 }
 
 nav ul li {
@@ -82,42 +115,26 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none;
-  color: white;
+  color: var(--color-background-text);
   font-weight: bold;
-  padding: 0.5em 1em;
+  padding: 0 1em;
+  height: var(--size-medium);
+  line-height: var(--size-medium);
+  display: flex;
+  align-items: center;
   transition: background-color 0.3s;
-  border-radius: 6px;
+  border-radius: var(--border-radius-sm);
 }
 
-/* =====================================================
-   Navigation Button - Active Page Style (Perfect Alignment)
-   ===================================================== */
-   nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 0 1em;
-    height: 40px;
-    line-height: 40px;
-    display: flex;
-    align-items: center;
-  }
-  
-  nav ul li.active a {
-    background-color: #f8f8f8; /* Light background to match page */
-    color: #004080;            /* Keep dark blue text */
-    height: 40px;              /* Exactly matches navbar */
-    line-height: 40px;
-    display: flex;
-    align-items: center;
-    border-radius: 0;
-    padding: 0 1em;
-  }
-  
+nav ul li.active a {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  border-radius: 0;
+}
 
 /* Navigation hover effect */
 nav ul li a:hover {
-  background-color: #0059b3;
+  background-color: var(--color-primary-light);
   border-radius: 0;
 }
 
@@ -132,71 +149,70 @@ nav ul li a:hover {
    Main Content Layout
    ===================================================== */
 
-main {
-  width: 100%;
-  padding: 2em;
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2em;
-  align-items: flex-start;
-}
+   main {
+    width: 100%;
+    padding: 2em 2em 1.5em 2em; /* top, right/left, bottom */
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+  }
+  
 
 #articles {
   flex: 1 1 600px;
 }
 
 #articles article {
-  background-color: white;
-  border-radius: 6px;
-  padding: 1.5em;
-  margin-bottom: 2em;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  color: #333;
+  background-color: var(--color-background-text);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-ml);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--box-shadow-light);
+  color: var(--color-text);
 }
 
 #articles article header h2 {
-    margin-bottom: 0.3em;
-    color: #004080;
-    font-family: 'Roboto Slab', serif;
-  }
-  
-  /* Add horizontal rule between title and meta */
-  #articles article header h2::after {
-    content: "";
-    display: block;
-    border-bottom: 1px solid #ccc;
-    margin-top: 0.5em;
-    margin-bottom: 0;
-  }
-  
-  #articles article header p {
-    text-align: right;       /* Align author/date to the right */
-    font-style: italic;      /* Italic for meta text */
-    color: #888;             /* Light gray for subtlety */
-    font-size: 0.9em;
-    margin: 0.5em 0 0;       /* Space above p */
-  }
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+  font-family: var(--font-primary);
+}
+
+#articles article header h2::after {
+  content: "";
+  display: block;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-top: var(--spacing-sm);
+}
+
+#articles article header p {
+  text-align: right;
+  font-style: italic;
+  color: var(--color-muted);
+  font-size: var(--font-size-small);
+  margin: 0.5em 0 0;
+}
 
 #articles h2 {
-  font-family: 'Roboto Slab', serif;
+  font-family: var(--font-primary);
   margin-top: 0;
-  color: #004080;
+  color: var(--color-primary);
 }
 
 #articles p {
   margin: 0.75em 0;
-  color: #333;
+  color: var(--color-text);
 }
 
 #articles a {
-  color: #0066cc;
+  color: var(--color-link);
   text-decoration: underline;
 }
 
 #articles strong {
-  font-weight: 700;
-  color: #333;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
 }
 
 /* =====================================================
@@ -205,22 +221,22 @@ main {
 
 aside {
   flex: 0 0 360px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-background-text);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-medium);
   height: auto;
   overflow: hidden;
 }
 
 aside h3 {
   margin: 0;
-  padding: 1.5em;
-  background-color: #004080;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
+  padding: var(--spacing-ml);
+  background-color: var(--color-primary);
+  color: var(--color-background-text);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
   border-radius: 10px 10px 0 0;
-  margin-bottom: 0.5em;
+  margin-bottom: var(--spacing-sm);
 }
 
 aside > div {
@@ -228,20 +244,21 @@ aside > div {
 }
 
 aside ul {
-  list-style: none;
-  padding: 0 0em;
+  list-style: none; /* No bullets in sidebar */
+  padding: 0;
   margin: 1em 0 0;
 }
 
 aside ul li {
-  margin-bottom: 1em;
+  margin-bottom: var(--spacing-md);
   padding-left: 0;
 }
 
-aside p, aside li {
+aside p,
+aside li {
   margin: 0 0 0.5em 0;
   padding: 0 1.5em;
-  color: #333;
+  color: var(--color-text);
 }
 
 /* =====================================================
@@ -253,14 +270,15 @@ aside p, aside li {
     align-items: center;
     justify-content: flex-end;
     text-align: right;
-    padding: 2em;
-    background-color: #004080;
-    margin-top: 3em;
+    padding: var(--spacing-lg);
+    background-color: var(--color-primary);
+    margin-top: 0; /* remove to prevent stacked spacing */
   }
   
-  #logo {
-    height: 70px;
-  }
+
+#logo {
+  height: var(--size-logo);
+}
 
 /* =====================================================
    Responsive Design
@@ -273,7 +291,7 @@ aside p, aside li {
 
   aside {
     width: 100%;
-    margin-top: 2em;
+    margin-top: var(--spacing-lg);
   }
 }
 
@@ -282,14 +300,37 @@ aside p, aside li {
     flex-direction: column;
     align-items: flex-start;
     height: auto;
-    padding: 1em;
+    padding: var(--spacing-md);
   }
 
   nav ul li {
-    margin-bottom: 0.5em;
+    margin-bottom: var(--spacing-sm);
   }
 
   main {
-    padding: 1em;
+    padding: var(--spacing-md);
   }
+}
+
+/* =====================================================
+   List Styling
+   ===================================================== */
+
+/* Only apply indentation for lists inside article (NOT globally) */
+#articles article ul,
+#articles article ol {
+  margin-left: var(--spacing-lg);        /* Indent from left */
+  padding-left: var(--spacing-md);       /* Space before bullets/numbers */
+  margin-bottom: var(--spacing-ml);    /* Space below the list */
+}
+
+#articles article li {
+  margin-bottom: var(--spacing-sm);    /* Space between list items */
+}
+
+/* Keep sidebar lists unindented */
+aside ul,
+aside li {
+  margin-left: 0;
+  padding-left: 0;
 }
