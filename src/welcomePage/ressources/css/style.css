@@ -1,237 +1,268 @@
+/* =====================================================
+   Base Styling
+   ===================================================== */
+
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,400i,700|Roboto+Slab:700');
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Pixelify+Sans:wght@400..700&display=swap');
 
-/*To make easier to modify the colors of the website to make it in line of the style of the game
-i propose to use variables */
-:root {
-    --header-background-color: rgba(34, 34, 34, 0.9); 
-    --footer-background-color: rgba(34, 34, 34, 0.9);
-    --main-background-color: rgba(228, 9, 9, 0.6); 
-    --header-font-color: #FFFFFF;
-    --main-font-color: #F0F0F0;
-    --accent-color: #FF4500;
-    --hover-color: rgba(255, 69, 0, 0.7);
-}
-
-
-/*GENERAL*/
-/*reset marging and padding */ 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
-}
-/*General Font */
+/* Apply default font styles */
 body {
-    font-family: "Pixelify Sans", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-    /*Background image */
-    background-image: url('https://images3.alphacoders.com/145/145407.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    color: var(--main-font-color);
-}
-html, body {
-    width: 100vw;
-    height: 100vh;
-    overflow: visible; /* Prevents scrolling */
-    display: flex;
-    flex-direction: column;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+  line-height: 1.6;
 }
 
+/* =====================================================
+   Header and Navigation
+   ===================================================== */
 
-/*HEADER */
-
-/*Header layout */
-body > header {
-    background-color: var(--header-background-color);
-    color: var(--header-font-color);
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0; /* Prevents the header from resizing */
-    position: relative;
-    z-index: 10
+header {
+  color: white;
+  padding: 0;
 }
 
-/*Navigation bar style */
-header ul {
-  
-    display: flex;
-    flex-direction: row; 
-    flex-wrap: wrap;
-    
-    justify-content: center;
-    gap: 15px;
-    padding: 10px;
-    list-style: none; /* no points for the <li> */
-    
+header h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  text-align: left;
+  background-image: url("../images/header_background.png");
+  background-size: cover;
+  background-position: center;
+  padding: 1em 2em;
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 15px rgba(255, 255, 255, 0.4);
 }
 
-header ul li a {
+nav {
+  background-color: #004080;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 60px;
+  gap: 1em;
+  padding-left: 2em;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  transition: background-color 0.3s;
+  border-radius: 6px;
+}
+
+/* =====================================================
+   Navigation Button - Active Page Style (Perfect Alignment)
+   ===================================================== */
+   nav ul li a {
     text-decoration: none;
-    color: var(--header-font-color);
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-/*navigation bar hover */
-header ul li a:hover {
-    background-color: var(--hover-color);
-}
-
-/*Active page style */
-.active{
-    background-color: var(--main-background-color);
-    padding: 10px 15px;
-    border-radius: 5px;
-}
-
-/* Hamburger Menu */
-.hamburger img {
-    background-color: lightgrey;
-    padding: 5px;
-    border-radius: 5px;
-    transition: 0.3s;
-} 
-
-.hamburger img:hover {
-    background-color: grey;
-}
-
-.hamburger img:active {
-    background-color: red;
-}
-
-/*Change size of all <li> elements when hamburger is clicked */
-.hamburger:active ~ li {
-    font-size: 0px;
-   
-}
-
-/*MAIN*/
-/*Main section style */
-main {
-    background-color: var(--main-background-color);
-    padding: 20px;
-    margin: 20px;
-    border-radius: 10px;
-    backdrop-filter: blur(8px);
-}
-/*main adaption to one screen */
-main {
-    position: relative; 
-    flex-grow: 1; /* Makes the main section take up remaining space */
-    overflow: auto; /* Allows content to scroll inside if necessary */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-right: 300px;
-}
-
-
-/*Header of the erticle */
-#articles > article > header {
-    margin-bottom: 10px;
-    font-size: 1.5em;
+    color: white;
     font-weight: bold;
+    padding: 0 1em;
+    height: 60px;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+  }
+  
+  nav ul li.active a {
+    background-color: #f8f8f8; /* Light background to match page */
+    color: #004080;            /* Keep dark blue text */
+    height: 60px;              /* Exactly matches navbar */
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    border-radius: 0;
+    padding: 0 1em;
+  }
+  
+
+/* Navigation hover effect */
+nav ul li a:hover {
+  background-color: #0059b3;
+  border-radius: 6px;
 }
 
-/*Group members*/
-body > main > aside > div {
-    margin-top: 20px;
-    text-align: left;
+.hamburger img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
+/* =====================================================
+   Main Content Layout
+   ===================================================== */
 
-body > main > aside > div > ul {
-    padding-left: 30px;
-    list-style: none;
+main {
+  width: 100%;
+  padding: 2em;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  align-items: flex-start;
 }
 
-/*<p> justify*/
-p {
-    text-align: justify;
-    line-height: 1.6;
+#articles {
+  flex: 1 1 600px;
+}
+
+#articles article {
+  background-color: white;
+  border-radius: 6px;
+  padding: 1.5em;
+  margin-bottom: 2em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #333;
+}
+
+#articles article header h2 {
+    margin-bottom: 0.3em;
+    color: #004080;
+    font-family: 'Roboto Slab', serif;
+  }
+  
+  /* Add horizontal rule between title and meta */
+  #articles article header h2::after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #ccc;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+  
+  #articles article header p {
+    text-align: right;       /* Align author/date to the right */
+    font-style: italic;      /* Italic for meta text */
+    color: #888;             /* Light gray for subtlety */
+    font-size: 0.9em;
+    margin: 0.5em 0 0;       /* Space above p */
   }
 
-/*ASIDE*/
+#articles h2 {
+  font-family: 'Roboto Slab', serif;
+  margin-top: 0;
+  color: #004080;
+}
+
+#articles p {
+  margin: 0.75em 0;
+  color: #333;
+}
+
+#articles a {
+  color: #0066cc;
+  text-decoration: underline;
+}
+
+#articles strong {
+  font-weight: 700;
+  color: #333;
+}
+
+/* =====================================================
+   Aside Section - Right Sidebar Card
+   ===================================================== */
+
 aside {
-    position: absolute; /* Position relative to main */
-    right: 1em;
-    top: 0;
-    bottom: 0;
-    margin: auto 0; /* Vertical centering */
-    height: fit-content;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 8px;
-    color: white;
-    z-index: 1000;
-    width: 250px;
-   
+  flex: 0 0 360px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: auto;
+  overflow: hidden;
 }
 
+aside h3 {
+  margin: 0;
+  padding: 1.5em;
+  background-color: #004080;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 0.5em;
+}
 
+aside > div {
+  padding: 0;
+}
 
-/*FOOTER*/
-/*footer box*/
+aside ul {
+  list-style: none;
+  padding: 0 0em;
+  margin: 1em 0 0;
+}
+
+aside ul li {
+  margin-bottom: 1em;
+  padding-left: 0;
+}
+
+aside p, aside li {
+  margin: 0 0 0.5em 0;
+  padding: 0 1.5em;
+  color: #333;
+}
+
+/* =====================================================
+   Footer
+   ===================================================== */
+
 footer {
-    background-color: var(--footer-background-color);
-    color: var(--header-font-color);
-    text-align: center;
-    padding: 15px;
-    margin-top: 5px;
-    border-top: 3px solid var(--accent-color);
-    flex-shrink: 0;
-}
-/*footer logo */
-footer #logo {
-    resize: both;
-    max-width: 150px;
-    margin-top: 10px;
+  text-align: center;
+  padding: 2em 0;
+  background-color: #004080;
+  margin-top: 3em;
 }
 
-/*Table Loyaout ONLY */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    display: flex;
+#logo {
+  width: 120px;
+}
+
+/* =====================================================
+   Responsive Design
+   ===================================================== */
+
+@media (max-width: 800px) {
+  main {
     flex-direction: column;
+  }
+
+  aside {
+    width: 100%;
+    margin-top: 2em;
+  }
 }
 
-td, th {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 1em;
+  }
+
+  nav ul li {
+    margin-bottom: 0.5em;
+  }
+
+  main {
+    padding: 1em;
+  }
 }
-tr:not(:first-child):hover { /*Exclude the first-child I dont want it with the hover prop. */
-    background-color: var(--hover-color);
-}
-
-
-
-/* Buttons */
-/*
-button {
-    background-color: var(--accent-color);
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-button:hover {
-    background-color: var(--hover-color);
-}
-*/
-
