@@ -11,6 +11,8 @@
     --color-muted: #888888;
     --color-link: #0066cc;
     --color-border-light: #cccccc;
+    --color-hover-animation: #eef6ff;
+    --color-background-contrast: #f9f9f9;
 
     /* Typography */
     --font-primary: Montserrat, sans-serif;
@@ -18,12 +20,13 @@
     --font-weight-bold: 700;
 
     /* Font Sizes */
-    --font-size-small: 0.9em;
+    --font-size-small: 0.9rem;
     --font-size-base: 1rem;
     --font-size-large: 1.2rem;
     --font-size-xl: 2.4rem;
 
     /* Spacing */
+    --spacing-xs: 0.1em;
     --spacing-sm: 0.5em;
     --spacing-md: 1em;
     --spacing-ml: 1.5em;
@@ -142,7 +145,8 @@ nav ul li a:hover {
    Hamburger Menu
    ===================================================== */
 .hamburger {
-    display: none;
+    display: none;  /* hide by default */
+    cursor: pointer;
 }
 
 /* =====================================================
@@ -281,36 +285,145 @@ aside li {
 }
 
 /* =====================================================
+   Table
+   ===================================================== */
+/* Project Logbook Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-lg);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-small);
+    background-color: var(--color-background-text);
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    text-align: left;
+  }
+  
+  /* Table headers with primary light color */
+  table thead tr {
+    background-color: var(--color-primary-light);
+    color: var(--color-text); /* Use dark text for contrast */
+    font-weight: var(--font-weight-bold);
+  }
+  
+  /* General cell styling with vertical and horizontal borders */
+  table th,
+  table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc; /* Light gray border for grid look */
+  }
+  
+  /* Alternate row background for better readability */
+  table tbody tr:nth-child(even) {
+    background-color: var(--color-background-contrast);
+  }
+  
+  /* Row hover effect */
+  table tbody tr:hover {
+    background-color: var(--color-hover-animation);
+  }
+  
+  
+
+
+
+  
+/* =====================================================
    Responsive Design
    ===================================================== */
 
-@media (max-width: 800px) {
-  main {
-    flex-direction: column;
-  }
+   @media (max-width: 800px) {
+    main {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    aside {
+      width: 100%;
+      max-width: 400px;
+      margin-top: var(--spacing-xs);
+    }
 
-  aside {
+     /* Table container behavior on small screens */
+  table {
+    display: table;
     width: 100%;
-    margin-top: var(--spacing-lg);
-  }
-}
-
-@media (max-width: 600px) {
-  nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-    padding: var(--spacing-md);
+    border-collapse: collapse;
+    overflow-x: auto;
+    box-shadow: var(--box-shadow-light);
   }
 
-  nav ul li {
-    margin-bottom: var(--spacing-sm);
+  /* Prevent the full layout from being affected by overflow */
+  #articles {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: var(--spacing-sm);
   }
 
-  main {
-    padding: var(--spacing-md);
+  #articles article {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
-}
+
+  table th,
+  table td {
+    white-space: nowrap; /* Prevent wrapping in cells */
+  }
+
+  table::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  table::-webkit-scrollbar-thumb {
+    background-color: var(--color-muted);
+    border-radius: var(--border-radius-sm);
+  }
+  }
+  
+  
+  @media (max-width: 600px) {
+    nav ul {
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      padding: var(--spacing-md);
+      position: relative;
+    }
+  
+    /* Hide all nav items except hamburger */
+    nav ul li {
+      display: none;
+    }
+  
+    nav ul li.hamburger {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+      position: static; /* Remove absolute positioning */
+      transform: none;
+      cursor: pointer;
+    }
+  
+    /* When menu is toggled open */
+    nav ul.open li {
+      display: block;
+      margin-bottom: var(--spacing-sm);
+    }
+  
+    nav ul.open li.hamburger {
+      margin-bottom: var(--spacing-sm); /* Keep spacing */
+    }
+  
+    main {
+      padding: var(--spacing-md);
+    }
+  }
+  
+      
+  
 
 /* =====================================================
    List Styling
