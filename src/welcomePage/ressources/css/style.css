@@ -1,198 +1,489 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,400i,700|Roboto+Slab:700');
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Pixelify+Sans:wght@400..700&display=swap');
-
-/*To make easier to modify the colors of the website to make it in line of the style of the game
-i propose to use variables */
+/*  
+================
+global variables
+================
+*/
 :root {
-    --header-background-color: rgba(34, 34, 34, 0.9); 
-    --footer-background-color: rgba(34, 34, 34, 0.9);
-    --main-background-color: rgba(228, 9, 9, 0.6); 
-    --header-font-color: #FFFFFF;
-    --main-font-color: #F0F0F0;
-    --accent-color: #FF4500;
-    --hover-color: rgba(255, 69, 0, 0.7);
+    /* colors */
+    --color-background: #f8f8f8;
+    --color-background-text: #ffffff;
+    --color-primary: #004080;
+    --color-primary-light: #0059b3;
+    --color-text: #333333;
+    --color-muted: #888888;
+    --color-link: #0066cc;
+    --color-border-light: #cccccc;
+    --color-hover-animation: #eef6ff;
+    --color-background-contrast: #f9f9f9;
+
+    /* typography */
+    --font-primary: Montserrat, sans-serif;
+    --font-secondary: 'Roboto Slab', serif;
+    --font-weight-bold: 700;
+
+    /* font sizes */
+    --font-size-small: 0.9rem;
+    --font-size-base: 1rem;
+    --font-size-large: 1.2rem;
+    --font-size-xl: 2.4rem;
+
+    /* spacing */
+    --spacing-xs: 0.1em;
+    --spacing-sm: 0.5em;
+    --spacing-md: 1em;
+    --spacing-ml: 1.5em;
+    --spacing-lg: 2em;
+
+    /* sizing */
+    --size-logo: 70px;
+    --size-small: 20px;
+    --size-medium: 40px;
+    --size-large: 60px;
+
+    /* shadows & radius */
+    --box-shadow-light: 0 2px 5px rgba(0,0,0,0.1);
+    --box-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius-sm: 6px;
+    --border-radius-lg: 10px;
 }
 
+/*  
+=============
+Base Styling
+=============
+/* currently unused import statement
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,400i,700|Roboto+Slab:700');
+*/
 
-/*GENERAL*/
-/*reset marging and padding */ 
-*{
+/*  
+==============
+General Reset
+==============
+*/
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+    font-family: var(--font-primary);
 }
-/*General Font */
+
+/* apply default font styles */
 body {
-    font-family: "Pixelify Sans", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-    /*Background image */
-    background-image: url('https://images3.alphacoders.com/145/145407.jpg');
-    background-repeat: no-repeat;
+    margin: 0;
+    font-family: var(--font-primary);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+/*  
+=====================
+header and navigation
+=====================
+*/
+/* header container */
+header {
+    color: var(--color-background-text);
+    padding: 0;
+}
+
+/* main site title in header */
+header h1 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    text-align: left;
+    background-image: url("../images/header_background.png");
     background-size: cover;
     background-position: center;
-    color: var(--main-font-color);
+    padding: 1em 1em;
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.6),
+        0 0 15px rgba(255, 255, 255, 0.4);
 }
-html, body {
-    width: 100vw;
-    height: 100vh;
-    overflow: visible; /* Prevents scrolling */
+
+/* navigation bar */
+nav {
+    background-color: var(--color-primary);
+}
+
+/* navigation menu list (horizontal) */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    flex-direction: column;
-}
-
-
-/*HEADER */
-
-/*Header layout */
-body > header {
-    background-color: var(--header-background-color);
-    color: var(--header-font-color);
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0; /* Prevents the header from resizing */
-    position: relative;
-    z-index: 10
-}
-
-/*Navigation bar style */
-header ul {
-  
-    display: flex;
-    flex-direction: row; 
-    flex-wrap: wrap;
-    
-    justify-content: center;
-    gap: 15px;
-    padding: 10px;
-    list-style: none; /* no points for the <li> */
-    
-}
-
-header ul li a {
-    text-decoration: none;
-    color: var(--header-font-color);
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-/*navigation bar hover */
-header ul li a:hover {
-    background-color: var(--hover-color);
-}
-
-/*Active page style */
-.active{
-    background-color: var(--main-background-color);
-    padding: 10px 15px;
-    border-radius: 5px;
-}
-
-/* Hamburger Menu */
-.hamburger img {
-    background-color: lightgrey;
-    padding: 5px;
-    border-radius: 5px;
-    transition: 0.3s;
-} 
-
-.hamburger img:hover {
-    background-color: grey;
-}
-
-.hamburger img:active {
-    background-color: red;
-}
-
-/*Change size of all <li> elements when hamburger is clicked */
-.hamburger:active ~ li {
-    font-size: 0px;
-   
-}
-
-
-/*MAIN*/
-/*Main section style */
-main {
-    background-color: var(--main-background-color);
-    padding: 20px;
-    margin: 20px;
-    border-radius: 10px;
-    backdrop-filter: blur(8px);
-}
-/*main adaption to one screen */
-main {
-    flex-grow: 1; /* Makes the main section take up remaining space */
-    overflow: auto; /* Allows content to scroll inside if necessary */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    height: var(--size-medium);
+    gap: var(--spacing-md);
+    padding-left: var(--spacing-lg);
 }
 
+/* each nav item */
+nav ul li {
+    display: inline;
+}
 
-/*Header of the erticle */
-#articles > article > header {
-    margin-bottom: 10px;
-    font-size: 1.5em;
+/* link inside nav item */
+nav ul li a {
+    text-decoration: none;
+    color: var(--color-background-text);
     font-weight: bold;
+    padding: 0 1em;
+    height: var(--size-medium);
+    line-height: var(--size-medium);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+    border-radius: var(--border-radius-sm);
 }
 
-/*Group members*/
-body > main > aside > div {
-    margin-top: 20px;
+/* active nav item (currently selected page) */
+nav ul li.active a {
+    background-color: var(--color-background);
+    color: var(--color-primary);
+    border-radius: 0;
+}
+
+/* hover effect for nav links */
+nav ul li a:hover {
+    background-color: var(--color-primary-light);
+    border-radius: 0;
+}
+
+/*  
+===============
+hamburger menu
+===============
+*/
+/* hamburger icon for mobile nav */
+.hamburger {
+    display: none;  /* hide by default */
+    cursor: pointer;
+}
+
+/*  
+===================
+main content layout
+===================
+*/
+/* main content area layout */
+main {
+    width: 100%;
+    padding: 2em 2em 1.5em 2em;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+}
+
+/* articles section (left column) */
+#articles {
+    flex: 1 1 600px;
+}
+
+/* individual article card */
+#articles article {
+    background-color: var(--color-background-text);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-ml);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--box-shadow-light);
+    color: var(--color-text);
+}
+
+/* article title */
+#articles article header h2 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+    font-family: var(--font-primary);
+}
+
+/* decorative line under article title */
+#articles article header h2::after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid var(--color-border-light);
+    margin-top: var(--spacing-sm);
+}
+
+/* article metadata (author, date) */
+#articles article header p {
+    text-align: right;
+    font-style: italic;
+    color: var(--color-muted);
+    font-size: var(--font-size-small);
+    margin: 0.5em 0 0;
+}
+
+/* article title */
+#articles h2 {
+    font-family: var(--font-primary);
+    margin-top: 0;
+    color: var(--color-primary);
+}
+
+/* paragraphs inside article */
+#articles p {
+    margin: 0.75em 0;
+    color: var(--color-text);
+}
+
+/* links inside articles */
+#articles a {
+    color: var(--color-link);
+    text-decoration: underline;
+}
+
+/* emphasized text in articles */
+#articles strong {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+}
+
+/*  
+==================================
+aside section - right sidebar card
+==================================
+*/
+/* sidebar (right column card) */
+aside {
+    flex: 0 0 360px;
+    background-color: var(--color-background-text);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-medium);
+    height: auto;
+    overflow: hidden;
+}
+
+/* sidebar title */
+aside h3 {
+    margin: 0;
+    padding: var(--spacing-ml);
+    background-color: var(--color-primary);
+    color: var(--color-background-text);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-bold);
+    border-radius: 10px 10px 0 0;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* wrapper inside sidebar */
+aside > div {
+    padding: 0;
+}
+
+/* sidebar list of team members */
+aside ul {
+    list-style: none; /* no bullets in sidebar */
+    padding: 0;
+    margin: 1em 0 0;
+}
+
+/* sidebar list item */
+aside ul li {
+    margin-bottom: var(--spacing-md);
+    padding-left: 0;
+}
+
+aside p,
+aside li {
+    margin: 0 0 0.5em 0;
+    padding: 0 1.5em;
+    color: var(--color-text);
+}
+
+/*  
+============
+list styling
+============
+*/
+/* only apply indentation for lists inside article (not globally) */
+#articles article ul,
+#articles article ol {
+    margin-left: var(--spacing-lg);
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-ml); 
+}
+
+/* space between list items */
+#articles article li {
+    margin-bottom: var(--spacing-sm);   
+}
+
+/* keep sidebar lists unindented */
+aside ul,
+aside li {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+/*  
+============
+table
+============
+*/
+/* logbook table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-lg);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-small);
+    background-color: var(--color-background-text);
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
     text-align: left;
 }
-
-
-body > main > aside > div > ul {
-    padding-left: 30px;
-    list-style: none;
-}
-
-/*<p> justify*/
-p {
-    text-align: justify;
-    line-height: 1.6;
-  }
   
-
-/*FOOTER*/
-/*footer box*/
-footer {
-    background-color: var(--footer-background-color);
-    color: var(--header-font-color);
-    text-align: center;
-    padding: 15px;
-    margin-top: 5px;
-    border-top: 3px solid var(--accent-color);
-    flex-shrink: 0;
+/* table header row */
+table thead tr {
+    background-color: var(--color-primary-light);
+    color: var(--color-text);
+    font-weight: var(--font-weight-bold);
 }
-/*footer logo */
-footer #logo {
-    resize: both;
-    max-width: 150px;
-    margin-top: 10px;
+  
+/* table header and cell styling */
+table th,
+table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border-light); /* light gray border for grid look */
 }
 
-/* Buttons */
-/*
-button {
-    background-color: var(--accent-color);
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
+/* alternate row background for better readability */
+table tbody tr:nth-child(even) {
+    background-color: var(--color-background-contrast);
 }
 
-button:hover {
-    background-color: var(--hover-color);
+/* hover highlight for table rows */
+table tbody tr:hover {
+    background-color: var(--color-hover-animation);
 }
+  
+/*  
+=======
+footer
+=======
 */
+/* footer with logo */
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    padding: var(--spacing-lg);
+    background-color: var(--color-primary);
+    margin-top: 0; /* remove to prevent stacked spacing */
+}
 
+/* footer logo image */
+#logo {
+    height: var(--size-logo);
+}
+
+/*  
+==================
+responsive design
+==================
+*/
+/* responsive layout below 800px (tablet) */
+@media (max-width: 800px) {
+    /* main content area layout */
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* sidebar (right column card) */
+    aside {
+        width: 100%;
+        max-width: 400px;
+        margin-top: var(--spacing-xs);
+    }
+
+     /* table container behavior on small screens */
+    table {
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+        overflow-x: auto;
+        box-shadow: var(--box-shadow-light);
+    }
+
+    /* prevent the full layout from being affected by overflow */
+    /* articles section (left column) */
+    #articles {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: var(--spacing-sm);
+    }
+
+    /* individual article card */
+    #articles article {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* table header and cell styling */
+    table th,
+    table td {
+        white-space: nowrap; /* prevent wrapping in cells */
+    }
+
+    /* pseudo-element for scrollbar styling */
+    table::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    /* pseudo-element for scrollbar styling */
+    table::-webkit-scrollbar-thumb {
+        background-color: var(--color-muted);
+        border-radius: var(--border-radius-sm);
+    }
+}
+  
+/* responsive layout below 600px (mobile) */
+@media (max-width: 600px) {
+
+    /* Navigation menu list (horizontal) */
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: var(--spacing-md);
+        position: relative;
+    }
+    
+    /* hide all nav items except hamburger */
+    nav ul li {
+        display: none;
+    }
+    
+    nav ul li.hamburger {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: var(--spacing-sm);
+        position: static; /* Remove absolute positioning */
+        transform: none;
+        cursor: pointer;
+    }
+    
+    /* when menu is toggled open */
+    nav ul.open li {
+        display: block;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    nav ul.open li.hamburger {
+        margin-bottom: var(--spacing-sm); /* keep spacing */
+    }
+
+    /* main content area layout */
+    main {
+        padding: var(--spacing-md);
+    }
+}
