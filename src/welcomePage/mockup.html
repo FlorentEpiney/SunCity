@@ -1,62 +1,121 @@
 <!doctype html>
 <html>
-<head>
-    <title>64-31 - Projet - Mockup</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="ressources/css/style.css">
-</head>
-<body>
+    <head>
+        <title>64-31 - Projet - Mockup</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="ressources/css/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>HES-SO Vs - 64-31 - Web Development</h1>
+            <nav>
+                <!-- Hamburger -->
+                <ul>
+                    <li class="hamburger">
+                        <img src="ressources/images/hamburger_icon.svg">
+                    </li>
+                    <li>
+                        <a href="description.html">Description</a>
+                    </li>
+                    <li>
+                        <a href="maquettes.html">Maquettes</a>
+                    </li>
+                    <li class="active">
+                        <a href="mockup.html">Mockup</a>
+                    </li>
+                    <li>
+                        <a href="flux.html">Flux</a>
+                    </li>
+                    <li>
+                        <a href="journal_de_bord.html">Journal de bord</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
-<header>
-    <h1>HES-SO Vs - 64-31 - Web Development</h1>
-    <nav>
-        <!-- Hamburger -->
-        <ul>
-            <li class="hamburger">
-                <img src="ressources/images/hamburger_icon.svg">
-            </li>
-            <li>
-                <a href="description.html">Description</a>
-            </li>
-            <li>
-                <a href="maquettes.html">Maquettes</a>
-            </li>
-            <li class="active">
-                <a href="mockup.html">Mockup</a>
-            </li>
-            <li>
-                <a href="flux.html">Flux</a>
-            </li>
-            <li>
-                <a href="journal_de_bord.html">Journal de bord</a>
-            </li>
-        </ul>
-    </nav>
-</header>
+        <main>
+            <!-- Début zone pour votre contenu -->
+            <section id="articles">
+                <article>
+                    <header>
+                        <h2>Our project's mockup</h2>
+                        <p>By Jean Dupont on 05/02/2024 at 09:00</p>
+                    </header>
+                    <div class="container">
+                        <p>
 
-<main>
-    <!-- Début zone pour votre contenu -->
-    <section id="articles">
-        <article>
-            <header>
-                <h2>Mockup de votre projet</h2>
-                <p>Par Jean Dupont le 5/02/2024 à 09:00</p>
-            </header>
-            <p>Lorem ipsum dolor sit amet... <a href="http://www.hevs.ch/">http://www.hevs.ch/</a>,
-                 Ut non eros scelerisque, varius diam a, pulvinar arcu. Phasellus fermentum non arcu ornare ornare. Sed libero mi, rutrum et felis commodo, molestie tempor leo. Duis sit amet erat ut elit faucibus tincidunt sit amet non leo. Quisque dapibus ultricies cursus.</p>
-            <p> Aenean elit nisi, maximus sit amet vulputate non, molestie non odio. Quisque in dolor vel libero <strong>lobortis commodo</strong> ultricies sed nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut pretium ipsum in ipsum venenatis, id elementum quam ultrices. Nam nec enim sagittis, ultrices massa eu, fermentum sem.</p>
-            <p><strong>Nam sed justo tortor:</strong>Aliquam eros ex, porttitor vel aliquam in, imperdiet id felis. Aliquam sed est quis nibh vestibulum porta. Nam ipsum quam, dapibus quis felis quis, pharetra auctor sapien</p>
-                <p>Le code source de l'application est disponible sur le <a href="https://github.com/">github du projet</a>.</p>
-        </article>
-    </section>
-    <!-- >Fin zone pour votre contenu -->
-</main>
-    
-    <footer>
-        <img id="logo" src="ressources/images/logo.png">
-    </footer>
+                        </p>
+                        <h1>Warning Page</h1>
+                        <p>
+                            When the players enters on our website, he must first confirm his age as the content of our game can include violence.
+                        </p>
+                        <img src="ressources/images/mockup/warning-18.png" alt="warningpage">
+                        <h1>Homepage</h1>
+                        <p>
+                            On the homepage, the players have 3 possibilities:
+                            <ul>
+                                <li>Play the game</li>
+                                <li>See the leaderboard</li>
+                                <li>Leave the game</li>
+                            </ul>
+                        </p>
+                        <img src="ressources/images/mockup/homePage.png" alt="homepage">
+                        <h1>Selection of the avater and the player</h1>
+                        <p>
+                            If the players click on the button "PLAY", they will be redirected to the selection of the avatar and the player.
+                            Both players can choose a different alias. The alias will serve to etablish the leaderboard. If an alias is already used, the new score will override the ancien one.
+                            Their location is by default automatically provided by an API. Howver, they can correct it if they want.
+                            Furthermore, they can choose between a set of avatars. They have just to drag and drop the wished one inside the dedicated field.
+                        </p>
+                        <img src="ressources/images/mockup/avatarPlayerSelection.png" alt="avatarplayerselection">
+                        <h1>Count down</h1>
+                        <p>
+                            The countdown serves to prepare the players before the game starts. It allows them to get ready and to be in the best conditions to play. It last 3 seconds.
+                        </p>
+                        <img src="ressources/images/mockup/countdown.png" alt="countdown">
+                        <h1>Game</h1>
+                        <p>
+                            The game page is divided in thow parts, one for each player. It includes the game field with the own view of the player and a board with the life points, the timers and some indications.
+                            At the top, there is a Pause button.
+                            At the bottom, there is two buttons as to play or stop the game music.
+                        </p>
+                        <img src="ressources/images/mockup/gamePage.png" alt="gamepage">
+                        <p>
+                            The game map is inspired of the city of Sierre, also called Sun City. We find the main streets, the traditional squares, the both lakes and some important buildings like the hospital or the police office.
+                            The game is in 2D. The players can only walk on street and on the gras. They can't walk neither on the buildings nor on the water nor through the trees.
+                        </p>
+                        <img src="ressources/images/mockup/suncity_map.png" alt="suncitymap">
+                        <h1>Game pause</h1>
+                        <p>
+                            If one of the player click on the Pause button, the game will be paused and a popup appears.
+                            The players can decide either to continue the game, or to restart from beginning or to leave the game and go back to the homepage.
+                            By the two last options, the current score gets lost.
+                        </p>
+                        <img src="ressources/images/mockup/gamePause.png" alt="gamepause">
+                        <h1>Game finished</h1>
+                        <p>
+                            If one of the player dies, the party is over. The winner and the loser are announced.
+                            After 5 seconds, the players are redirected to the leaderboard.
+                        </p>
+                        <img src="ressources/images/mockup/gameFinish.png" alt="gamefinish">
+                        <h1>Leaderboard</h1>
+                        <p>
+                            On the leaderboard, the players can see all the result of the previous games.
+                            The leaderboard is sorted by the score. The player with the highest score is on the top.
+                            The score is calculated according to the time the player survived in Sun City.
+                        </p>
+                        <img src="ressources/images/mockup/leaderBoard.png" alt="leaderboard">
+                    </div>
+                </article>
+            </section>
+            <!-- >Fin zone pour votre contenu -->
+        </main>
 
-    <script src="ressources/js/script.js"></script>
-</body>
+            <footer>
+                <img id="logo" src="ressources/images/logo.png">
+            </footer>
+
+            <script src="ressources/js/script.js"></script>
+    </body>
 </html>
