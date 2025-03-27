@@ -102,6 +102,10 @@ header h1 {
         0 0 15px rgba(255, 255, 255, 0.4);
 }
 
+img{
+    height: 250px;
+}
+
 /* navigation bar */
 nav {
     background-color: var(--color-primary);
