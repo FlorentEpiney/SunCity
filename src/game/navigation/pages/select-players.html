@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN City</title>
+    <link rel="stylesheet" href="../css/start-screen.css">
+</head>
+<body>
+    <div class="screen character-selection" id="characterSelection">
+        <h1 id="selectionTitle">Player 1: Choose Your Character</h1>
+        <div class="characters">
+            <div class="character" onclick="selectCharacter(this, 'Player 1', '../images/julio.jpg')">
+                <img src="../images/julio.jpg" alt="Player 1">
+            </div>
+            <div class="character" onclick="selectCharacter(this, 'Player 2', '../images/florent.jpg')">
+                <img src="../images/florent.jpg" alt="Player 2">
+            </div>
+        </div>
+        <button onclick="continueToNextStep()">CONTINUE</button>
+    </div>
+    <!-- Récapitulatif des choix -->
+    <div class="screen recap" id="recapScreen">
+        <h1>Players Ready!</h1>
+        <p><strong>Player 1:</strong> <img id="recapP1" width="100"></p>
+        <p><strong>Player 2:</strong> <img id="recapP2" width="100"></p>
+        <button onclick="startCountdown()">CONTINUE</button>
+    </div>
+
+    <script>
+        let step = 1;
+        let selectedPlayers = { player1: null, player2: null };
+        document.getElementById("characterSelection").style.display = "flex";
+
+        function selectCharacter(element, player, imgSrc) {
+            let characters = document.querySelectorAll(".character");
+            characters.forEach(char => char.classList.remove("selected"));
+            element.classList.add("selected");
+
+            if (step === 1) {
+                selectedPlayers.player1 = imgSrc;
+            } else {
+                selectedPlayers.player2 = imgSrc;
+            }
+        }
+
+        function continueToNextStep() {
+            if (step === 1 && selectedPlayers.player1 === null) {
+                alert("Player 1 must choose a character!");
+                return;
+            }
+            if (step === 2 && selectedPlayers.player2 === null) {
+                alert("Player 2 must choose a character!");
+                return;
+            }
+
+            if (step === 1) {
+                step++;
+                document.getElementById("selectionTitle").innerText = "Player 2: Choose Your Character";
+            } else {
+                document.getElementById("characterSelection").classList.add("hide");
+                setTimeout(() => {
+                    document.getElementById("characterSelection").style.display = "none";
+                    showRecapScreen();
+                }, 1000);
+            }
+        }
+
+        function showRecapScreen() {
+            document.getElementById("recapP1").src = selectedPlayers.player1;
+            document.getElementById("recapP2").src = selectedPlayers.player2;
+            document.getElementById("recapScreen").style.display = "flex";
+        }
+
+        function startCountdown() {
+            window.location.href = 'countdown.html';
+        }
+    </script>
+</body>
+</html>
