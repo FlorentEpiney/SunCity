@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN City</title>
+    <link rel="stylesheet" href="../css/start-screen.css">
+</head>
+<body>
+<!-- Countdown Section -->
+<div class="countdown" id="countdown">
+    <div class="countdown-text" id="countdown-text">3</div>
+    <video class="video-background" src="../../ressources/video/sunCity.mp4" autoplay loop muted></video>
+</div>
+
+<script>
+    window.onload = function() {
+        startCountdown();
+    };
+
+    function startCountdown() {
+        let countdownText = document.getElementById("countdown-text");
+        let count = 3;
+
+        let interval = setInterval(() => {
+            count--;
+            countdownText.innerText = count > 0 ? count : "GO!";
+
+            if (count < 0) {
+                clearInterval(interval);setTimeout(() => {
+                    window.location.href = "../../gamePage.html"; // Change this to your destination page
+                }, 1000);
+            }
+        }, 1000);
+    }
+</script>
+</body>
+</html>

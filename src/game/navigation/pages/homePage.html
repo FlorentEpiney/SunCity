@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN City</title>
+    <link rel="stylesheet" href="../css/start-screen.css" >
+</head>
+<body>
+    <audio id="background-music" src="../../ressources/sounds/boneyM_Sunny.mp3" autoplay loop></audio>
+    <div class="screen" id="startScreen">
+        <img src="../images/suncity.jpg" alt="SUN City" class="background-image">
+        <button onclick="openExitpage()">Exit</button>
+        <h1>Welcome to SUN City</h1>
+        <button onclick="openGamePage()">PLAY</button>
+        <button onclick="openLeaderBoard()">Leaderboard</button>
+        <br>
+        <br>
+        <button onclick="document.getElementById('background-music').play()">
+            <img src="../../ressources/images/volume.png" style="width: 20px; height: 20px;"/>
+        </button>
+        <button onclick="document.getElementById('background-music').pause()">
+            <img src="../../ressources/images/volume_off.png" style="width: 20px; height: 20px;"/>
+        </button>
+    </div>
+    <script>
+        function openExitpage() {
+            window.location.href = 'exit.html';
+        }
+        function openGamePage() {
+            window.location.href = 'select-players.html';
+        }
+        function openLeaderBoard() {
+            window.location.href = 'leaderboard.html';
+        }
+    </script>
+</body>
+</html>
