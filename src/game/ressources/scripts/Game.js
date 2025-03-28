@@ -47,31 +47,31 @@ var player2;
 var player;
 
 // Load the collision map data
-// fetch('gameData/collision_map.json')
-//     .then(response => response.json())
-//     .then(response => {
-//         var array = response;
-//         var array2D = [];
-//         for (var i = 0; i < 100; i++) {
-//             array2D[i] = [];
-//             for (var j = 0; j < 200; j++) {
-//                 array2D[i][j] = array[i * 200 + j];
-//             }
-//         }
-//         Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
-
-fetch('gameData/collision_map_test.json')
+fetch('gameData/collision_map.json')
     .then(response => response.json())
     .then(response => {
         var array = response;
         var array2D = [];
-        for(var i = 0 ; i < 10; i++){
+        for (var i = 0; i < 100; i++) {
             array2D[i] = [];
-            for(var j = 0 ; j < 10; j++){
-                array2D[i][j] = array[i * 10 + j];
+            for (var j = 0; j < 200; j++) {
+                array2D[i][j] = array[i * 200 + j];
             }
         }
-        Maps.current = Maps('field', 'ressources/images/map.png', array2D);
+        Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
+
+// fetch('gameData/collision_map_test.json')
+//     .then(response => response.json())
+//     .then(response => {
+//         var array = response;
+//         var array2D = [];
+//         for(var i = 0 ; i < 10; i++){
+//             array2D[i] = [];
+//             for(var j = 0 ; j < 10; j++){
+//                 array2D[i][j] = array[i * 10 + j];
+//             }
+//         }
+//         Maps.current = Maps('field', 'ressources/images/map.png', array2D);
 
         player1 = Player(50, 50); // Starting position for player1
         player2 = Player(150, 50); // Starting position for player2
