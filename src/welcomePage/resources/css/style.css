@@ -167,6 +167,11 @@ hamburger menu
     cursor: pointer;
 }
 
+.hamburger img {
+    height: var(--size-medium);
+    width: auto;
+}
+
 /*  
 ===================
 main content layout

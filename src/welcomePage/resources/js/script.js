@@ -1,3 +1,4 @@
+/*
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM loaded - checking for time span");
     
@@ -37,6 +38,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+*/
+
+document.addEventListener("DOMContentLoaded", function() {
+    let timeSpan = document.getElementById("total-time");
+    if (timeSpan) {
+        fetch('logbook.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                let totalMinutes = calculateTimeFromDocument(doc);
+                updateTimeDisplay(timeSpan, totalMinutes);
+            })
+            .catch(error => {
+                console.error('Error fetching journal page:', error);
+                updateTimeDisplay(timeSpan, 0);
+            });
+    }
+});
+
+
+
 
 function calculateTimeFromDocument(doc) {
     let totalMinutes = 0;
