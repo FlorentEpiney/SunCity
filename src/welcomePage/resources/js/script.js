@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // If no data in localStorage, fetch and calculate it now
         if (totalMinutes === 0) {
             // Use fetch to get the journal page
-            fetch('journal_de_bord.html')
+            fetch('logbook.html')
                 .then(response => response.text())
                 .then(html => {
                     // Create a temporary DOM element to parse the HTML
