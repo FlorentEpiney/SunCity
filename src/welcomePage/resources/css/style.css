@@ -252,6 +252,12 @@ main {
     color: var(--color-text);
 }
 
+/* resize image of player avatars */
+#playerMale, #playerFemale {
+    width: 30%;
+    height: auto;
+}
+
 /*  
 ==================================
 aside section - right sidebar card
@@ -494,5 +500,12 @@ responsive design
     /* main content area layout */
     main {
         padding: var(--spacing-md);
+    }
+}
+
+/* responsive layout for print media */
+@media print {
+    aside {
+        display: none;
     }
 }
