@@ -186,6 +186,7 @@ main {
 /* articles section (left column) */
 #articles {
     flex: 1 1 600px;
+    text-align: justify;
 }
 
 /* individual article card */
