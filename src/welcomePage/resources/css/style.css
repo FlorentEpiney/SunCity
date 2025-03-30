@@ -167,6 +167,11 @@ hamburger menu
     cursor: pointer;
 }
 
+.hamburger img {
+    height: var(--size-medium);
+    width: auto;
+}
+
 /*  
 ===================
 main content layout
@@ -246,6 +251,12 @@ main {
 #articles strong {
     font-weight: var(--font-weight-bold);
     color: var(--color-text);
+}
+
+/* resize image of player avatars */
+#playerMale, #playerFemale {
+    width: 30%;
+    height: auto;
 }
 
 /*  
@@ -490,5 +501,12 @@ responsive design
     /* main content area layout */
     main {
         padding: var(--spacing-md);
+    }
+}
+
+/* responsive layout for print media */
+@media print {
+    aside {
+        display: none;
     }
 }

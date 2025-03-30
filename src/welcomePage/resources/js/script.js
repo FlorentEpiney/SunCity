@@ -1,3 +1,4 @@
+/*
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM loaded - checking for time span");
     
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // If no data in localStorage, fetch and calculate it now
         if (totalMinutes === 0) {
             // Use fetch to get the journal page
-            fetch('journal_de_bord.html')
+            fetch('logbook.html')
                 .then(response => response.text())
                 .then(html => {
                     // Create a temporary DOM element to parse the HTML
@@ -37,6 +38,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+*/
+
+document.addEventListener("DOMContentLoaded", function() {
+    let timeSpan = document.getElementById("total-time");
+    if (timeSpan) {
+        fetch('logbook.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                let totalMinutes = calculateTimeFromDocument(doc);
+                updateTimeDisplay(timeSpan, totalMinutes);
+            })
+            .catch(error => {
+                console.error('Error fetching journal page:', error);
+                updateTimeDisplay(timeSpan, 0);
+            });
+    }
+});
+
+
+
 
 function calculateTimeFromDocument(doc) {
     let totalMinutes = 0;
