@@ -47,31 +47,31 @@ var player2;
 var player;
 
 // Load the collision map data
-// fetch('gameData/collision_map.json')
-//     .then(response => response.json())
-//     .then(response => {
-//         var array = response;
-//         var array2D = [];
-//         for (var i = 0; i < 100; i++) {
-//             array2D[i] = [];
-//             for (var j = 0; j < 200; j++) {
-//                 array2D[i][j] = array[i * 200 + j];
-//             }
-//         }
-//         Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
-
-fetch('gameData/collision_map_test.json')
+fetch('gameData/collision_map.json')
     .then(response => response.json())
     .then(response => {
         var array = response;
         var array2D = [];
-        for(var i = 0 ; i < 10; i++){
+        for (var i = 0; i < 100; i++) {
             array2D[i] = [];
-            for(var j = 0 ; j < 10; j++){
-                array2D[i][j] = array[i * 10 + j];
+            for (var j = 0; j < 200; j++) {
+                array2D[i][j] = array[i * 200 + j];
             }
         }
-        Maps.current = Maps('field', 'ressources/images/map.png', array2D);
+        Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
+
+// fetch('gameData/collision_map_test.json')
+//     .then(response => response.json())
+//     .then(response => {
+//         var array = response;
+//         var array2D = [];
+//         for(var i = 0 ; i < 10; i++){
+//             array2D[i] = [];
+//             for(var j = 0 ; j < 10; j++){
+//                 array2D[i][j] = array[i * 10 + j];
+//             }
+//         }
+//         Maps.current = Maps('field', 'ressources/images/map.png', array2D);
 
         player1 = Player(50, 50); // Starting position for player1
         player2 = Player(150, 50); // Starting position for player2
@@ -244,32 +244,4 @@ startNewGame = function() {
     Enemy.randomlyGenerate();
     Enemy.randomlyGenerate();
     Enemy.randomlyGenerate();
-}
-
-Maps = function(id, imgSrc, grid) {
-    var self = {
-        id: id,
-        image: new Image(),
-        width: grid[0].length * TILE_SIZE,
-        height: grid.length * TILE_SIZE,
-        grid: grid,
-    }
-    self.image.src = imgSrc;
-
-    self.isPositionWall = function(pt) {
-        var gridX = Math.floor(pt.x / TILE_SIZE);
-        var gridY = Math.floor(pt.y / TILE_SIZE);
-        if (gridX < 0 || gridX >= self.grid[0].length)
-            return true;
-        if (gridY < 0 || gridY >= self.grid.length)
-            return true;
-        return self.grid[gridY][gridX];
-    }
-
-    self.draw = function(ctx, player) {
-        var x = WIDTH / 2 - player.x;
-        var y = HEIGHT / 2 - player.y;
-        ctx.drawImage(self.image, 0, 0, self.image.width, self.image.height, x, y, self.image.width * 2, self.image.height * 2);
-    }
-    return self;
 }

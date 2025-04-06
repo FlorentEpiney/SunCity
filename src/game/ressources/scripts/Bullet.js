@@ -1,0 +1,97 @@
+Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
+    var self = Entity('bullet', id, x, y, width, height, Img.bullet);
+    self.timer = 0;
+    self.combatType = combatType;
+    self.spdX = spdX;
+    self.spdY = spdY;
+    self.toRemove = false;
+
+    var super_update = self.update;
+    self.update = function(ctx, player) {
+        self.updatePosition();
+        super_update(ctx, player);
+        self.timer++;
+        if (self.timer > 75) // Increase this value to make bullets last longer
+            self.toRemove = true;
+
+        if (self.combatType === 'player') { // bullet was shot by player
+            for (var key2 in Enemy.list) {
+                if (self.testCollision(Enemy.list[key2])) {
+                    self.toRemove = true;
+                    Enemy.list[key2].hp -= 1;
+                }
+            }
+        } else if (self.combatType === 'enemy') {
+            if (self.testCollision(player)) {
+                self.toRemove = true;
+                player.hp -= 1;
+            }
+        }
+        if (Maps.current.isPositionWall(self)) {
+            self.toRemove = true;
+        }
+    };
+
+    self.updatePosition = function() {
+        self.x += self.spdX;
+        self.y += self.spdY;
+
+        if (self.x < 0 || self.x > Maps.current.width) {
+            self.spdX = -self.spdX;
+        }
+        if (self.y < 0 || self.y > Maps.current.height) {
+            self.spdY = -self.spdY;
+        }
+    };
+
+    self.draw = function(ctx, player) {
+        ctx.save();
+        var x = self.x - player.x + WIDTH / 2;
+        var y = self.y - player.y + HEIGHT / 2;
+
+        x -= self.width / 2;
+        y -= self.height / 2;
+
+        ctx.drawImage(self.img,
+            0, 0, self.img.width, self.img.height,
+            x, y, self.width, self.height
+        );
+
+        ctx.restore();
+    };
+
+    Bullet.list[id] = self;
+};
+
+Bullet.list = {};
+
+Bullet.update = function(ctx1, ctx2, player1, player2) {
+    for (var key in Bullet.list) {
+        var b = Bullet.list[key];
+        b.update(ctx1, player1);
+        b.update(ctx2, player2);
+        b.draw(ctx1, player1);
+        b.draw(ctx2, player2);
+
+        if (b.toRemove) {
+            delete Bullet.list[key];
+        }
+    }
+};
+
+Bullet.generate = function(actor, aimOverwrite) {
+    var x = actor.x;
+    var y = actor.y;
+    var height = 24;
+    var width = 24;
+    var id = Math.random();
+
+    var angle;
+    if (aimOverwrite !== undefined)
+        angle = aimOverwrite;
+    else angle = actor.aimAngle;
+
+    var spdX = Math.cos(angle / 180 * Math.PI) * 5;
+    var spdY = Math.sin(angle / 180 * Math.PI) * 5;
+    Bullet(id, x, y, spdX, spdY, width, height, actor.type);
+};
