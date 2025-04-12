@@ -1,4 +1,8 @@
-Player = function(startX, startY) {
+import { Img } from './Managers/ImagesManager.js';
+import EntityRenderer from './Managers/EntityRenderer.js';
+import Actor  from './Actor.js';
+
+export default function Player(startX, startY) {
     var self = Actor('player', 'myId', startX, startY, 50 * 1.5, 70 * 1.5, Img.player, 10, 1);
     self.maxMoveSpd = 10 * 5;
     self.pressingMouseLeft = false;
@@ -7,7 +11,7 @@ Player = function(startX, startY) {
     var super_update = self.update;
     self.update = function(ctx) {
         self.updatePosition();
-        super_update(ctx, player);
+        super_update(ctx, self);
         if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp)
             self.spriteAnimCounter += 0.2;
         if (self.pressingMouseLeft)

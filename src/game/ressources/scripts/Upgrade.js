@@ -1,5 +1,10 @@
 // Upgrade function
-Upgrade = function(id, x, y, width, height, category, img) {
+import Entity from './Entity.js';
+import Maps from './Maps.js';  // Import Maps from Maps.js
+import { Img } from './Managers/ImagesManager.js';  // Import Img properly
+
+
+export default function Upgrade (id, x, y, width, height, category, img) {
     var self = Entity('upgrade', id, x, y, width, height, img);
     self.category = category;
     self.timer = 0; // Add timer property

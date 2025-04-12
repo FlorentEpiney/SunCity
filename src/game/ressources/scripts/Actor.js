@@ -1,4 +1,10 @@
-Actor = function(type, id, x, y, width, height, img, hp, atkSpd) {
+// ressources/scripts/Actor.js
+import Entity from './Entity.js';
+import Maps from './Maps.js';
+import Bullet from './Bullet.js';
+
+
+export default function Actor(type, id, x, y, width, height, img, hp, atkSpd) {
     var self = Entity(type, id, x, y, width, height, img);
 
     self.hp = hp;
