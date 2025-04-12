@@ -1,4 +1,17 @@
-Entity = function(type, id, x, y, width, height, img) {
+// ressources/scripts/Entity.js
+import { Img } from './Managers/ImagesManager.js'; 
+
+const WIDTH = 500;  
+const HEIGHT = 500;
+
+function testCollisionRectRect(rect1, rect2) {
+    return rect1.x <= rect2.x + rect2.width &&
+        rect2.x <= rect1.x + rect1.width &&
+        rect1.y <= rect2.y + rect2.height &&
+        rect2.y <= rect1.y + rect1.height;
+}
+
+export default function Entity(type, id, x, y, width, height, img) {
     var self = {
         type: type,
         id: id,

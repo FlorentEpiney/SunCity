@@ -1,3 +1,20 @@
+import Maps from './Maps.js'; 
+import Player from './Player.js';
+import Enemy from './Enemy.js';
+import Bullet from './Bullet.js';
+import Upgrade from './Upgrade.js';
+
+// Define global variables that will be used by other modules
+window.WIDTH = 500;
+window.HEIGHT = 500;
+window.TILE_SIZE = 64 * 2;
+window.timeWhenGameStarted = Date.now();
+window.frameCount = 0;
+window.score = 0;
+window.paused = false;
+
+
+
 var canvas1 = document.getElementById("player1Canvas");
 var ctx1 = canvas1.getContext("2d");
 var canvas2 = document.getElementById("player2Canvas");
@@ -35,12 +52,13 @@ Img.upgrade1.src = 'ressources/images/upgrade1.png';
 Img.upgrade2 = new Image();
 Img.upgrade2.src = 'ressources/images/upgrade2.png';
 
-testCollisionRectRect = function(rect1, rect2) {
+function testCollisionRectRect(rect1, rect2) {
     return rect1.x <= rect2.x + rect2.width &&
         rect2.x <= rect1.x + rect1.width &&
         rect1.y <= rect2.y + rect2.height &&
         rect2.y <= rect1.y + rect1.height;
 }
+
 
 var player1;
 var player2;
@@ -188,7 +206,7 @@ document.onkeyup = function(event) {
         player2.pressingUp = false;
 }
 
-update = function() {
+function update() {
     if (paused) {
         ctx1.fillText('Paused', WIDTH / 2, HEIGHT / 2);
         ctx2.fillText('Paused', WIDTH / 2, HEIGHT / 2);
@@ -232,7 +250,7 @@ update = function() {
 
 }
 
-startNewGame = function() {
+function startNewGame() {
     player1.hp = 10;
     player2.hp = 10;
     timeWhenGameStarted = Date.now();

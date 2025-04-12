@@ -1,4 +1,9 @@
-Bullet = function(id, x, y, spdX, spdY, width, height, combatType) {
+import Entity from './Entity.js';
+import { Img } from './Managers/ImagesManager.js'; 
+import Maps from './Maps.js';
+import Enemy from './Enemy.js'; // Import Enemy to check for collisions
+
+export default function Bullet (id, x, y, spdX, spdY, width, height, combatType) {
     var self = Entity('bullet', id, x, y, width, height, Img.bullet);
     self.timer = 0;
     self.combatType = combatType;

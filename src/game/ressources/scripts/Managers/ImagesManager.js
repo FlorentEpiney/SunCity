@@ -1,0 +1,23 @@
+// ImagesManager.js
+
+/**
+ * ImagesManager.js
+ * This module manages the loading and storing of images used in the game.
+ * It creates an object containing all the images and their respective sources.
+ */
+export const Img = {
+    player: new Image(),
+    bat: new Image(),
+    bee: new Image(),
+    bullet: new Image(),
+    upgrade1: new Image(),
+    upgrade2: new Image(),
+};
+
+// Assigning image sources
+Img.player.src = "ressources/images/player.png";
+Img.bat.src = 'ressources/images/bat.png';
+Img.bee.src = 'ressources/images/bee.png';
+Img.bullet.src = 'ressources/images/bullet.png';
+Img.upgrade1.src = 'ressources/images/upgrade1.png';
+Img.upgrade2.src = 'ressources/images/upgrade2.png';

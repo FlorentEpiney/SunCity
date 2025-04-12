@@ -1,4 +1,7 @@
-Maps = function(id, imgSrc, grid) {
+export default function Maps (id, imgSrc, grid) {
+    const TILE_SIZE = 128; // set your tile size here
+
+
     var self = {
         id: id,
         image: new Image(),
