@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SUN CITY</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .background {
+      background-image: url("suncity.jpg");
+      background-size: 80%;
+      background-position: center;
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      filter: blur(8px);
+      z-index: -1;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    .popup-overlay, .denied-page {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .popup-box {
+      background: #f4f4f4;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    .popup-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .popup-box button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #ff5722;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .denied-page {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .denied-box {
+      background: #ddd;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .denied-box h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .denied-box p {
+      font-size: 18px;
+      color: #222;
+    }
+
+    .game-content {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+  <div class="overlay"></div>
+
+  <div id="agePopup" class="popup-overlay">
+    <div class="popup-box">
+      <h2>⚠️ WARNING – RESTRICTED CONTENT</h2>
+      <p><strong>SunCity</strong> is a violent game. It contains:</p>
+      <ul style="text-align: left;">
+        <li>✅ Explicit violence</li>
+        <li>✅ Strong language</li>
+        <li>✅ Criminal behavior</li>
+        <li>✅ Adult themes</li>
+      </ul>
+      <p><strong>FORBIDDEN for players under 18</strong></p>
+      <button id="enterBtn">I am 18 or older - Enter</button>
+      <button id="exitBtn">I am under 18 - Exit</button>
+    </div>
+  </div>
+
+  <div id="deniedPage" class="denied-page">
+    <div class="denied-box">
+      <h1>SUN CITY</h1>
+      <p>This game is only intended for players over the age of 18</p>
+    </div>
+  </div>
+
+  <div id="gameContent" class="game-content">
+    <h1>🎮 Welcome to Sun City</h1>
+    <p>The game starts here...</p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const enterBtn = document.getElementById("enterBtn");
+      const exitBtn = document.getElementById("exitBtn");
+      const popup = document.getElementById("agePopup");
+      const gameContent = document.getElementById("gameContent");
+      const deniedPage = document.getElementById("deniedPage");
+
+      enterBtn.addEventListener("click", function () {
+        popup.style.display = "none";
+        gameContent.style.display = "block";
+      });
+
+      exitBtn.addEventListener("click", function () {
+        popup.style.display = "none";
+        deniedPage.style.display = "flex";
+      });
+    });
+  </script>
+
+</body>
+</html>
