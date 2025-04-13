@@ -3,7 +3,7 @@ import EntityRenderer from './Managers/EntityRenderer.js';
 import Actor  from './Actor.js';
 
 export default function Player(startX, startY, name, img) {
-    var self = Actor('player', 'myId', startX, startY, 50 * 1.5, 70 * 1.5, img, 10, 1);
+    var self = Actor('player', 'myId', startX, startY, 50 * 1.5, 70 * 1.5, img, 10, 1, name);
     self.maxMoveSpd = 10 * 5;
     self.pressingMouseLeft = false;
     self.pressingMouseRight = false;
