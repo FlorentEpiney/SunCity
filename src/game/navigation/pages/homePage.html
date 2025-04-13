@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SUN City</title>
     <link rel="stylesheet" href="../css/start-screen.css" >
+    <link rel="stylesheet" href="../css/deniedAccess.css" />
+
 </head>
 <body>
+<div id="agePopup" class="popup-overlay">
+    <div class="popup-box">
+        <h2>⚠️ WARNING – RESTRICTED CONTENT</h2>
+        <p><strong>SunCity</strong> contains:</p>
+        <ul style="text-align: left;">
+            <li>✅ Explicit violence</li>
+            <li>✅ Strong language</li>
+            <li>✅ Criminal behavior</li>
+            <li>✅ Adult themes</li>
+        </ul>
+        <p><strong>FORBIDDEN for players under 18</strong></p>
+        <button id="enterBtn">I am 18 or older - Enter</button>
+        <button id="exitBtn">I am under 18 - Exit</button>
+    </div>
+</div>
     <audio id="background-music" src="../../ressources/sounds/boneyM_Sunny.mp3" autoplay loop></audio>
     <div class="screen" id="startScreen">
         <img src="../images/suncity.jpg" alt="SUN City" class="background-image">
@@ -25,7 +42,7 @@
     </div>
     <script>
         function openExitpage() {
-            window.location.href = 'exit.html';
+            window.location.href = 'deniedAccess.html';
         }
         function openGamePage() {
             window.location.href = 'select-players.html';
@@ -34,5 +51,27 @@
             window.location.href = 'leaderboard.html';
         }
     </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const popup = document.getElementById("agePopup");
+        const enterBtn = document.getElementById("enterBtn");
+        const exitBtn = document.getElementById("exitBtn");
+        const screen = document.getElementById("startScreen");
+
+        // Floute l'écran tant que le popup est affiché
+        screen.classList.add("blur");
+
+        enterBtn.addEventListener("click", function () {
+            popup.style.display = "none";
+            screen.classList.remove("blur");
+        });
+
+        exitBtn.addEventListener("click", function () {
+            window.location.href = 'deniedAccess.html';
+        });
+    });
+
+
+</script>
 </body>
 </html>
