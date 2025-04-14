@@ -8,28 +8,97 @@
 </head>
 <body>
     <div class="screen character-selection" id="characterSelection">
-        <h1 id="selectionTitle">Player 1: Choose Your Character</h1>
+        <h1 id="selectionTitle">Player 1: Drag your avatar to the box below</h1>
         <div class="characters">
-            <div class="character" onclick="selectCharacter(this, 'Player 1', '../images/julio.jpg')">
+            <div class="character" draggable="true" ondragstart="drag(event)" data-img="../images/julio.jpg">
                 <img src="../images/julio.jpg" alt="Player 1">
             </div>
-            <div class="character" onclick="selectCharacter(this, 'Player 2', '../images/florent.jpg')">
+            <div class="character" draggable="true" ondragstart="drag(event)" data-img="../images/florent.jpg">
                 <img src="../images/florent.jpg" alt="Player 2">
             </div>
         </div>
+        <div class="drop-box" id="playerDropBox" ondrop="drop(event)" ondragover="allowDrop(event)">
+            Drop your character here
+        </div>
         <button onclick="continueToNextStep()">CONTINUE</button>
     </div>
-    <!-- Récapitulatif des choix -->
+
+    <!-- recap summary -->
     <div class="screen recap" id="recapScreen">
         <h1>Players Ready!</h1>
-        <p><strong>Player 1:</strong> <img id="recapP1" width="100"></p>
-        <p><strong>Player 2:</strong> <img id="recapP2" width="100"></p>
+
+        <div class="player-recap">
+            <div class="avatar-wrapper">
+                <img id="recapP1">
+            </div>
+            <div class="player-info">
+                <h2>Player 1</h2>
+                <div class="location-box">
+                    <p id="location1Display">📍 Detecting location...</p>
+                    <button onclick="toggleLocationInput('1')">Change Location</button>
+                    <div class="manualInput" id="manualInput1">
+                        <input type="text" id="manualCity1" placeholder="City">
+                        <input type="text" id="manualCountry1" placeholder="Country">
+                        <button onclick="setManualLocation('1')">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="player-recap">
+            <div class="avatar-wrapper">
+                <img id="recapP2">
+            </div>
+            <div class="player-info">
+                <h2>Player 2</h2>
+                <div class="location-box">
+                    <p id="location2Display">📍 Detecting location...</p>
+                    <button onclick="toggleLocationInput('2')">Change Location</button>
+                    <div class="manualInput" id="manualInput2">
+                        <input type="text" id="manualCity2" placeholder="City">
+                        <input type="text" id="manualCountry2" placeholder="Country">
+                        <button onclick="setManualLocation('2')">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <button onclick="startCountdown()">CONTINUE</button>
     </div>
+
 
     <script>
         let step = 1;
         let selectedPlayers = { player1: null, player2: null };
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            const img = ev.target.tagName === "IMG" ? ev.target : ev.target.querySelector("img");
+            ev.dataTransfer.setData("text/plain", img.src);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const imgSrc = ev.dataTransfer.getData("text/plain");
+
+            const dropBox = document.getElementById("playerDropBox");
+            dropBox.innerHTML = "";
+            const img = document.createElement("img");
+            img.src = imgSrc;
+            img.alt = step === 1 ? "Player 1" : "Player 2";
+            dropBox.appendChild(img);
+
+            if (step === 1) {
+                selectedPlayers.player1 = imgSrc;
+            } else {
+                selectedPlayers.player2 = imgSrc;
+            }
+        }
+
+        /*
         document.getElementById("characterSelection").style.display = "flex";
 
         function selectCharacter(element, player, imgSrc) {
@@ -43,7 +112,8 @@
                 selectedPlayers.player2 = imgSrc;
             }
         }
-
+        */
+        
         function continueToNextStep() {
             if (step === 1 && selectedPlayers.player1 === null) {
                 alert("Player 1 must choose a character!");
@@ -56,7 +126,8 @@
 
             if (step === 1) {
                 step++;
-                document.getElementById("selectionTitle").innerText = "Player 2: Choose Your Character";
+                document.getElementById("selectionTitle").innerText = "Player 2: Drag your avatar to the box below";
+                document.getElementById("playerDropBox").innerHTML = "Drop your character here";
             } else {
                 document.getElementById("characterSelection").classList.add("hide");
                 setTimeout(() => {
@@ -70,10 +141,86 @@
             document.getElementById("recapP1").src = selectedPlayers.player1;
             document.getElementById("recapP2").src = selectedPlayers.player2;
             document.getElementById("recapScreen").style.display = "flex";
+
+            // fetch locations with api
+            fetchLocationForPlayer("1");
+            fetchLocationForPlayer("2");
         }
 
         function startCountdown() {
             window.location.href = 'countdown.html';
+        }
+
+        document.getElementById("characterSelection").style.display = "flex";
+
+        const manualLocations = { "1": null, "2": null };
+
+        function fetchLocationForPlayer(playerId) {
+            const displayDiv = document.getElementById(`location${playerId}Display`);
+
+            if (!navigator.geolocation) {
+                displayDiv.textContent = "❌ Geolocation not supported";
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(success, error);
+
+            function success(pos) {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+
+                // 🚨 This fetches location from your backend (NOT directly from OpenCage)
+                fetch(`/api/location?lat=${lat}&lon=${lon}&player=${playerId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (manualLocations[playerId]) return;
+
+                        if (data && data.city && data.country) {
+                            displayDiv.innerHTML = `📍 ${data.city}, ${data.country}`;
+                        } else {
+                            displayDiv.textContent = "❌ Location not found";
+                        }
+                    }).catch(() => {
+                        displayDiv.textContent = "❌ Location fetch error";
+                    });
+            }
+
+            function error() {
+                displayDiv.textContent = "❌ Permission denied or unavailable";
+            }
+        }
+
+        // toggle manual field to enable both players to manually enter their location
+        function toggleLocationInput(playerId) {
+            const container = document.getElementById(`manualInput${playerId}`);
+            const changeButton = document.querySelector(`#manualInput${playerId}`).previousElementSibling;
+
+            const isVisible = container.style.display === "block";
+            container.style.display = isVisible ? "none" : "block";
+
+            // hide "Change Location" button while editing
+            changeButton.style.display = isVisible ? "inline-block" : "none";
+        }
+
+        function setManualLocation(playerId) {
+            const city = document.getElementById(`manualCity${playerId}`).value.trim();
+            const country = document.getElementById(`manualCountry${playerId}`).value.trim();
+            const displayDiv = document.getElementById(`location${playerId}Display`);
+
+            if (city && country) {
+                manualLocations[playerId] = { city, country };
+                displayDiv.innerHTML = `
+                    📍 ${city}, ${country}<br>
+                    ✏️ <em>Manually entered</em>
+                `;
+                document.getElementById(`manualInput${playerId}`).style.display = "none";
+
+                // show the button again
+                const changeButton = displayDiv.parentElement.querySelector("button");
+                changeButton.style.display = "inline-block";
+            } else {
+                alert("Please enter both city and country.");
+            }
         }
     </script>
 </body>

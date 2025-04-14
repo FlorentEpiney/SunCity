@@ -198,3 +198,119 @@ button:hover {
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* player selection */
+.drop-box {
+    width: 200px;
+    height: 220px;
+    border: 3px dashed white;
+    color: white;
+    font-size: 18px;
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.drop-box img {
+    width: 150px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.player-recap {
+    display: flex;
+    align-items: flex-start; /* Change from center to top-align */
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 30px;
+    position: relative;
+}
+
+  
+  .player-recap img {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid white;
+  }
+  
+  .player-info h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: white;
+  }
+  
+  .location-box {
+    background-color: #222;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    width: 250px;     /* change from max-width to fixed width */
+    box-sizing: border-box;
+}
+
+  
+  .location-box p {
+    margin: 0 0 10px;
+  }
+    
+  .manualInput {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 10px;
+    align-items: stretch;
+    width: 100%;
+}
+
+.manualInput input {
+    padding: 6px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* spacing only between City and Country */
+.manualInput input:first-of-type {
+    margin-bottom: 8px;
+}
+
+.manualInput button {
+    padding: 8px 20px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.player-recap {
+    display: flex;
+    align-items: flex-end; /* aligns bottom */
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+
+
+  
