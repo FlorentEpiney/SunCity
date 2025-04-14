@@ -70,6 +70,36 @@
 
 
     <script>
+        // static country map code
+        const countryCodeMap = {
+            "Switzerland": "CH",
+            "Germany": "DE",
+            "France": "FR",
+            "Italy": "IT",
+            "Spain": "ES",
+            "Austria": "AT",
+            "United Kingdom": "GB",
+            "United States": "US",
+            "Netherlands": "NL",
+            "Belgium": "BE",
+            "Portugal": "PT",
+            "Poland": "PL",
+            "Czech Republic": "CZ",
+            "Hungary": "HU",
+            "Denmark": "DK",
+            "Sweden": "SE",
+            "Norway": "NO",
+            "Finland": "FI",
+            "Ireland": "IE"
+        };
+
+        // function to get country code from country name
+        function toCountryCodeEmoji(code) {
+            return code.toUpperCase()
+                .replace(/./g, char =>
+                    String.fromCodePoint(127397 + char.charCodeAt()));
+        }
+
         let step = 1;
         let selectedPlayers = { player1: null, player2: null };
         let playerNames = { player1: "Player 1", player2: "Player 2" };
@@ -187,7 +217,9 @@
                         if (manualLocations[playerId]) return;
 
                         if (data && data.city && data.country) {
-                            displayDiv.innerHTML = `📍 ${data.city}, ${data.country}`;
+                            const code = countryCodeMap[data.country] || null;
+                            const countryCodeEmoji = code ? toCountryCodeEmoji(code) : "📍";
+                            displayDiv.innerHTML = `${countryCodeEmoji} ${data.city}, ${data.country}`;
                         } else {
                             displayDiv.textContent = "❌ Location not found";
                         }
@@ -220,10 +252,11 @@
 
             if (city && country) {
                 manualLocations[playerId] = { city, country };
-                displayDiv.innerHTML = `
-                    📍 ${city}, ${country}<br>
-                    ✏️ <em>Manually entered</em>
-                `;
+
+                const code = countryCodeMap[country] || null;
+                const countryCodeEmoji = code ? toCountryCodeEmoji(code) : "📍";
+                displayDiv.innerHTML = `${countryCodeEmoji} ${city}, ${country}<br>✏️ <em>Manually entered</em>`;
+                
                 document.getElementById(`manualInput${playerId}`).style.display = "none";
 
                 // show the button again
