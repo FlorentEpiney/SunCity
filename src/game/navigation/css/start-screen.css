@@ -311,6 +311,17 @@ button:hover {
     height: 100%;
 }
 
+.player-name-input {
+    margin-top: 15px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    width: 200px; /* match .drop-box width */
+    box-sizing: border-box;
+    text-align: center;
+}
+
 
 
   

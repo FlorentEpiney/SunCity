@@ -20,6 +20,8 @@
         <div class="drop-box" id="playerDropBox" ondrop="drop(event)" ondragover="allowDrop(event)">
             Drop your character here
         </div>
+        <!-- player name input -->
+        <input type="text" id="playerNameInput" class="player-name-input" placeholder="Enter your name">
         <button onclick="continueToNextStep()">CONTINUE</button>
     </div>
 
@@ -32,7 +34,7 @@
                 <img id="recapP1">
             </div>
             <div class="player-info">
-                <h2>Player 1</h2>
+                <h2 id="recapName1">Player 1</h2>
                 <div class="location-box">
                     <p id="location1Display">📍 Detecting location...</p>
                     <button onclick="toggleLocationInput('1')">Change Location</button>
@@ -50,7 +52,7 @@
                 <img id="recapP2">
             </div>
             <div class="player-info">
-                <h2>Player 2</h2>
+                <h2 id="recapName2">Player 2</h2>
                 <div class="location-box">
                     <p id="location2Display">📍 Detecting location...</p>
                     <button onclick="toggleLocationInput('2')">Change Location</button>
@@ -70,6 +72,7 @@
     <script>
         let step = 1;
         let selectedPlayers = { player1: null, player2: null };
+        let playerNames = { player1: "Player 1", player2: "Player 2" };
 
         function allowDrop(ev) {
             ev.preventDefault();
@@ -115,6 +118,8 @@
         */
         
         function continueToNextStep() {
+            const nameInput = document.getElementById("playerNameInput").value.trim();
+
             if (step === 1 && selectedPlayers.player1 === null) {
                 alert("Player 1 must choose a character!");
                 return;
@@ -125,10 +130,13 @@
             }
 
             if (step === 1) {
+                if (nameInput) playerNames.player1 = nameInput;
                 step++;
                 document.getElementById("selectionTitle").innerText = "Player 2: Drag your avatar to the box below";
                 document.getElementById("playerDropBox").innerHTML = "Drop your character here";
+                document.getElementById("playerNameInput").value = "";
             } else {
+                if (nameInput) playerNames.player2 = nameInput;
                 document.getElementById("characterSelection").classList.add("hide");
                 setTimeout(() => {
                     document.getElementById("characterSelection").style.display = "none";
@@ -137,9 +145,12 @@
             }
         }
 
+
         function showRecapScreen() {
             document.getElementById("recapP1").src = selectedPlayers.player1;
             document.getElementById("recapP2").src = selectedPlayers.player2;
+            document.getElementById("recapName1").innerText = playerNames.player1;
+            document.getElementById("recapName2").innerText = playerNames.player2;
             document.getElementById("recapScreen").style.display = "flex";
 
             // fetch locations with api
