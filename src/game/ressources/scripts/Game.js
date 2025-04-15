@@ -36,7 +36,8 @@ var WIDTH = 500;
 var HEIGHT = 500;
 var timeWhenGameStarted = Date.now();
 var frameCount = 0;
-var score = 0;
+var scorePlayer1 = 0;
+var scorePlayer2 = 0;
 var paused = false;
 
 function testCollisionRectRect(rect1, rect2) {
@@ -93,51 +94,6 @@ fetch('../../gameData/collision_map.json')
     .catch(error => {
         console.error('Error loading collision map:', error);
     });
-
-
-document.onmousedown = function(mouse) {
-    if (mouse.which === 1) {
-        player1.pressingMouseLeft = true;
-        player2.pressingMouseLeft = true;
-    } else {
-        player1.pressingMouseRight = true;
-        player2.pressingMouseRight = true;
-    }
-}
-document.onmouseup = function(mouse) {
-    if (mouse.which === 1) {
-        player1.pressingMouseLeft = false;
-        player2.pressingMouseLeft = false;
-    } else {
-        player1.pressingMouseRight = false;
-        player2.pressingMouseRight = false;
-    }
-}
-document.oncontextmenu = function(mouse) {
-    mouse.preventDefault();
-}
-
-// document.onmousemove = function(mouse) {  // Mouse movement aiming
-//     if (player1) {
-//         var mouseX = mouse.clientX - document.getElementById('player1Canvas').getBoundingClientRect().left;
-//         var mouseY = mouse.clientY - document.getElementById('player1Canvas').getBoundingClientRect().top;
-//
-//         mouseX -= WIDTH / 2;
-//         mouseY -= HEIGHT / 2;
-//
-//         player1.aimAngle = Math.atan2(mouseY, mouseX) / Math.PI * 180;
-//     }
-//     if(player2){
-//         mouseX = mouse.clientX - document.getElementById('player2Canvas').getBoundingClientRect().left;
-//         mouseY = mouse.clientY - document.getElementById('player2Canvas').getBoundingClientRect().top;
-//
-//         mouseX -= WIDTH / 2;
-//         mouseY -= HEIGHT / 2;
-//
-//         player2.aimAngle = Math.atan2(mouseY, mouseX) / Math.PI * 180;
-//     }
-//
-// }
 
  document.onkeydown = function(event) {
      if (event.keyCode === 68) { //d
@@ -218,8 +174,8 @@ function update() {
     let p2_y_relative_to_p1 = player2.y - player1.y;
     player2.drawAt(ctx1, p2_x_relative_to_p1, p2_y_relative_to_p1);
 
-    ctx1.fillText(player1.hp + " Hp", 0, 30);
-    ctx1.fillText('Score: ' + score, 200, 30);
+    localStorage.setItem('hpPlayer1',player1.hp);
+    localStorage.setItem('scorePlayer1',scorePlayer1);
 
     // Draw the map and players on canvas 2 (Player 2's perspective)
     Maps.current.draw(ctx2, player2);
@@ -229,11 +185,13 @@ function update() {
     let p1_y_relative_to_p2 = player1.y - player2.y;
     player1.drawAt(ctx2, p1_x_relative_to_p2, p1_y_relative_to_p2);
 
-    ctx2.fillText(player2.hp + " Hp", 0, 30);
-    ctx2.fillText('Score: ' + score, 200, 30);
+
+    localStorage.setItem('hpPlayer2',player2.hp);
+    localStorage.setItem('scorePlayer2',scorePlayer2);
 
     frameCount++;
-    score++;
+    scorePlayer1++;
+    scorePlayer2++;
 
     Bullet.update(ctx1, ctx2, player1, player2);
     Upgrade.update(ctx1, player1);
@@ -247,7 +205,8 @@ function startNewGame() {
     player2.hp = 10;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
-    score = 0;
+    scorePlayer1 = 0;
+    scorePlayer2 = 0;
     Enemy.list = {};
     Upgrade.list = {};
     Bullet.list = {};

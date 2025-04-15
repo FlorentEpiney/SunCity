@@ -5,8 +5,14 @@
     </head>
     <body>
         <audio id="background-music" src="../../ressources/sounds/chrisRea_Josephine.mp3" autoplay loop></audio>
-        <canvas id="player1Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
-        <canvas id="player2Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+        <div style="display: flex;">
+            <div id="textarea-player1" style="width: 200px; height: 500px; resize: none; border: 1px solid #ccc; padding: 4px; font-family: monospace; white-space: pre-wrap;">
+            </div>
+            <canvas id="player1Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+            <div id="textarea-player2" style="width: 200px; height: 500px; resize: none; border: 1px solid #ccc; padding: 4px; font-family: monospace; white-space: pre-wrap;">
+            </div>
+            <canvas id="player2Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+        </div>
         <br/>
         <br/>
         <button onclick="document.getElementById('background-music').play()">
@@ -17,4 +23,29 @@
         </button>
     </body>
     <script type="module" src="../../ressources/scripts/Game.js"></script>
+
+    <script type="module" src="ressources/scripts/Game.js"></script>
+    <script>
+     setInterval(() => {
+         // Player 1
+         let hpPlayer1 = localStorage.getItem("hpPlayer1");
+         let scorePlayer1 = localStorage.getItem("scorePlayer1");
+         document.getElementById("textarea-player1").innerHTML = `<b>HP: </b> ${hpPlayer1}
+            <br><b>Score: </b> ${scorePlayer1}
+            <br>
+            <b>Keyboard</b>
+            <br>w: up<br>s: down<br>a: left<br>d: right<br>q: shoot<br>e: special shoot<br>`;
+
+         // Player 2
+         let hpPlayer2 = localStorage.getItem("hpPlayer2");
+         let scorePlayer2 = localStorage.getItem("scorePlayer2");
+         document.getElementById("textarea-player2").innerHTML = `<b>HP: </b> ${hpPlayer2}
+        <br><b>Score: </b> ${scorePlayer2}
+         <br>
+             <b>Keyboard</b>
+             <br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot<br>`;
+     }, 10);
+    </script>
+
+
 </html>
