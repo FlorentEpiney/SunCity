@@ -210,7 +210,7 @@
                 const lat = pos.coords.latitude;
                 const lon = pos.coords.longitude;
 
-                // 🚨 This fetches location from your backend (NOT directly from OpenCage)
+                // fetch location from backend
                 fetch(`/api/location?lat=${lat}&lon=${lon}&player=${playerId}`)
                     .then(res => res.json())
                     .then(data => {
