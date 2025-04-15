@@ -4,7 +4,7 @@ import { Img } from './Managers/ImagesManager.js';
 import Actor from './Actor.js';
 
 export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
-    var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd);
+    var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd,'');
 
     self.directionChangeTimer = 0;
     self.spriteAnimCounter = 0;

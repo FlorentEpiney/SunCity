@@ -3,6 +3,7 @@ import Player from './Player.js';
 import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import Upgrade from './Upgrade.js';
+import { Img } from './Managers/ImagesManager.js';
 
 // Define global variables that will be used by other modules
 window.WIDTH = 500;
@@ -38,20 +39,6 @@ var frameCount = 0;
 var score = 0;
 var paused = false;
 
-var Img = {};
-Img.player = new Image();
-Img.player.src = "ressources/images/player.png";
-Img.bat = new Image();
-Img.bat.src = 'ressources/images/bat.png';
-Img.bee = new Image();
-Img.bee.src = 'ressources/images/bee.png';
-Img.bullet = new Image();
-Img.bullet.src = 'ressources/images/bullet.png';
-Img.upgrade1 = new Image();
-Img.upgrade1.src = 'ressources/images/upgrade1.png';
-Img.upgrade2 = new Image();
-Img.upgrade2.src = 'ressources/images/upgrade2.png';
-
 function testCollisionRectRect(rect1, rect2) {
     return rect1.x <= rect2.x + rect2.width &&
         rect2.x <= rect1.x + rect1.width &&
@@ -65,7 +52,7 @@ var player2;
 var player;
 
 // Load the collision map data
-fetch('gameData/collision_map.json')
+fetch('../../gameData/collision_map.json')
     .then(response => response.json())
     .then(response => {
         var array = response;
@@ -76,7 +63,7 @@ fetch('gameData/collision_map.json')
                 array2D[i][j] = array[i * 200 + j];
             }
         }
-        Maps.current = Maps('field', 'ressources/images/suncity_map.png', array2D);
+        Maps.current = Maps('field', '../../ressources/images/suncity_map.png', array2D);
 
 // fetch('gameData/collision_map_test.json')
 //     .then(response => response.json())
@@ -91,8 +78,13 @@ fetch('gameData/collision_map.json')
 //         }
 //         Maps.current = Maps('field', 'ressources/images/map.png', array2D);
 
-        player1 = Player(50, 50); // Starting position for player1
-        player2 = Player(150, 50); // Starting position for player2
+        // Initialize players
+        let player1Name = localStorage.getItem("player1Name");
+        let player1Img = Img.player[localStorage.getItem("player1Img")];
+        let player2Name =  localStorage.getItem("player2Name");
+        let player2Img =  Img.player[localStorage.getItem("player2Img")];
+        player1 = Player(50, 50, player1Name, player1Img); // Starting position for player1
+        player2 = Player(150, 50, player2Name, player2Img); // Starting position for player2
         player = player1;
         startNewGame();
 
