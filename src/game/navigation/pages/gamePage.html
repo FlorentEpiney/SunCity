@@ -4,7 +4,7 @@
         <h1>Try to survive</h1>
     </head>
     <body>
-        <audio id="background-music" src="ressources/sounds/chrisRea_Josephine.mp3" autoplay loop></audio>
+        <audio id="background-music" src="../../ressources/sounds/chrisRea_Josephine.mp3" autoplay loop></audio>
         <div style="display: flex;">
             <div id="textarea-player1" style="width: 200px; height: 500px; resize: none; border: 1px solid #ccc; padding: 4px; font-family: monospace; white-space: pre-wrap;">
             </div>
@@ -16,13 +16,14 @@
         <br/>
         <br/>
         <button onclick="document.getElementById('background-music').play()">
-            <img src="ressources/images/volume.png" style="width: 20px; height: 20px;"/>
+            <img src="../../ressources/images/volume.png" style="width: 20px; height: 20px;"/>
         </button>
         <button onclick="document.getElementById('background-music').pause()">
-            <img src="ressources/images/volume_off.png" style="width: 20px; height: 20px;"/>
+            <img src="../../ressources/images/volume_off.png" style="width: 20px; height: 20px;"/>
         </button>
     </body>
-    
+    <script type="module" src="../../ressources/scripts/Game.js"></script>
+
     <script type="module" src="ressources/scripts/Game.js"></script>
     <script>
      setInterval(() => {
@@ -46,5 +47,5 @@
      }, 10);
     </script>
 
-    
+
 </html>

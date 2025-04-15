@@ -29,7 +29,7 @@
 
     <script>
         let step = 1;
-        let selectedPlayers = { player1: null, player2: null };
+        let selectedPlayers = {player1: null, player2: null};
         document.getElementById("characterSelection").style.display = "flex";
 
         function selectCharacter(element, player, imgSrc) {
@@ -75,6 +75,12 @@
         function startCountdown() {
             window.location.href = 'countdown.html';
         }
+    </script>
+    <script>
+        localStorage.setItem("player1Name", "Alice");
+        localStorage.setItem("player2Name", "Bob");
+        localStorage.setItem("player1Img", "0");
+        localStorage.setItem("player2Img", "1");
     </script>
 </body>
 </html>
