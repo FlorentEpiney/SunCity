@@ -70,27 +70,31 @@
 
 
     <script>
-        // static country map code
+        // static country map code (multiple languages)
         const countryCodeMap = {
             "Switzerland": "CH",
+            "Schweiz": "CH",
+            "Suisse": "CH",
             "Germany": "DE",
+            "Deutschland": "DE",
+            "Allemagne": "DE",
             "France": "FR",
-            "Italy": "IT",
-            "Spain": "ES",
+            "Frankreich": "FR",
             "Austria": "AT",
+            "Österreich": "AT",
+            "Austriche": "AT",
+            "Italy": "IT",
+            "Italien": "IT",
+            "Italie": "IT",
+            "Spain": "ES",
+            "Spanien": "ES",
+            "Espagne": "ES",
             "United Kingdom": "GB",
+            "Vereinigtes Königreich": "GB",
+            "Royaume-Uni": "GB",
             "United States": "US",
-            "Netherlands": "NL",
-            "Belgium": "BE",
-            "Portugal": "PT",
-            "Poland": "PL",
-            "Czech Republic": "CZ",
-            "Hungary": "HU",
-            "Denmark": "DK",
-            "Sweden": "SE",
-            "Norway": "NO",
-            "Finland": "FI",
-            "Ireland": "IE"
+            "Vereinigte Staaten": "US",
+            "États-Unis": "US",
         };
 
         // function to get country code from country name
@@ -103,6 +107,17 @@
         let step = 1;
         let selectedPlayers = { player1: null, player2: null };
         let playerNames = { player1: "Player 1", player2: "Player 2" };
+        const manualLocations = { "1": null, "2": null };
+        let apiConfig = null;
+
+        async function loadApiConfig() {
+        try {
+            const response = await fetch('../../configuration/apiConfig.json');
+            apiConfig = await response.json();
+        } catch (error) {
+            console.error("Could not load API config:", error);
+        }
+    }
 
         function allowDrop(ev) {
             ev.preventDefault();
@@ -194,44 +209,59 @@
 
         document.getElementById("characterSelection").style.display = "flex";
 
-        const manualLocations = { "1": null, "2": null };
+        async function fetchLocationForPlayer(playerId) {
+        const displayDiv = document.getElementById(`location${playerId}Display`);
 
-        function fetchLocationForPlayer(playerId) {
-            const displayDiv = document.getElementById(`location${playerId}Display`);
+        if (!navigator.geolocation) {
+            displayDiv.textContent = "❌ Geolocation not supported";
+            return;
+        }
 
-            if (!navigator.geolocation) {
-                displayDiv.textContent = "❌ Geolocation not supported";
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+
+            // LOAD CONFIG FIRST
+            if (!apiConfig) {
+                await loadApiConfig();
+            }
+
+            if (!apiConfig || !apiConfig.apiUrl || !apiConfig.apiKey) {
+                displayDiv.textContent = "❌ API config missing";
                 return;
             }
 
-            navigator.geolocation.getCurrentPosition(success, error);
+            // FETCH using OpenCage API logic
+            try {
+                const res = await fetch(`${apiConfig.apiUrl}?q=${lat}+${lon}&key=${apiConfig.apiKey}`);
+                const data = await res.json();
 
-            function success(pos) {
-                const lat = pos.coords.latitude;
-                const lon = pos.coords.longitude;
+                if (manualLocations[playerId]) return;
 
-                // fetch location from backend
-                fetch(`/api/location?lat=${lat}&lon=${lon}&player=${playerId}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (manualLocations[playerId]) return;
+                const result = data.results && data.results[0];
+                if (result) {
+                    const components = result.components;
+                    const city = components.city || components.town || components.village || components.county;
+                    const country = components.country;
 
-                        if (data && data.city && data.country) {
-                            const code = countryCodeMap[data.country] || null;
-                            const countryCodeEmoji = code ? toCountryCodeEmoji(code) : "📍";
-                            displayDiv.innerHTML = `${countryCodeEmoji} ${data.city}, ${data.country}`;
-                        } else {
-                            displayDiv.textContent = "❌ Location not found";
-                        }
-                    }).catch(() => {
-                        displayDiv.textContent = "❌ Location fetch error";
-                    });
+                    if (city && country) {
+                        const code = countryCodeMap[country] || null;
+                        const emoji = code ? toCountryCodeEmoji(code) : "📍";
+                        displayDiv.innerHTML = `${emoji} ${city}, ${country}`;
+                    } else {
+                        displayDiv.textContent = "❌ Location data incomplete";
+                    }
+                } else {
+                    displayDiv.textContent = "❌ No results from API";
+                }
+            } catch (err) {
+                displayDiv.textContent = "❌ Location fetch error";
+                console.error("API error:", err);
             }
-
-            function error() {
-                displayDiv.textContent = "❌ Permission denied or unavailable";
-            }
-        }
+        }, () => {
+            displayDiv.textContent = "❌ Permission denied or unavailable";
+        });
+    }
 
         // toggle manual field to enable both players to manually enter their location
         function toggleLocationInput(playerId) {
