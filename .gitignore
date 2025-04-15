@@ -1,2 +1,2 @@
 # Ignore the config file with sensitive data
-game/configuration/apiConfig.json
+src/game/configuration/apiConfig.json
