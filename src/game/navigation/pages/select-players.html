@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/start-screen.css">
 </head>
 <body>
+    <!-- Character Selection Screen -->
     <div class="screen character-selection" id="characterSelection">
         <h1 id="selectionTitle">Player 1: Drag your avatar to the box below</h1>
         <div class="characters">
@@ -20,12 +21,11 @@
         <div class="drop-box" id="playerDropBox" ondrop="drop(event)" ondragover="allowDrop(event)">
             Drop your character here
         </div>
-        <!-- player name input -->
         <input type="text" id="playerNameInput" class="player-name-input" placeholder="Enter your name">
         <button onclick="continueToNextStep()">CONTINUE</button>
     </div>
 
-    <!-- recap summary -->
+    <!-- Recap Screen -->
     <div class="screen recap" id="recapScreen">
         <h1>Players Ready!</h1>
 
@@ -68,9 +68,10 @@
         <button onclick="startCountdown()">CONTINUE</button>
     </div>
 
-
     <script>
-        // static country map code (multiple languages)
+        /*
+            Configuration and state 
+        */
         const countryCodeMap = {
             "Switzerland": "CH",
             "Schweiz": "CH",
@@ -96,84 +97,77 @@
             "Vereinigte Staaten": "US",
             "États-Unis": "US",
         };
-
-        // function to get country code from country name
-        function toCountryCodeEmoji(code) {
-            return code.toUpperCase()
-                .replace(/./g, char =>
-                    String.fromCodePoint(127397 + char.charCodeAt()));
-        }
-
         let step = 1;
         let selectedPlayers = { player1: null, player2: null };
         let playerNames = { player1: "Player 1", player2: "Player 2" };
         const manualLocations = { "1": null, "2": null };
         let apiConfig = null;
 
+        /*
+            Helper methods
+        */
+
+        // Convert 2-letter country code to emoji flag
+        function toCountryCodeEmoji(code) {
+            return code.toUpperCase().replace(/./g, char =>
+                String.fromCodePoint(127397 + char.charCodeAt()));
+        }
+
+        // Load API key + URL from external JSON
         async function loadApiConfig() {
-        try {
-            const response = await fetch('../../configuration/apiConfig.json');
-            apiConfig = await response.json();
-        } catch (error) {
-            console.error("Could not load API config:", error);
-        }
-    }
-
-        function allowDrop(ev) {
-            ev.preventDefault();
+            try {
+                const response = await fetch('../../configuration/apiConfig.json');
+                apiConfig = await response.json();
+            } catch (error) {
+                console.error("Could not load API config:", error);
+            }
         }
 
+        // Check if manual or automatic location is available
+        function isLocationAvailable(playerId) {
+            const display = document.getElementById(`location${playerId}Display`);
+            const value = display.innerText || display.textContent;
+            return manualLocations[playerId] || (value && !value.startsWith("❌") && !value.includes("Detecting location"));
+        }
+
+        /*
+            UI interactions
+        */
+
+        // Enable dropping avatar into box
+        function allowDrop(ev) { ev.preventDefault(); }
+
+        // Set dragged image to transfer
         function drag(ev) {
             const img = ev.target.tagName === "IMG" ? ev.target : ev.target.querySelector("img");
             ev.dataTransfer.setData("text/plain", img.src);
         }
 
+        // Drop avatar and assign it to current player step
         function drop(ev) {
             ev.preventDefault();
             const imgSrc = ev.dataTransfer.getData("text/plain");
-
             const dropBox = document.getElementById("playerDropBox");
             dropBox.innerHTML = "";
             const img = document.createElement("img");
             img.src = imgSrc;
             img.alt = step === 1 ? "Player 1" : "Player 2";
             dropBox.appendChild(img);
-
-            if (step === 1) {
-                selectedPlayers.player1 = imgSrc;
-            } else {
-                selectedPlayers.player2 = imgSrc;
-            }
+            if (step === 1) selectedPlayers.player1 = imgSrc;
+            else selectedPlayers.player2 = imgSrc;
         }
 
-        /*
-        document.getElementById("characterSelection").style.display = "flex";
-
-        function selectCharacter(element, player, imgSrc) {
-            let characters = document.querySelectorAll(".character");
-            characters.forEach(char => char.classList.remove("selected"));
-            element.classList.add("selected");
-
-            if (step === 1) {
-                selectedPlayers.player1 = imgSrc;
-            } else {
-                selectedPlayers.player2 = imgSrc;
-            }
-        }
-        */
-        
+        // Continue to next player or show recap
         function continueToNextStep() {
             const nameInput = document.getElementById("playerNameInput").value.trim();
-
-            if (step === 1 && selectedPlayers.player1 === null) {
+            if (step === 1 && !selectedPlayers.player1) {
                 alert("Player 1 must choose a character!");
                 return;
             }
-            if (step === 2 && selectedPlayers.player2 === null) {
+            if (step === 2 && !selectedPlayers.player2) {
                 alert("Player 2 must choose a character!");
                 return;
             }
-
             if (step === 1) {
                 if (nameInput) playerNames.player1 = nameInput;
                 step++;
@@ -190,60 +184,79 @@
             }
         }
 
-
+        // Fill in recap screen and trigger geolocation
         function showRecapScreen() {
             document.getElementById("recapP1").src = selectedPlayers.player1;
             document.getElementById("recapP2").src = selectedPlayers.player2;
             document.getElementById("recapName1").innerText = playerNames.player1;
             document.getElementById("recapName2").innerText = playerNames.player2;
             document.getElementById("recapScreen").style.display = "flex";
-
-            // fetch locations with api
             fetchLocationForPlayer("1");
             fetchLocationForPlayer("2");
         }
 
+        // Prevent starting game without valid location
         function startCountdown() {
+            const missing = [];
+            if (!isLocationAvailable("1")) missing.push("Player 1");
+            if (!isLocationAvailable("2")) missing.push("Player 2");
+            if (missing.length > 0) {
+                alert(`${missing.join(" and ")} must provide a location to continue.`);
+                return;
+            }
             window.location.href = 'countdown.html';
         }
 
-        document.getElementById("characterSelection").style.display = "flex";
-
-        async function fetchLocationForPlayer(playerId) {
-        const displayDiv = document.getElementById(`location${playerId}Display`);
-
-        if (!navigator.geolocation) {
-            displayDiv.textContent = "❌ Geolocation not supported";
-            return;
+        // Manually input fallback location if needed
+        function toggleLocationInput(playerId) {
+            const container = document.getElementById(`manualInput${playerId}`);
+            const changeButton = container.previousElementSibling;
+            const isVisible = container.style.display === "block";
+            container.style.display = isVisible ? "none" : "block";
+            changeButton.style.display = isVisible ? "inline-block" : "none";
         }
 
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
-
-            // LOAD CONFIG FIRST
-            if (!apiConfig) {
-                await loadApiConfig();
+        // Save manual location and update display
+        function setManualLocation(playerId) {
+            const city = document.getElementById(`manualCity${playerId}`).value.trim();
+            const country = document.getElementById(`manualCountry${playerId}`).value.trim();
+            const displayDiv = document.getElementById(`location${playerId}Display`);
+            if (city && country) {
+                manualLocations[playerId] = { city, country };
+                const code = countryCodeMap[country] || null;
+                const emoji = code ? toCountryCodeEmoji(code) : "📍";
+                displayDiv.innerHTML = `${emoji} ${city}, ${country}<br>✏️ <em>Manually entered</em>`;
+                document.getElementById(`manualInput${playerId}`).style.display = "none";
+                const changeButton = displayDiv.parentElement.querySelector("button");
+                changeButton.style.display = "inline-block";
+            } else {
+                alert("Please enter both city and country.");
             }
+        }
 
-            if (!apiConfig || !apiConfig.apiUrl || !apiConfig.apiKey) {
-                displayDiv.textContent = "❌ API config missing";
+        // Attempt automatic location detection via API (OpenCage)
+        async function fetchLocationForPlayer(playerId) {
+            const displayDiv = document.getElementById(`location${playerId}Display`);
+            if (!navigator.geolocation) {
+                displayDiv.textContent = "❌ Geolocation not supported";
                 return;
             }
-
-            // FETCH using OpenCage API logic
-            try {
-                const res = await fetch(`${apiConfig.apiUrl}?q=${lat}+${lon}&key=${apiConfig.apiKey}`);
-                const data = await res.json();
-
-                if (manualLocations[playerId]) return;
-
-                const result = data.results && data.results[0];
-                if (result) {
-                    const components = result.components;
-                    const city = components.city || components.town || components.village || components.county;
-                    const country = components.country;
-
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                if (!apiConfig) await loadApiConfig();
+                if (!apiConfig?.apiUrl || !apiConfig?.apiKey) {
+                    displayDiv.textContent = "❌ API config missing";
+                    return;
+                }
+                try {
+                    const res = await fetch(`${apiConfig.apiUrl}?q=${lat}+${lon}&key=${apiConfig.apiKey}`);
+                    const data = await res.json();
+                    if (manualLocations[playerId]) return;
+                    const result = data.results?.[0];
+                    const components = result?.components;
+                    const city = components?.city || components?.town || components?.village || components?.county;
+                    const country = components?.country;
                     if (city && country) {
                         const code = countryCodeMap[country] || null;
                         const emoji = code ? toCountryCodeEmoji(code) : "📍";
@@ -251,51 +264,17 @@
                     } else {
                         displayDiv.textContent = "❌ Location data incomplete";
                     }
-                } else {
-                    displayDiv.textContent = "❌ No results from API";
+                } catch (err) {
+                    displayDiv.textContent = "❌ Location fetch error";
+                    console.error("API error:", err);
                 }
-            } catch (err) {
-                displayDiv.textContent = "❌ Location fetch error";
-                console.error("API error:", err);
-            }
-        }, () => {
-            displayDiv.textContent = "❌ Permission denied or unavailable";
-        });
-    }
-
-        // toggle manual field to enable both players to manually enter their location
-        function toggleLocationInput(playerId) {
-            const container = document.getElementById(`manualInput${playerId}`);
-            const changeButton = document.querySelector(`#manualInput${playerId}`).previousElementSibling;
-
-            const isVisible = container.style.display === "block";
-            container.style.display = isVisible ? "none" : "block";
-
-            // hide "Change Location" button while editing
-            changeButton.style.display = isVisible ? "inline-block" : "none";
+            }, () => {
+                displayDiv.textContent = "❌ Permission denied or unavailable";
+            });
         }
 
-        function setManualLocation(playerId) {
-            const city = document.getElementById(`manualCity${playerId}`).value.trim();
-            const country = document.getElementById(`manualCountry${playerId}`).value.trim();
-            const displayDiv = document.getElementById(`location${playerId}Display`);
-
-            if (city && country) {
-                manualLocations[playerId] = { city, country };
-
-                const code = countryCodeMap[country] || null;
-                const countryCodeEmoji = code ? toCountryCodeEmoji(code) : "📍";
-                displayDiv.innerHTML = `${countryCodeEmoji} ${city}, ${country}<br>✏️ <em>Manually entered</em>`;
-                
-                document.getElementById(`manualInput${playerId}`).style.display = "none";
-
-                // show the button again
-                const changeButton = displayDiv.parentElement.querySelector("button");
-                changeButton.style.display = "inline-block";
-            } else {
-                alert("Please enter both city and country.");
-            }
-        }
+        // Show initial screen
+        document.getElementById("characterSelection").style.display = "flex";
     </script>
 </body>
 </html>

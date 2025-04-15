@@ -199,7 +199,7 @@ button:hover {
     cursor: pointer;
 }
 
-/* player selection */
+/* Player Drop Area */
 .drop-box {
     width: 200px;
     height: 220px;
@@ -222,47 +222,49 @@ button:hover {
     object-fit: cover;
 }
 
+/* Player Recap Layout */
 .player-recap {
     display: flex;
-    align-items: flex-start; /* Change from center to top-align */
+    align-items: flex-end; /* aligns bottom for avatars */
     justify-content: center;
-    margin-bottom: 30px;
     gap: 30px;
+    margin-bottom: 30px;
     position: relative;
 }
 
-  
-  .player-recap img {
+.player-recap img {
     width: 150px;
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
     border: 2px solid white;
-  }
-  
-  .player-info h2 {
+}
+
+/*  Player Info Display  */
+.player-info h2 {
     margin-bottom: 10px;
     font-size: 24px;
     color: white;
-  }
-  
-  .location-box {
+}
+
+/*  Location Box  */
+.location-box {
     background-color: #222;
     padding: 10px 15px;
     border-radius: 8px;
     color: white;
     text-align: left;
     font-size: 14px;
-    width: 250px;     /* change from max-width to fixed width */
+    width: 250px;
     box-sizing: border-box;
 }
 
-  
-  .location-box p {
+.location-box p {
     margin: 0 0 10px;
-  }
-    
-  .manualInput {
+}
+
+/*  Manual Location Input  */
+.manualInput {
     display: none;
     flex-direction: column;
     margin-top: 10px;
@@ -281,7 +283,7 @@ button:hover {
     box-sizing: border-box;
 }
 
-/* spacing only between City and Country */
+/* Additional spacing between City and Country Input Field */
 .manualInput input:first-of-type {
     margin-bottom: 8px;
 }
@@ -296,14 +298,7 @@ button:hover {
     cursor: pointer;
 }
 
-.player-recap {
-    display: flex;
-    align-items: flex-end; /* aligns bottom */
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 30px;
-}
-
+/*  Avatar Wrapper  */
 .avatar-wrapper {
     display: flex;
     flex-direction: column;
@@ -311,17 +306,14 @@ button:hover {
     height: 100%;
 }
 
+/*  Player Name Input  */
 .player-name-input {
     margin-top: 15px;
     padding: 8px;
     font-size: 16px;
     border-radius: 6px;
     border: none;
-    width: 200px; /* match .drop-box width */
+    width: 200px;
     box-sizing: border-box;
     text-align: center;
 }
-
-
-
-  
