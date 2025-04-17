@@ -25,11 +25,15 @@ export default class EntityRenderer {
         y -= entity.height / 2;
 
         const { frameCount, frameWidth, frameHeight } = this.spriteConfig;
+        
+         // Default to row 0 if not provided
+        const row = entity.spriteRow || 0;
+        
         const walkingMod = Math.floor(entity.spriteAnimCounter) % frameCount;
 
         ctx.drawImage(
             entity.img,
-            walkingMod * frameWidth, 0, // assuming first row for walking animation
+            walkingMod * frameWidth, row*frameHeight, // assuming first row for walking animation
             frameWidth, frameHeight,
             x, y, entity.width, entity.height
         );

@@ -19,10 +19,17 @@ Img.player[0] = new Image();
 Img.player[0].src = '../../ressources/images/player.png';
 Img.player[1] = new Image();
 Img.player[1].src = '../../ressources/images/player.png';
+Img.bat.src = 'ressources/images/bat.png';
+Img.bee.src = 'ressources/images/bee.png';
+Img.bullet.src = 'ressources/images/bullet.png';
+Img.upgrade1.src = 'ressources/images/upgrade1.png';
+Img.upgrade2.src = 'ressources/images/upgrade2.png';
 
+// Adding custom metadata for sprite sheets
+// For example, if the bat sprite sheet is organized in 2 rows and 3 columns:
+Img.bat.rows = 4;
+Img.bat.columns = 3;
 
-Img.bat.src = '../../ressources/images/bat.png';
-Img.bee.src = '../../ressources/images/bee.png';
-Img.bullet.src = '../../ressources/images/bullet.png';
-Img.upgrade1.src = '../../ressources/images/upgrade1.png';
-Img.upgrade2.src = '../../ressources/images/upgrade2.png';
+// Similarly for the bee sprite sheet:
+Img.bee.rows = 4;
+Img.bee.columns = 3;
