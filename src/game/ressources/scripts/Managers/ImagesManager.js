@@ -6,7 +6,7 @@
  * It creates an object containing all the images and their respective sources.
  */
 export const Img = {
-    player: new Image(),
+    player: [],
     bat: new Image(),
     bee: new Image(),
     bullet: new Image(),
@@ -15,7 +15,10 @@ export const Img = {
 };
 
 // Assigning image sources
-Img.player.src = "ressources/images/player.png";
+Img.player[0] = new Image();
+Img.player[0].src = '../../ressources/images/player.png';
+Img.player[1] = new Image();
+Img.player[1].src = '../../ressources/images/player.png';
 Img.bat.src = 'ressources/images/bat.png';
 Img.bee.src = 'ressources/images/bee.png';
 Img.bullet.src = 'ressources/images/bullet.png';
