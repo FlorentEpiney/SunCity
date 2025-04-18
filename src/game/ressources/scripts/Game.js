@@ -91,7 +91,8 @@ fetch('../../gameData/collision_map.json')
 
         setInterval(update, 40);
     })
-    .catch(error => {
+
+.catch(error => {
         console.error('Error loading collision map:', error);
     });
 
@@ -159,6 +160,7 @@ function update() {
         ctx1.fillText('Paused', WIDTH / 2, HEIGHT / 2);
         ctx2.fillText('Paused', WIDTH / 2, HEIGHT / 2);
         return;
+
     }
 
     ctx1.clearRect(0, 0, WIDTH, HEIGHT);
@@ -214,3 +216,7 @@ function startNewGame() {
     Enemy.randomlyGenerate();
     Enemy.randomlyGenerate();
 }
+const pauseButton = document.getElementById('pauseButton');
+pauseButton.addEventListener('click', function () {
+    paused = !paused;
+});

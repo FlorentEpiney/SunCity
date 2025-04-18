@@ -13,6 +13,15 @@
             </div>
             <canvas id="player2Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
         </div>
+        <div id="pausePopup" style="display: none; flex-direction: column; justify-content: center; align-items: center; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 2px solid #333; border-radius: 10px; padding: 30px; z-index: 9999;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); text-align: center;">
+            <button onclick="resumeGame()" style="margin: 10px; padding: 10px 20px;">Play</button>
+            <button onclick="restartGame()" style="margin: 10px; padding: 10px 20px;">Replay</button>
+            <button onclick="exitGame()" style="margin: 10px; padding: 10px 20px;">Exit</button>
+        </div>
         <br/>
         <br/>
         <button onclick="document.getElementById('background-music').play()">
@@ -20,6 +29,13 @@
         </button>
         <button onclick="document.getElementById('background-music').pause()">
             <img src="../../ressources/images/volume_off.png" style="width: 20px; height: 20px;"/>
+        </button>
+        <button id="pauseButton"
+                style="position: fixed; top: 20px; right: 20px; z-index: 10000;
+           padding: 10px 20px; font-size: 16px; border: none;
+           border-radius: 8px; background-color: #ffffff; color: #000000;
+           cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+            Pause
         </button>
     </body>
     <script type="module" src="../../ressources/scripts/Game.js"></script>
@@ -45,6 +61,51 @@
              <b>Keyboard</b>
              <br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot<br>`;
      }, 10);
+    </script>
+    <script>
+        let paused = false;
+
+        function showPausePopup() {
+            document.getElementById('pausePopup').style.display = 'flex';
+        }
+
+        function hidePausePopup() {
+            document.getElementById('pausePopup').style.display = 'none';
+        }
+
+        function resumeGame() {
+            paused = false;
+            hidePausePopup();
+        }
+
+        function restartGame() {
+            paused = false;
+            hidePausePopup();
+            location.reload();
+        }
+
+        function exitGame() {
+            paused = false;
+            hidePausePopup();
+            window.location.href = 'exit.html';
+        }
+
+
+        document.getElementById("pauseButton").addEventListener("click", function () {
+            paused = true;
+            showPausePopup();
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "p" || event.key === "P") {
+                paused = !paused;
+                if (paused) {
+                    showPausePopup();
+                } else {
+                    hidePausePopup();
+                }
+            }
+        });
     </script>
 
 
