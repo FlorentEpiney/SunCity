@@ -219,4 +219,4 @@ function startNewGame() {
 const pauseButton = document.getElementById('pauseButton');
 pauseButton.addEventListener('click', function () {
     paused = !paused;
-});
+})
