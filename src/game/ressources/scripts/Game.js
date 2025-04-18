@@ -157,8 +157,8 @@ document.onkeyup = function(event) {
 
 function update() {
     if (paused) {
-        ctx1.fillText('Paused', WIDTH / 2, HEIGHT / 2);
-        ctx2.fillText('Paused', WIDTH / 2, HEIGHT / 2);
+        ctx1.showPausePopup()( WIDTH / 2, HEIGHT / 2);
+        ctx2.showPausePopup()( WIDTH / 2, HEIGHT / 2);
         return;
 
     }

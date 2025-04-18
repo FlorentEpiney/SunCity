@@ -1,111 +1,101 @@
-<html>
-    <head>
-        <title>Game</title>
-        <h1>Try to survive</h1>
-    </head>
-    <body>
-        <audio id="background-music" src="../../ressources/sounds/chrisRea_Josephine.mp3" autoplay loop></audio>
-        <div style="display: flex;">
-            <div id="textarea-player1" style="width: 200px; height: 500px; resize: none; border: 1px solid #ccc; padding: 4px; font-family: monospace; white-space: pre-wrap;">
-            </div>
-            <canvas id="player1Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
-            <div id="textarea-player2" style="width: 200px; height: 500px; resize: none; border: 1px solid #ccc; padding: 4px; font-family: monospace; white-space: pre-wrap;">
-            </div>
-            <canvas id="player2Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
-        </div>
-        <div id="pausePopup" style="display: none; flex-direction: column; justify-content: center; align-items: center; position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 2px solid #333; border-radius: 10px; padding: 30px; z-index: 9999;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); text-align: center;">
-            <button onclick="resumeGame()" style="margin: 10px; padding: 10px 20px;">Play</button>
-            <button onclick="restartGame()" style="margin: 10px; padding: 10px 20px;">Replay</button>
-            <button onclick="exitGame()" style="margin: 10px; padding: 10px 20px;">Exit</button>
-        </div>
-        <br/>
-        <br/>
-        <button onclick="document.getElementById('background-music').play()">
-            <img src="../../ressources/images/volume.png" style="width: 20px; height: 20px;"/>
-        </button>
-        <button onclick="document.getElementById('background-music').pause()">
-            <img src="../../ressources/images/volume_off.png" style="width: 20px; height: 20px;"/>
-        </button>
-        <button id="pauseButton"
-                style="position: fixed; top: 20px; right: 20px; z-index: 10000;
-           padding: 10px 20px; font-size: 16px; border: none;
-           border-radius: 8px; background-color: #ffffff; color: #000000;
-           cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
-            Pause
-        </button>
-    </body>
-    <script type="module" src="../../ressources/scripts/Game.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+    <link rel="stylesheet" href="../css/game.css"> <
+</head>
+<body>
 
-    <script type="module" src="ressources/scripts/Game.js"></script>
-    <script>
-     setInterval(() => {
-         // Player 1
-         let hpPlayer1 = localStorage.getItem("hpPlayer1");
-         let scorePlayer1 = localStorage.getItem("scorePlayer1");
-         document.getElementById("textarea-player1").innerHTML = `<b>HP: </b> ${hpPlayer1}
-            <br><b>Score: </b> ${scorePlayer1}
-            <br>
-            <b>Keyboard</b>
-            <br>w: up<br>s: down<br>a: left<br>d: right<br>q: shoot<br>e: special shoot<br>`;
+<h1>SUNCITY</h1>
 
-         // Player 2
-         let hpPlayer2 = localStorage.getItem("hpPlayer2");
-         let scorePlayer2 = localStorage.getItem("scorePlayer2");
-         document.getElementById("textarea-player2").innerHTML = `<b>HP: </b> ${hpPlayer2}
-        <br><b>Score: </b> ${scorePlayer2}
-         <br>
-             <b>Keyboard</b>
-             <br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot<br>`;
-     }, 10);
-    </script>
-    <script>
-        let paused = false;
+<audio id="background-music" src="../../ressources/sounds/chrisRea_Josephine.mp3" autoplay loop></audio>
 
-        function showPausePopup() {
-            document.getElementById('pausePopup').style.display = 'flex';
+<div id="canvas-style">
+    <!-- Player 1 -->
+    <div id="textarea-player1"></div>
+
+    <div id="canvas-container">
+        <canvas id="player1Canvas" width="500" height="500"></canvas>
+        <canvas id="player2Canvas" width="500" height="500"></canvas>
+    </div>
+
+    <!-- Player 2 -->
+    <div id="textarea-player2"></div>
+</div>
+
+<!-- Pause Popup -->
+<div id="pausePopup">
+    <button onclick="resumeGame()">Play</button>
+    <button onclick="restartGame()">Replay</button>
+    <button onclick="exitGame()">Exit</button>
+</div>
+
+<!-- Volume Buttons -->
+<br/><br/>
+<button onclick="document.getElementById('background-music').play()">
+    <img src="../../ressources/images/volume.png" />
+</button>
+<button onclick="document.getElementById('background-music').pause()">
+    <img src="../../ressources/images/volume_off.png" />
+</button>
+
+<!-- Pause Button -->
+<button id="pauseButton">Pause</button>
+
+<!-- JS Scripts -->
+<script type="module" src="../../ressources/scripts/Game.js"></script>
+<script type="module" src="ressources/scripts/Game.js"></script>
+<script>
+    // Info affichage en temps réel
+    setInterval(() => {
+        document.getElementById("textarea-player1").innerHTML = `<b>HP: </b>${localStorage.getItem("hpPlayer1")}<br>
+        <b>Score: </b>${localStorage.getItem("scorePlayer1")}<br><br>
+        <b>Keyboard</b><br>w: up<br>s: down<br>a: left<br>d: right<br>q: shoot<br>e: special shoot`;
+
+        document.getElementById("textarea-player2").innerHTML = `<b>HP: </b>${localStorage.getItem("hpPlayer2")}<br>
+        <b>Score: </b>${localStorage.getItem("scorePlayer2")}<br><br>
+        <b>Keyboard</b><br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot`;
+    }, 10);
+
+    // Pause Popup Logic
+    let paused = false;
+
+    function showPausePopup() {
+        document.getElementById('pausePopup').style.display = 'flex';
+    }
+    function hidePausePopup() {
+        document.getElementById('pausePopup').style.display = 'none';
+    }
+
+    function resumeGame() {
+        paused = false;
+        hidePausePopup();
+    }
+
+    function restartGame() {
+        paused = false;
+        hidePausePopup();
+        location.reload();
+    }
+
+    function exitGame() {
+        paused = false;
+        hidePausePopup();
+        window.location.href = 'exit.html';
+    }
+
+    document.getElementById("pauseButton").addEventListener("click", () => {
+        paused = true;
+        showPausePopup();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "p" || event.key === "P") {
+            paused = !paused;
+            paused ? showPausePopup() : hidePausePopup();
         }
-
-        function hidePausePopup() {
-            document.getElementById('pausePopup').style.display = 'none';
-        }
-
-        function resumeGame() {
-            paused = false;
-            hidePausePopup();
-        }
-
-        function restartGame() {
-            paused = false;
-            hidePausePopup();
-            location.reload();
-        }
-
-        function exitGame() {
-            paused = false;
-            hidePausePopup();
-            window.location.href = 'exit.html';
-        }
-
-
-        document.getElementById("pauseButton").addEventListener("click", function () {
-            paused = true;
-            showPausePopup();
-        });
-
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "p" || event.key === "P") {
-                paused = !paused;
-                if (paused) {
-                    showPausePopup();
-                } else {
-                    hidePausePopup();
-                }
-            }
-        });
-    </script>
-
+    });
+</script>
+</body>
 </html>
