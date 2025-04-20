@@ -1,5 +1,5 @@
 export default function Maps (id, imgSrc, grid) {
-    const TILE_SIZE = 128; // set your tile size here
+    const TILE_SIZE = 64; // set your tile size here
 
 
     var self = {
