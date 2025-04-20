@@ -5,6 +5,7 @@ import Bullet from './Bullet.js';
 import Upgrade from './Upgrade.js';
 import { Img } from './Managers/ImagesManager.js';
 
+
 // Define global variables that will be used by other modules
 window.WIDTH = 500;
 window.HEIGHT = 500;
