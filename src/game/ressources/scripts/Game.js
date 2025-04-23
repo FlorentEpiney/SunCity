@@ -5,10 +5,11 @@ import Bullet from './Bullet.js';
 import Upgrade from './Upgrade.js';
 import { Img } from './Managers/ImagesManager.js';
 
+
 // Define global variables that will be used by other modules
 window.WIDTH = 500;
 window.HEIGHT = 500;
-window.TILE_SIZE = 64 * 2;
+window.TILE_SIZE = 32 * 2;
 window.timeWhenGameStarted = Date.now();
 window.frameCount = 0;
 window.score = 0;
@@ -31,7 +32,7 @@ ctx2.mozImageSmoothingEnabled = false;
 ctx2.msImageSmoothingEnabled = false;
 ctx2.imageSmoothingEnabled = false;
 
-var TILE_SIZE = 64 * 2;
+var TILE_SIZE = 32 * 2;
 var WIDTH = 500;
 var HEIGHT = 500;
 var timeWhenGameStarted = Date.now();
@@ -84,8 +85,8 @@ fetch('../../gameData/collision_map.json')
         let player1Img = Img.player[localStorage.getItem("player1Img")];
         let player2Name =  localStorage.getItem("player2Name");
         let player2Img =  Img.player[localStorage.getItem("player2Img")];
-        player1 = Player(50, 50, player1Name, player1Img); // Starting position for player1
-        player2 = Player(150, 50, player2Name, player2Img); // Starting position for player2
+        player1 = Player(250, 100, player1Name, player1Img); // Starting position for player1
+        player2 = Player(350, 100, player2Name, player2Img); // Starting position for player2
         player = player1;
         startNewGame();
 
