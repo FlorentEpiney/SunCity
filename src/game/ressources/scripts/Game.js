@@ -135,6 +135,7 @@ fetch('../../gameData/collision_map.json')
 
     else if (event.keyCode === 80) //p
         paused = !paused;
+        paused ? showPausePopup() : hidePausePopup();
 }
 
 document.onkeyup = function(event) {
@@ -157,13 +158,9 @@ document.onkeyup = function(event) {
         player2.pressingUp = false;
 }
 
-function update() {
-    if (paused) {
-        ctx1.showPausePopup()( WIDTH / 2, HEIGHT / 2);
-        ctx2.showPausePopup()( WIDTH / 2, HEIGHT / 2);
-        return;
 
-    }
+function update() {
+    if (paused) {return;}
 
     // Verification of the end of the game
     if (player1.hp <= 0 || player2.hp <= 0) {
@@ -240,7 +237,35 @@ function startNewGame() {
     Enemy.randomlyGenerate();
     Enemy.randomlyGenerate();
 }
+
+// Pause Popup Logic
+function showPausePopup() {
+    document.getElementById('pausePopup').style.display = 'flex';
+}
+function hidePausePopup() {
+    document.getElementById('pausePopup').style.display = 'none';
+}
+const resumeGameButton = document.getElementById('resumeGame');
+resumeGameButton.addEventListener('click', function () {
+    paused = false;
+    hidePausePopup();
+});
+const restartGameButton = document.getElementById('restartGame');
+restartGameButton.addEventListener('click', function () {
+    paused = false;
+    hidePausePopup();
+    location.reload();
+});
+const exitGameButton = document.getElementById('exitGame');
+exitGameButton.addEventListener('click', function () {
+    paused = false;
+    hidePausePopup();
+    window.location.href = 'exit.html';
+});
+
 const pauseButton = document.getElementById('pauseButton');
 pauseButton.addEventListener('click', function () {
-    paused = !paused;
-})
+    paused = true;
+    showPausePopup();
+});
+

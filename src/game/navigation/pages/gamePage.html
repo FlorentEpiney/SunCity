@@ -26,9 +26,9 @@
 
 <!-- Pause Popup -->
 <div id="pausePopup">
-    <button onclick="resumeGame()">Play</button>
-    <button onclick="restartGame()">Replay</button>
-    <button onclick="exitGame()">Exit</button>
+    <button id="resumeGame">Play</button>
+    <button id="restartGame">Replay</button>
+    <button id="exitGame">Exit</button>
 </div>
 
 <!-- Volume Buttons -->
@@ -46,7 +46,7 @@
 <!-- JS Scripts -->
 <script type="module" src="../../ressources/scripts/Game.js"></script>
 <script>
-    // Info affichage en temps réel
+    // Info published on life time
     setInterval(() => {
         document.getElementById("textarea-player1").innerHTML = `<b>HP: </b>${localStorage.getItem("hpPlayer1")}<br>
         <b>Score: </b>${localStorage.getItem("scorePlayer1")}<br><br>
@@ -56,45 +56,6 @@
         <b>Score: </b>${localStorage.getItem("scorePlayer2")}<br><br>
         <b>Keyboard</b><br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot`;
     }, 10);
-
-    // Pause Popup Logic
-    let paused = false;
-
-    function showPausePopup() {
-        document.getElementById('pausePopup').style.display = 'flex';
-    }
-    function hidePausePopup() {
-        document.getElementById('pausePopup').style.display = 'none';
-    }
-
-    function resumeGame() {
-        paused = false;
-        hidePausePopup();
-    }
-
-    function restartGame() {
-        paused = false;
-        hidePausePopup();
-        location.reload();
-    }
-
-    function exitGame() {
-        paused = false;
-        hidePausePopup();
-        window.location.href = 'exit.html';
-    }
-
-    document.getElementById("pauseButton").addEventListener("click", () => {
-        paused = true;
-        showPausePopup();
-    });
-
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "p" || event.key === "P") {
-            paused = !paused;
-            paused ? showPausePopup() : hidePausePopup();
-        }
-    });
 </script>
 </body>
 </html>
