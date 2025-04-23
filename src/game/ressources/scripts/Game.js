@@ -40,6 +40,7 @@ var frameCount = 0;
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
 var paused = false;
+var gameloop;
 
 function testCollisionRectRect(rect1, rect2) {
     return rect1.x <= rect2.x + rect2.width &&
@@ -90,7 +91,7 @@ fetch('../../gameData/collision_map.json')
         player = player1;
         startNewGame();
 
-        setInterval(update, 40);
+        gameloop = setInterval(update, 40);
     })
 
 .catch(error => {
@@ -162,6 +163,28 @@ function update() {
         ctx2.showPausePopup()( WIDTH / 2, HEIGHT / 2);
         return;
 
+    }
+
+    // Verification of the end of the game
+    if (player1.hp <= 0 || player2.hp <= 0) {
+
+        clearInterval(gameloop); // stop the game loop
+
+        localStorage.setItem('hpPlayer1',player1.hp);
+        localStorage.setItem('hpPlayer2',player2.hp);
+
+        if(player1.hp <= 0){
+            localStorage.setItem('winner','2');
+            /*TODO color canvas1 in red
+            *  and canvas2 in green*/
+
+        }else{
+            localStorage.setItem('winner','1');
+            /*TODO color canvas1 in green
+            *  and canvas2 in red*/
+        }
+
+        return;
     }
 
     ctx1.clearRect(0, 0, WIDTH, HEIGHT);
