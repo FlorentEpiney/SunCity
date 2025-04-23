@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+h1 {
+    text-align: center;
+    font-size: 48px;
+    color: #333;
+    margin-top: 20px;
+}
+
+#canvas-style {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+#textarea-player1,
+#textarea-player2 {
+    width: 200px;
+    height: 500px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+#textarea-player1 {
+    margin-right: 20px;
+}
+
+#textarea-player2 {
+    margin-left: 20px;
+}
+
+#canvas-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+canvas {
+    border: 1px solid #000;
+    margin: 0 5px;
+}
+
+#pausePopup {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 30px;
+    z-index: 9999;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#pausePopup button {
+    width: 150px;
+    height: 50px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease-in-out;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#pauseButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+button img {
+    width: 20px;
+    height: 20px;
+}

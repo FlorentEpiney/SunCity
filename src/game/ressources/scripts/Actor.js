@@ -4,7 +4,7 @@ import Maps from './Maps.js';
 import Bullet from './Bullet.js';
 
 
-export default function Actor(type, id, x, y, width, height, img, hp, atkSpd) {
+export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, name) {
     var self = Entity(type, id, x, y, width, height, img);
 
     self.hp = hp;
@@ -54,6 +54,9 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd) {
             x, y, self.width, self.height
         );
 
+        if(type == 'player') {
+            drawName(ctx, x, y,self, name);
+        }
         ctx.restore();
     };
 
@@ -87,6 +90,9 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd) {
             walkingMod * frameWidth, directionMod * frameHeight, frameWidth, frameHeight,
             x, y, self.width, self.height
         );
+        if(type == 'player') {
+            drawName(ctx, x, y,self, name);
+        }
 
         ctx.restore();
     };
@@ -160,5 +166,17 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd) {
         }
     };
 
+    function drawName(ctx, x, y, entity, name) {
+        const nameX = x + entity.width / 2;
+        const nameY = y;
+
+        ctx.fillStyle = 'black';
+        ctx.font = '16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(name, nameX, nameY);
+    }
+
     return self;
-};
+
+}
+

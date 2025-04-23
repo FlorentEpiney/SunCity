@@ -4,12 +4,19 @@ import { Img } from './Managers/ImagesManager.js';
 import Actor from './Actor.js';
 
 export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
-    var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd);
+    var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd,'');
 
     self.directionChangeTimer = 0;
     self.spriteAnimCounter = 0;
     self.targetPlayer = null; // Store the target player reference
+    self.spriteRow = 0; // Default animation row (down)
+    self.lastMoveX = 0; // Track horizontal movement
+    self.lastMoveY = 0; // Track vertical movement
 
+    // Calculate sprite configuration using custom properties stored in the image
+    // Providing fallback defaults if properties are missing:
+    const columns = img.columns || 3; // Fallback to 3 columns if not defined
+    const rows = img.rows || 4;       // Fallback to 4 rows if not defined
     /**
      * Renderer for drawing the enemy
      * Creates an instance of EntityRenderer with the sprite configuration
@@ -17,9 +24,9 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
      * @type {EntityRenderer}
      */
     self.renderer = new EntityRenderer({
-        frameCount: 3,
-        frameWidth: img.width / 3,
-        frameHeight: img.height / 4
+        frameCount: columns,
+        frameWidth: img.width / columns,
+        frameHeight: img.height / rows
     });
 
     /**
@@ -31,12 +38,86 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
      */
     var super_update = self.update;
     self.update = function(ctx, player) {
+        // Store current position to calculate movement direction
+        const oldX = self.x;
+        const oldY = self.y;
+
         self.targetPlayer = player; // Store the player reference for use in other methods
         super_update(ctx, player);
         self.spriteAnimCounter += 0.2;
+        
         self.updateAim();
-        self.updateKeyPress();
-        //self.performAttack(); // Enemies perform attack automatically
+        self.pursuePlayer();
+        self.performAttack(); // Enemies perform attack automatically
+        
+        // Calculate movement direction
+        self.lastMoveX = self.x - oldX;
+        self.lastMoveY = self.y - oldY;
+        
+        // Update sprite row based on movement direction
+        self.updateSpriteDirection();
+
+    };
+    /**
+     * 
+     * Pursue the player by setting the movement direction
+     * 
+     */
+    self.pursuePlayer = function() {
+        if (!self.targetPlayer) return;
+        
+        // Calculate direction to player
+        var diffX = self.targetPlayer.x - self.x;
+        var diffY = self.targetPlayer.y - self.y;
+        
+        // Determine movement direction based on player position
+        self.pressingRight = diffX > 0;
+        self.pressingLeft = diffX < 0;
+        self.pressingDown = diffY > 0;
+        self.pressingUp = diffY < 0;
+        
+        // Add randomness to movement to make it less predictable
+        if (Math.random() < 0.1) { // 10% chance to move randomly
+            self.pressingRight = Math.random() < 0.5;
+            self.pressingLeft = Math.random() < 0.5;
+            self.pressingDown = Math.random() < 0.5;
+            self.pressingUp = Math.random() < 0.5;
+        }
+    };
+
+    /**
+     * Updates the sprite direction based on movement
+     * Sets the appropriate row in the sprite sheet based on the direction
+     * Assuming typical sprite sheet layout:
+     * Row 0 = Down/South
+     * Row 1 = Left/West
+     * Row 2 = Right/East
+     * Row 3 = Up/North
+     */
+    self.updateSpriteDirection = function() {
+        // Determine the dominant direction of movement
+        const absX = Math.abs(self.lastMoveX);
+        const absY = Math.abs(self.lastMoveY);
+        
+        // Only update direction if there's significant movement
+        if (absX > 0.1 || absY > 0.1) {
+            if (absX > absY) {
+                // Horizontal movement is stronger
+                if (self.lastMoveX > 0) {
+                    self.spriteRow = 2; // Right-facing row (East)
+                } else {
+                    self.spriteRow = 1; // Left-facing row (West)
+                }
+            } else {
+                // Vertical movement is stronger
+                if (self.lastMoveY > 0) {
+                    self.spriteRow = 0; // Down-facing row (South)
+                } else {
+                    self.spriteRow = 3; // Up-facing row (North)
+                }
+            }
+        }
+        // If not moving significantly, keep the current direction
     };
 
     self.updateAim = function() {
@@ -50,16 +131,18 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
     };
 
     self.updateKeyPress = function() {
+        /*
         // Randomly change direction every 2 seconds
         self.directionChangeTimer += 40; // Assuming update is called every 40ms
 
-        if (self.directionChangeTimer >= 2000) {
+        if (self.directionChangeTimer >= 20d00) {
             self.pressingRight = Math.random() < 0.5;
             self.pressingLeft = Math.random() < 0.5;
             self.pressingDown = Math.random() < 0.5;
             self.pressingUp = Math.random() < 0.5;
             self.directionChangeTimer = 0;
         }
+            */
     };
 
     /**
@@ -109,9 +192,9 @@ Enemy.randomlyGenerate = function() {
     var enemy; // Declare the variable first
     
     if (Math.random() < 0.5) {
-        enemy = Enemy(id, x, y, width, height, Img.bat, 2, 1);
+        enemy = Enemy(id, x, y, width, height, Img.bat, 10, 1);
     } else {
-        enemy = Enemy(id, x, y, width, height, Img.bee, 1, 3);
+        enemy = Enemy(id, x, y, width, height, Img.bee, 5, 3);
     }
     
     Enemy.list[id] = enemy;

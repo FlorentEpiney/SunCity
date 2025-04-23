@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+    <link rel="stylesheet" href="../css/game.css"> <
+</head>
+<body>
+
+<h1>SUNCITY</h1>
+
+<audio id="background-music" src="../../ressources/sounds/chrisRea_Josephine.mp3" autoplay loop></audio>
+
+<div id="canvas-style">
+    <!-- Player 1 -->
+    <div id="textarea-player1"></div>
+
+    <div id="canvas-container">
+        <canvas id="player1Canvas" width="500" height="500"></canvas>
+        <canvas id="player2Canvas" width="500" height="500"></canvas>
+    </div>
+
+    <!-- Player 2 -->
+    <div id="textarea-player2"></div>
+</div>
+
+<!-- Pause Popup -->
+<div id="pausePopup">
+    <button onclick="resumeGame()">Play</button>
+    <button onclick="restartGame()">Replay</button>
+    <button onclick="exitGame()">Exit</button>
+</div>
+
+<!-- Volume Buttons -->
+<br/><br/>
+<button onclick="document.getElementById('background-music').play()">
+    <img src="../../ressources/images/volume.png" />
+</button>
+<button onclick="document.getElementById('background-music').pause()">
+    <img src="../../ressources/images/volume_off.png" />
+</button>
+
+<!-- Pause Button -->
+<button id="pauseButton">Pause</button>
+
+<!-- JS Scripts -->
+<script type="module" src="../../ressources/scripts/Game.js"></script>
+<script type="module" src="ressources/scripts/Game.js"></script>
+<script>
+    // Info affichage en temps réel
+    setInterval(() => {
+        document.getElementById("textarea-player1").innerHTML = `<b>HP: </b>${localStorage.getItem("hpPlayer1")}<br>
+        <b>Score: </b>${localStorage.getItem("scorePlayer1")}<br><br>
+        <b>Keyboard</b><br>w: up<br>s: down<br>a: left<br>d: right<br>q: shoot<br>e: special shoot`;
+
+        document.getElementById("textarea-player2").innerHTML = `<b>HP: </b>${localStorage.getItem("hpPlayer2")}<br>
+        <b>Score: </b>${localStorage.getItem("scorePlayer2")}<br><br>
+        <b>Keyboard</b><br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot`;
+    }, 10);
+
+    // Pause Popup Logic
+    let paused = false;
+
+    function showPausePopup() {
+        document.getElementById('pausePopup').style.display = 'flex';
+    }
+    function hidePausePopup() {
+        document.getElementById('pausePopup').style.display = 'none';
+    }
+
+    function resumeGame() {
+        paused = false;
+        hidePausePopup();
+    }
+
+    function restartGame() {
+        paused = false;
+        hidePausePopup();
+        location.reload();
+    }
+
+    function exitGame() {
+        paused = false;
+        hidePausePopup();
+        window.location.href = 'exit.html';
+    }
+
+    document.getElementById("pauseButton").addEventListener("click", () => {
+        paused = true;
+        showPausePopup();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "p" || event.key === "P") {
+            paused = !paused;
+            paused ? showPausePopup() : hidePausePopup();
+        }
+    });
+</script>
+</body>
+</html>
