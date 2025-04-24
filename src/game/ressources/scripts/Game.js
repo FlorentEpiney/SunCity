@@ -86,8 +86,8 @@ fetch('../../gameData/collision_map.json')
         let player1Img = Img.player[localStorage.getItem("player1Img")];
         let player2Name =  localStorage.getItem("player2Name");
         let player2Img =  Img.player[localStorage.getItem("player2Img")];
-        player1 = Player(250, 100, player1Name, player1Img); // Starting position for player1
-        player2 = Player(350, 100, player2Name, player2Img); // Starting position for player2
+        player1 = Player(250, 100, player1Name, player1Img, 'player1'); // Starting position for player1
+        player2 = Player(350, 100, player2Name, player2Img, 'player2'); // Starting position for player2
         player = player1;
         startNewGame();
 
@@ -224,8 +224,8 @@ function update() {
 }
 
 function startNewGame() {
-    player1.hp = 10;
-    player2.hp = 10;
+    player1.hp = 20;
+    player2.hp = 20;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
     scorePlayer1 = 0;
