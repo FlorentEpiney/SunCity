@@ -22,16 +22,11 @@ export default function Upgrade (id, x, y, width, height, category, img) {
         this.x = this.x - 250;
         this.y = this.y - 250;
         if (isColliding) {
-            console.log('Collision detected with upgrade');
             if (this.category === 'score'){
-                console.log('player.score before', player.score);
                 player.score += 1000;
-                console.log('player.score after', player.score);
             }
-            if (this.category === 'atkSpd'){
-                console.log('player.atkSpd before', player.atkSpd);
-                player.atkSpd += 3;
-                console.log('player.atkSpd after', player.atkSpd);
+            if (this.category === 'hp'){
+                player.hp += 3;
             }
             this.toRemove = true;
         }
@@ -72,7 +67,7 @@ Upgrade.randomlyGenerate = function() {
         category = 'score';
         img = Img.upgrade1;
     } else {
-        category = 'atkSpd';
+        category = 'hp';
         img = Img.upgrade2;
     }
     var upgrade = Upgrade(id, x, y, width, height, category, img);
