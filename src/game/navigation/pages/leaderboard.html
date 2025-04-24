@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SUN City</title>
-    <link rel="stylesheet" href="../css/start-screen.css">
-</head>
-<body>
-    <h1>Leaderboard</h1>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>SUN City</title>
+        <link rel="stylesheet" href="../css/start-screen.css">
+        <style>
+            body{
+                background-color: white;
+            }
+            h1{
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Leaderboard</h1>
+        <div id="wallOfFameTable"></div>
+    </body>
+
+    <script type="module">
+       import Leaderboard from "../../ressources/scripts/Leaderboard.js";
+       document.addEventListener('DOMContentLoaded', function() {
+           const leaderboard = Leaderboard();
+           leaderboard.displayWallOfFame();
+       });
+    </script>
 </html>
