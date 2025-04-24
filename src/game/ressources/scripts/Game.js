@@ -36,7 +36,6 @@ var TILE_SIZE = 32 * 2;
 var WIDTH = 500;
 var HEIGHT = 500;
 var timeWhenGameStarted = Date.now();
-var frameCount = 0;
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
 var paused = false;
@@ -217,15 +216,14 @@ function update() {
     scorePlayer2++;
 
     Bullet.update(ctx1, ctx2, player1, player2);
-    Upgrade.update(ctx1, player1);
-    Upgrade.update(ctx2, player2);
+    Upgrade.update(ctx1, ctx2, player1, player2);
     Enemy.update(ctx1, ctx2, player1, player2);
 
 }
 
 function startNewGame() {
-    player1.hp = 10;
-    player2.hp = 10;
+    player1.hp = 1000;
+    player2.hp = 1000;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
     scorePlayer1 = 0;
