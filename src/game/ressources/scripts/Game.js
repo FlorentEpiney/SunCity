@@ -3,6 +3,7 @@ import Player from './Player.js';
 import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import Upgrade from './Upgrade.js';
+import Leaderboard from './Leaderboard.js';
 import { Img } from './Managers/ImagesManager.js';
 
 
@@ -180,6 +181,9 @@ function update() {
             /*TODO color canvas1 in green
             *  and canvas2 in red*/
         }
+
+        //Leaderboard
+        Leaderboard().saveScore();
 
         return;
     }
