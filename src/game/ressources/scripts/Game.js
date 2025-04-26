@@ -37,7 +37,6 @@ var TILE_SIZE = 32 * 2;
 var WIDTH = 500;
 var HEIGHT = 500;
 var timeWhenGameStarted = Date.now();
-var frameCount = 0;
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
 var paused = false;
@@ -202,7 +201,7 @@ function update() {
     player2.drawAt(ctx1, p2_x_relative_to_p1, p2_y_relative_to_p1);
 
     localStorage.setItem('hpPlayer1',player1.hp);
-    localStorage.setItem('scorePlayer1',scorePlayer1);
+    localStorage.setItem('scorePlayer1',player1.score);
 
     // Draw the map and players on canvas 2 (Player 2's perspective)
     Maps.current.draw(ctx2, player2);
@@ -214,22 +213,23 @@ function update() {
 
 
     localStorage.setItem('hpPlayer2',player2.hp);
-    localStorage.setItem('scorePlayer2',scorePlayer2);
+    localStorage.setItem('scorePlayer2',player2.score);
 
     frameCount++;
-    scorePlayer1++;
-    scorePlayer2++;
+    player1.score++;
+    player2.score++;
 
     Bullet.update(ctx1, ctx2, player1, player2);
-    Upgrade.update(ctx1, player1);
-    Upgrade.update(ctx2, player2);
+    Upgrade.update(ctx1, ctx2, player1, player2);
     Enemy.update(ctx1, ctx2, player1, player2);
 
 }
 
 function startNewGame() {
     player1.hp = 10;
+    player1.score = 0;
     player2.hp = 10;
+    player2.score = 0;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
     scorePlayer1 = 0;
