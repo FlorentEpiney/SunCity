@@ -48,7 +48,7 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
         
         self.updateAim();
         self.pursuePlayer();
-        self.performAttack(); // Enemies perform attack automatically
+        //self.performAttack(); // Enemies perform attack automatically
         
         // Calculate movement direction
         self.lastMoveX = self.x - oldX;
@@ -192,9 +192,9 @@ Enemy.randomlyGenerate = function() {
     var enemy; // Declare the variable first
     
     if (Math.random() < 0.5) {
-        enemy = Enemy(id, x, y, width, height, Img.bat, 10, 1);
+        enemy = Enemy(id, x, y, width, height, Img.guard_white, 10, 1);
     } else {
-        enemy = Enemy(id, x, y, width, height, Img.bee, 5, 3);
+        enemy = Enemy(id, x, y, width, height, Img.guard_yellow, 5, 3);
     }
     
     Enemy.list[id] = enemy;

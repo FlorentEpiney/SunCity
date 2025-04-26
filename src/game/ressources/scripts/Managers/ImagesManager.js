@@ -9,6 +9,9 @@ export const Img = {
     player: [],
     bat: new Image(),
     bee: new Image(),
+    guard_white: new Image(),  
+    guard_yellow: new Image(), 
+    inspector: new Image(),    
     bullet: new Image(),
     upgrade1: new Image(),
     upgrade2: new Image(),
@@ -21,15 +24,28 @@ Img.player[1] = new Image();
 Img.player[1].src = '../../ressources/images/player.png';
 Img.bat.src = '../../ressources/images/bat.png';
 Img.bee.src = '../../ressources/images/bee.png';
+Img.guard_white.src = '../../ressources/images/guard_white.png';
+Img.guard_yellow.src = '../../ressources/images/guard_yellow.png';
+Img.inspector.src = '../../ressources/images/inspector.png';
 Img.bullet.src = '../../ressources/images/bullet.png';
 Img.upgrade1.src = '../../ressources/images/upgrade1.png';
 Img.upgrade2.src = '../../ressources/images/upgrade2.png';
 
+
 // Adding custom metadata for sprite sheets
-// For example, if the bat sprite sheet is organized in 2 rows and 3 columns:
+
 Img.bat.rows = 4;
 Img.bat.columns = 3;
 
-// Similarly for the bee sprite sheet:
+
 Img.bee.rows = 4;
 Img.bee.columns = 3;
+
+Img.guard_white.rows = 4;
+Img.guard_white.columns = 4;
+
+Img.guard_yellow.rows = 4;
+Img.guard_yellow.columns = 4;
+
+Img.inspector.rows = 4;
+Img.inspector.columns = 4;
