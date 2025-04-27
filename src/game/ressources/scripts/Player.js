@@ -4,7 +4,7 @@ import Actor  from './Actor.js';
 
 export default function Player(startX, startY, name, img, id) {
     var self = Actor('player', id, startX, startY, 50 * 1.5, 70 * 1.5, img, 10, 1, name);
-    self.maxMoveSpd = 10 * 5;
+    self.maxMoveSpd = 10;
     self.pressingMouseLeft = false;
     self.pressingMouseRight = false;
 
