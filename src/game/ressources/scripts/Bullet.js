@@ -3,10 +3,11 @@ import { Img } from './Managers/ImagesManager.js';
 import Maps from './Maps.js';
 import Enemy from './Enemy.js'; // Import Enemy to check for collisions
 
-export default function Bullet (id, x, y, spdX, spdY, width, height, combatType) {
+export default function Bullet (id, x, y, spdX, spdY, width, height, combatType, ownerId) {
     var self = Entity('bullet', id, x, y, width, height, Img.bullet);
     self.timer = 0;
     self.combatType = combatType;
+    self.ownerId = ownerId;
     self.spdX = spdX;
     self.spdY = spdY;
     self.toRemove = false;
@@ -26,6 +27,13 @@ export default function Bullet (id, x, y, spdX, spdY, width, height, combatType)
                     Enemy.list[key2].hp -= 1;
                 }
             }
+                if (self.testCollision(player)) {
+                    if(self.ownerId !== player.id){
+                        self.toRemove = true;
+                        player.hp -= 1;
+                    }
+                }
+
         } else if (self.combatType === 'enemy') {
             if (self.testCollision(player)) {
                 self.toRemove = true;
@@ -98,5 +106,5 @@ Bullet.generate = function(actor, aimOverwrite) {
 
     var spdX = Math.cos(angle / 180 * Math.PI) * 5;
     var spdY = Math.sin(angle / 180 * Math.PI) * 5;
-    Bullet(id, x, y, spdX, spdY, width, height, actor.type);
+    Bullet(id, x, y, spdX, spdY, width, height, actor.type, actor.id);
 };
