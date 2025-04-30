@@ -2,6 +2,8 @@ import EntityRenderer from './Managers/EntityRenderer.js';
 import Maps from './Maps.js';
 import { Img } from './Managers/ImagesManager.js'; 
 import Actor from './Actor.js';
+import EnemyFactory from './Managers/EnemyFactory.js';
+
 
 export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
     var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd,'');
@@ -164,24 +166,98 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
 
 Enemy.list = {};
 
+// Modify the Enemy.update function in Enemy.js to prevent duplicate drawing
 Enemy.update = function(ctx1, ctx2, player1, player2) {
     if (window.frameCount % 100 === 0) { // every 4 sec
-        Enemy.randomlyGenerate();
+        // Check if EnemyFactory exists, otherwise use the original method
+        if (typeof EnemyFactory !== 'undefined') {
+            EnemyFactory.randomlyGenerate();
+        } else {
+            // Fallback to original method
+            Enemy.randomlyGenerate();
+        }
     }
 
+    // First update all enemies
     for (var key in Enemy.list) {
-        Enemy.list[key].update(ctx1, player1);
-        Enemy.list[key].update(ctx2, player2);
+        // Only update the state, don't draw during update
+        const enemy = Enemy.list[key];
+        
+        // Store current position for motion calculation before updating
+        const oldX = enemy.x;
+        const oldY = enemy.y;
+        
+        // Calculate distance to both players
+        const distToPlayer1 = calculateDistance(enemy, player1);
+        const distToPlayer2 = calculateDistance(enemy, player2);
+        
+        // Choose closest player as target
+        const targetPlayer = distToPlayer1 <= distToPlayer2 ? player1 : player2;
+
+        // Only call the base update logic without drawing
+        if (enemy.updateState) {
+            // If enemy has a dedicated updateState method, use it
+            enemy.updateState(targetPlayer);
+        } else {
+            // Otherwise, manage state update manually
+            enemy.targetPlayer = targetPlayer;
+            
+            // Handle aiming and movement updates
+            if (enemy.state !== 'dead' && enemy.hp > 0) {
+                enemy.updateAim();
+                enemy.pursuePlayer();
+            }
+            
+            // Update standard properties
+            enemy.attackCounter += enemy.atkSpd;
+            if (enemy.hp <= 0 && enemy.state !== 'dead') {
+                enemy.state = 'dead';
+                enemy.onDeath();
+            }
+            
+            // Update position if not dead
+            if (enemy.state !== 'dead') {
+                enemy.updatePosition();
+            }
+            
+            // Calculate movement direction for rotation
+            enemy.lastMoveX = enemy.x - oldX;
+            enemy.lastMoveY = enemy.y - oldY;
+            
+            // Update rotation if applicable
+            if (enemy.updateRotation && enemy.state === 'alive') {
+                enemy.updateRotation();
+            }
+            
+            // Update sprite direction if applicable
+            if (enemy.updateSpriteDirection) {
+                enemy.updateSpriteDirection();
+            }
+        }
+    }
+    
+    // Then draw all enemies separately for each canvas
+    for (var key in Enemy.list) {
         Enemy.list[key].draw(ctx1, player1);
+    }
+    
+    for (var key in Enemy.list) {
         Enemy.list[key].draw(ctx2, player2);
     }
 
+    // Clean up dead enemies
     for (var key in Enemy.list) {
         if (Enemy.list[key].toRemove) {
             delete Enemy.list[key];
         }
     }
 };
+
+function calculateDistance(entity1, entity2) {
+    const dx = entity1.x - entity2.x;
+    const dy = entity1.y - entity2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
 
 Enemy.randomlyGenerate = function() {
     var x = Math.random() * Maps.current.width;
