@@ -158,7 +158,6 @@ document.onkeyup = function(event) {
         player2.pressingUp = false;
 }
 
-
 function update() {
     if (paused) {return;}
 
@@ -172,11 +171,43 @@ function update() {
 
         if(player1.hp <= 0){
             localStorage.setItem('winner','2');
+            ctx1.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx1.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+            ctx2.fillStyle = 'rgba(0, 255, 0, 0.3)';
+            ctx2.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+
+            ctx1.font = 'bold 40px Arial';
+            ctx1.fillStyle = 'black';
+            ctx1.textAlign = 'center';
+            ctx1.fillText('You Lose!', WIDTH / 2, HEIGHT / 2);
+
+            ctx2.font = 'bold 40px Arial';
+            ctx2.fillStyle = 'black';
+            ctx2.textAlign = 'center';
+            ctx2.fillText('You Win!', WIDTH / 2, HEIGHT / 2);
+
+            setTimeout(() => showEndGamePopup(2), 5000);
             /*TODO color canvas1 in red
             *  and canvas2 in green*/
 
         }else{
             localStorage.setItem('winner','1');
+            ctx2.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx2.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+            ctx1.fillStyle = 'rgba(0, 255, 0, 0.3)';
+            ctx1.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+
+            ctx2.font = 'bold 40px Arial';
+            ctx2.fillStyle = 'black';
+            ctx2.textAlign = 'center';
+            ctx2.fillText('You Lose!', WIDTH / 2, HEIGHT / 2);
+
+            ctx1.font = 'bold 40px Arial';
+            ctx1.fillStyle = 'black';
+            ctx1.textAlign = 'center';
+            ctx1.fillText('You Win!', WIDTH / 2, HEIGHT / 2);
+
+            setTimeout(() => showEndGamePopup(1), 5000);
             /*TODO color canvas1 in green
             *  and canvas2 in red*/
         }
@@ -272,4 +303,18 @@ pauseButton.addEventListener('click', function () {
     paused = true;
     showPausePopup();
 });
+function showEndGamePopup(winner) {
+    const popup = document.getElementById('endGamePopup');
+    const localPlayer = localStorage.getItem('playerNumber');
+
+    popup.style.display = 'flex';
+}
+
+document.getElementById('replayGame').addEventListener('click', () => {
+    location.reload();
+});
+document.getElementById('exitGameEnd').addEventListener('click', () => {
+    window.location.href = 'exit.html';
+});
+
 
