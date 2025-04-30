@@ -14,7 +14,8 @@ h1 {
 #canvas-style {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    gap: 20px;
     margin-top: 40px;
 }
 
@@ -28,25 +29,22 @@ h1 {
     white-space: pre-wrap;
     background-color: #fff;
     overflow-y: auto;
-}
-
-#textarea-player1 {
-    margin-right: 20px;
-}
-
-#textarea-player2 {
-    margin-left: 20px;
+    flex-shrink: 0;
 }
 
 #canvas-container {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    position: relative;
 }
 
 canvas {
+    width: 500px;
+    height: 500px;
     border: 1px solid #000;
-    margin: 0 5px;
+    margin: 0;
+    padding: 0;
 }
 
 #pausePopup {
@@ -101,18 +99,18 @@ button img {
     height: 20px;
 }
 
- .game-message {
-     position: absolute;
-     width: 500px;
-     height: 500px;
-     font-size: 48px;
-     font-weight: bold;
-     color: white;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     pointer-events: none;
- }
+.game-message {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
 
 #game-message-player1 {
     top: 0;
@@ -122,11 +120,6 @@ button img {
 #game-message-player2 {
     top: 0;
     left: 500px;
-}
-
-#canvas-container {
-    position: relative;
-    width: 1000px;
 }
 
 #endGamePopup {
@@ -146,6 +139,7 @@ button img {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
+
 #endGamePopup button {
     width: 150px;
     height: 50px;
@@ -157,7 +151,5 @@ button img {
     transition: transform 0.2s ease-in-out;
     font-size: 16px;
     cursor: pointer;
+    margin: 10px 0;
 }
-
-
-
