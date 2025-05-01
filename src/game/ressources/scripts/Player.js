@@ -3,8 +3,8 @@ import { Img } from './Managers/ImagesManager.js';
 import RotatingEntityRenderer from './Managers/RotatingEntityRenderer.js';
 import Actor from './Actor.js';
 
-export default function Player(startX, startY, name, img) {
-    var self = Actor('player', 'myId', startX, startY, 64, 64, img, 10, 1, name);
+export default function Player(startX, startY, name, img, id) {
+    var self = Actor('player', id, startX, startY, 64, 64, img, 10, 1, name);
 
     // Initialize rotating renderer
     self.renderer = new RotatingEntityRenderer();
@@ -12,7 +12,7 @@ export default function Player(startX, startY, name, img) {
     // Set initial state and rotation
     self.state = 'alive';
     self.rotation = 0;
-    self.maxMoveSpd = 10;
+    self.maxMoveSpd = 10*5;
     self.pressingMouseLeft = false;
     self.pressingMouseRight = false;
 

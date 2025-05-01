@@ -87,8 +87,8 @@ fetch('../../gameData/collision_map.json')
         let player1Img = Img.player[localStorage.getItem("player1Img")];
         let player2Name =  localStorage.getItem("player2Name");
         let player2Img =  Img.player[localStorage.getItem("player2Img")];
-        player1 = Player(250, 100, player1Name, player1Img); // Starting position for player1
-        player2 = Player(350, 100, player2Name, player2Img); // Starting position for player2
+        player1 = Player(250, 100, player1Name, player1Img, 'player1'); // Starting position for player1
+        player2 = Player(350, 100, player2Name, player2Img, 'player2'); // Starting position for player2
         player = player1;
         startNewGame();
 
@@ -172,11 +172,43 @@ function update() {
 
         if(player1.hp <= 0){
             localStorage.setItem('winner','2');
+            ctx1.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx1.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+            ctx2.fillStyle = 'rgba(0, 255, 0, 0.3)';
+            ctx2.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+
+            ctx1.font = 'bold 40px Arial';
+            ctx1.fillStyle = 'black';
+            ctx1.textAlign = 'center';
+            ctx1.fillText('You Lose!', WIDTH / 2, HEIGHT / 2);
+
+            ctx2.font = 'bold 40px Arial';
+            ctx2.fillStyle = 'black';
+            ctx2.textAlign = 'center';
+            ctx2.fillText('You Win!', WIDTH / 2, HEIGHT / 2);
+
+            setTimeout(() => showEndGamePopup(2), 5000);
             /*TODO color canvas1 in red
             *  and canvas2 in green*/
 
         }else{
             localStorage.setItem('winner','1');
+            ctx2.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx2.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+            ctx1.fillStyle = 'rgba(0, 255, 0, 0.3)';
+            ctx1.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
+
+            ctx2.font = 'bold 40px Arial';
+            ctx2.fillStyle = 'black';
+            ctx2.textAlign = 'center';
+            ctx2.fillText('You Lose!', WIDTH / 2, HEIGHT / 2);
+
+            ctx1.font = 'bold 40px Arial';
+            ctx1.fillStyle = 'black';
+            ctx1.textAlign = 'center';
+            ctx1.fillText('You Win!', WIDTH / 2, HEIGHT / 2);
+
+            setTimeout(() => showEndGamePopup(1), 5000);
             /*TODO color canvas1 in green
             *  and canvas2 in red*/
         }
@@ -231,9 +263,9 @@ function update() {
 }
 
 function startNewGame() {
-    player1.hp = 10;
+    player1.hp = 20;
     player1.score = 0;
-    player2.hp = 10;
+    player2.hp = 20;
     player2.score = 0;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
@@ -282,4 +314,18 @@ pauseButton.addEventListener('click', function () {
     paused = true;
     showPausePopup();
 });
+function showEndGamePopup(winner) {
+    const popup = document.getElementById('endGamePopup');
+    const localPlayer = localStorage.getItem('playerNumber');
+
+    popup.style.display = 'flex';
+}
+
+document.getElementById('replayGame').addEventListener('click', () => {
+    location.reload();
+});
+document.getElementById('exitGameEnd').addEventListener('click', () => {
+    window.location.href = 'exit.html';
+});
+
 
