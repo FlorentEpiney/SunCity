@@ -103,7 +103,9 @@ export default class RotatingEntityRenderer {
         
         // Green foreground for current health
         ctx.fillStyle = '#33FF33';
-        const healthWidth = barWidth * (entity.hp / entity.hpMax);
+        let entityHP = entity.hp;
+        if(entityHP > entity.hpMax) entityHP = entity.hpMax;    //The green bar should not exceed the bar width
+        const healthWidth = barWidth * (entityHP / entity.hpMax);
         ctx.fillRect(healthBarX, healthBarY, healthWidth, 5);
         
         // Black border
