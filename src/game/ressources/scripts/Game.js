@@ -263,9 +263,9 @@ function update() {
 }
 
 function startNewGame() {
-    player1.hp = 20;
+    player1.hp = 10;
     player1.score = 0;
-    player2.hp = 20;
+    player2.hp = 10;
     player2.score = 0;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
