@@ -29,13 +29,11 @@ function loadImage(image, src, fallbackSrc = null) {
     image.onerror = function() {
         console.error(`Error loading image: ${src}`);
         if (fallbackSrc) {
-            console.log(`Falling back to: ${fallbackSrc}`);
             image.src = fallbackSrc;
         }
     };
     
     image.onload = function() {
-        console.log(`Image loaded successfully: ${src}`);
     };
     
     image.src = src;
@@ -84,5 +82,3 @@ Img.guard_yellow.columns = 4;
 Img.inspector.rows = 4;
 Img.inspector.columns = 4;
 */
-// Output loaded images to console for debugging
-console.log("ImagesManager initialized with the following images:", Img);

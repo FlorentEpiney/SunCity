@@ -10,6 +10,7 @@ export default function Player(startX, startY, name, img, id) {
     self.renderer = new RotatingEntityRenderer();
 
     // Set initial state and rotation
+    self.name = name;
     self.state = 'alive';
     self.rotation = 0;
     self.maxMoveSpd = 10*5;
@@ -123,9 +124,6 @@ export default function Player(startX, startY, name, img, id) {
         if (self.rotationMode) {
             self.rotationModeTimer = self.ROTATION_MODE_DURATION;
         }
-
-        // Visual feedback that rotation mode changed
-        console.log("Rotation mode " + (self.rotationMode ? "enabled" : "disabled"));
     };
 
     // Original attack methods

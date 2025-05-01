@@ -133,6 +133,7 @@ fetch('../../gameData/collision_map.json')
             player2.performSpecialAttack();
         } else if (event.keyCode === 80) { //p - pause
             paused = !paused;
+            paused ? showPausePopup() : hidePausePopup();
         }
     };
 
@@ -158,7 +159,7 @@ fetch('../../gameData/collision_map.json')
             player2.pressingUp = false;
     };
 
-f// Update function in Game.js
+// Update function in Game.js
 function update() {
     if (paused) {return;}
 

@@ -49,11 +49,9 @@ export default class EnemyFactory {
      * @returns {Object} - Enemy instance
      */
    static randomlyGenerate() {
-    console.log("EnemyFactory.randomlyGenerate called");
     
     // Check if Maps.current exists to prevent errors
     if (!Maps.current) {
-        console.error("Maps.current is undefined in EnemyFactory");
         return null;
     }
     
@@ -68,22 +66,18 @@ export default class EnemyFactory {
     switch (enemyType) {
         case 0:
             // Handgun Enemy
-            console.log("Creating HandgunEnemy");
             enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.handgunEnemy, 5, 1, 200);
             break;
         case 1:
             // Flamethrower Enemy
-            console.log("Creating FlameThrowerEnemy");
             enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.flameThrowerEnemy, 20, 0.5, 100);
             break;
         case 2:
             // Pumpgun Enemy (Using RotatingEnemy implementation)
-            console.log("Creating PumpgunEnemy");
             enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.pumpgunEnemy, 12, 1.5, 150);
             break;
         case 3:
             // Knife Enemy (Using standard enemy implementation)
-            console.log("Creating KnifeEnemy");
             enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.knifeEnemy, 8, 2, 100);
             enemy.maxMoveSpd = 4; // Knife enemies move faster
             break;

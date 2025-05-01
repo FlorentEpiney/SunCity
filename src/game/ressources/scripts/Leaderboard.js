@@ -25,7 +25,6 @@ export default function Leaderboard(){
                 return response.json();
             })
             .then(data => {
-                console.log('Wall of Fame data:', data);
                 wallOfFame = data;
 
                 // Check if player1 already exists
@@ -137,7 +136,6 @@ export default function Leaderboard(){
                 return response.json();
             })
             .then(data => {
-                console.log('Wall of Fame data:', data);
                 wallOfFame = data;
 
                 // Call the function to display the table

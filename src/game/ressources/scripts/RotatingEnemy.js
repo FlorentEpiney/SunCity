@@ -19,7 +19,6 @@ import Bullet from './Bullet.js';
  * @returns {Object} - RotatingEnemy instance
  */
 export default function RotatingEnemy(id, x, y, width, height, img, hp, atkSpd, atkRange) {
-    console.log("Creating rotating enemy", id, "at", x, y);
     
     // Create an actor as the base, but with 'rotatingEnemy' type
     const self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd, '');
@@ -171,9 +170,6 @@ export default function RotatingEnemy(id, x, y, width, height, img, hp, atkSpd, 
             // Generate bullet using existing Bullet.generate function
             // The aim angle is already set in updateAim
             Bullet.generate(self);
-            
-            // Add some visual feedback for debugging
-            console.log(`RotatingEnemy ${self.id} attacking at angle ${self.aimAngle}`);
         }
     };
     

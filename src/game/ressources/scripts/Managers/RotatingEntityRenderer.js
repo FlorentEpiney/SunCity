@@ -71,7 +71,12 @@ export default class RotatingEntityRenderer {
         
         // Reset transformation
         ctx.resetTransform();
-        
+
+        // Display player name above the entity
+        if(entity.type == 'player') {
+            drawName(ctx, x, y, entity, entity.name);
+        }
+
         // Draw health bar if entity is alive
         if (entity.state === 'alive') {
             this.drawHealthBar(ctx, x - entity.width / 2, y - entity.height / 2 - 20, entity);
@@ -105,4 +110,15 @@ export default class RotatingEntityRenderer {
         ctx.strokeStyle = 'black';
         ctx.strokeRect(healthBarX, healthBarY, barWidth, 5);
     }
+}
+
+
+function drawName(ctx, x, y, entity, name) {
+    const nameX = x ;
+    const nameY = y - entity.height / 2;
+
+    ctx.fillStyle = 'black';
+    ctx.font = '16px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(name, nameX, nameY);
 }

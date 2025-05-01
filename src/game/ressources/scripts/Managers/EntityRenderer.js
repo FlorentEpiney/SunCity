@@ -66,3 +66,5 @@ export default class EntityRenderer {
         ctx.strokeRect(healthBarX - 50, healthBarY, 100, 10);
     }
 }
+
+
