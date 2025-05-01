@@ -22,9 +22,17 @@ export default function Bullet (id, x, y, spdX, spdY, width, height, combatType,
 
         if (self.combatType === 'player') { // bullet was shot by player
             for (var key2 in Enemy.list) {
-                if (self.testCollision(Enemy.list[key2])) {
+                var enemy = Enemy.list[key2];
+                
+                // Only check collision with living enemies
+                // Skip collision detection for dead enemies or specifically for rotating enemies in 'dead' state
+                if ((enemy.state === 'dead') || (enemy.hp <= 0)) {
+                    continue; // Skip this enemy
+                }
+                
+                if (self.testCollision(enemy)) {
                     self.toRemove = true;
-                    Enemy.list[key2].hp -= 1;
+                    enemy.hp -= 1;
                 }
             }
                 if (self.testCollision(player)) {

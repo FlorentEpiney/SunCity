@@ -1,4 +1,5 @@
 // ImagesManager.js
+// Path: ressources/scripts/Managers/ImagesManager.js
 
 /**
  * ImagesManager.js
@@ -7,29 +8,77 @@
  */
 export const Img = {
     player: [],
-    bat: new Image(),
-    bee: new Image(),
+
+    // bullets images
     bullet: new Image(),
+
+    //upgrades images
     upgrade1: new Image(),
     upgrade2: new Image(),
+
+    //enemy images
+    handgunEnemy: new Image(),
+    flameThrowerEnemy: new Image(),
+    pumpgunEnemy: new Image(),
+    knifeEnemy: new Image(),
+    rotatingEnemyDead: new Image(), // New rotating enemy dead image
 };
 
-// Assigning image sources
+// Function to load an image with error handling
+function loadImage(image, src, fallbackSrc = null) {
+    image.onerror = function() {
+        console.error(`Error loading image: ${src}`);
+        if (fallbackSrc) {
+            image.src = fallbackSrc;
+        }
+    };
+    
+    image.onload = function() {
+    };
+    
+    image.src = src;
+}
+
+// Assigning image sources with error handling
 Img.player[0] = new Image();
-Img.player[0].src = '../../ressources/images/player.png';
+loadImage(Img.player[0], '../../ressources/images/player-img/player_soldier.png');
+
 Img.player[1] = new Image();
-Img.player[1].src = '../../ressources/images/player.png';
-Img.bat.src = '../../ressources/images/bat.png';
-Img.bee.src = '../../ressources/images/bee.png';
-Img.bullet.src = '../../ressources/images/bullet.png';
-Img.upgrade1.src = '../../ressources/images/upgrade1.png';
-Img.upgrade2.src = '../../ressources/images/upgrade2.png';
+loadImage(Img.player[1], '../../ressources/images/player-img/player_hitman.png');
+
+
+loadImage(Img.bullet, '../../ressources/images/bullet.png');
+
+
+loadImage(Img.upgrade1, '../../ressources/images/upgrade1.png');
+loadImage(Img.upgrade2, '../../ressources/images/upgrade2.png');
+
+
+
+loadImage(Img.handgunEnemy, '../../ressources/images/enemy-img/enemy_9mmhandgun.png');
+
+loadImage(Img.flameThrowerEnemy, '../../ressources/images/enemy-img/enemy_flamethrower.png');
+
+loadImage(Img.pumpgunEnemy, '../../ressources/images/enemy-img/enemy_pumpgun.png');
+
+loadImage(Img.knifeEnemy, '../../ressources/images/enemy-img/enemy_knife.gif');
+
+loadImage(Img.rotatingEnemyDead, '../../ressources/images/enemy-img/rotating_enemy_dead.png');
 
 // Adding custom metadata for sprite sheets
-// For example, if the bat sprite sheet is organized in 2 rows and 3 columns:
+/**
 Img.bat.rows = 4;
 Img.bat.columns = 3;
 
-// Similarly for the bee sprite sheet:
 Img.bee.rows = 4;
 Img.bee.columns = 3;
+
+Img.guard_white.rows = 4;
+Img.guard_white.columns = 4;
+
+Img.guard_yellow.rows = 4;
+Img.guard_yellow.columns = 4;
+
+Img.inspector.rows = 4;
+Img.inspector.columns = 4;
+*/

@@ -1,6 +1,5 @@
 /*
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("DOM loaded - checking for time span");
     
     // Find the span by ID
     let timeSpan = document.getElementById("total-time");
@@ -104,7 +103,6 @@ function updateTimeDisplay(spanElement, minutes) {
     
     // Update the span
     spanElement.textContent = `${totalHours}h ${remainingMinutes}m`;
-    console.log(`Updated span text to: ${totalHours}h ${remainingMinutes}m`);
 }
 
 /* function for burger menu in vertical mode */

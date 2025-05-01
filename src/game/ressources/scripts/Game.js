@@ -5,6 +5,7 @@ import Bullet from './Bullet.js';
 import Upgrade from './Upgrade.js';
 import Leaderboard from './Leaderboard.js';
 import { Img } from './Managers/ImagesManager.js';
+import EnemyFactory from './Managers/EnemyFactory.js'
 
 
 // Define global variables that will be used by other modules
@@ -93,71 +94,72 @@ fetch('../../gameData/collision_map.json')
 
         gameloop = setInterval(update, 40);
     })
-
 .catch(error => {
         console.error('Error loading collision map:', error);
     });
 
- document.onkeydown = function(event) {
-     if (event.keyCode === 68) { //d
-         player1.pressingRight = true;
-         player1.aimAngle = 0;
-     } else if (event.keyCode === 83) {//s
-         player1.pressingDown = true;
-         player1.aimAngle = 90;
-     } else if (event.keyCode === 65) { //a
-         player1.pressingLeft = true;
-         player1.aimAngle = 180;
-     } else if (event.keyCode === 87){ // w
-         player1.pressingUp = true;
-         player1.aimAngle = 270;
-     }else if (event.keyCode === 81) // q
-        player1.performAttack();
-    else if (event.keyCode === 69) // e
-        player1.performSpecialAttack();
+    document.onkeydown = function(event) {
+        // Player 1 controls
+        if (event.keyCode === 68) { //d
+            player1.pressingRight = true;
+        } else if (event.keyCode === 83) { //s
+            player1.pressingDown = true;
+        } else if (event.keyCode === 65) { //a
+            player1.pressingLeft = true;
+        } else if (event.keyCode === 87) { // w
+            player1.pressingUp = true;
+        } else if (event.keyCode === 16) { // Shift key - toggle rotation mode
+            player1.toggleRotationMode();
+        } else if (event.keyCode === 81) { // q - attack
+            player1.performAttack();
+        } else if (event.keyCode === 69) { // e - special attack
+            player1.performSpecialAttack();
+        }
 
-    if (event.keyCode === 39) { // right arrow
-        player2.pressingRight = true;
-        player2.aimAngle = 0;
-    }else if (event.keyCode === 40) { // down arrow
-        player2.pressingDown = true;
-        player2.aimAngle = 90;
-    }else if (event.keyCode === 37) { // left arrow
-        player2.pressingLeft = true;
-        player2.aimAngle = 180;
-    }else if (event.keyCode === 38) { // up arrow
-        player2.pressingUp = true;
-        player2.aimAngle = 270;
-    }else if (event.keyCode === 48) // 0
-        player2.performAttack();
-    else if (event.keyCode === 57) // 9
-        player2.performSpecialAttack();
+        // Player 2 controls
+        if (event.keyCode === 39) { // right arrow
+            player2.pressingRight = true;
+        } else if (event.keyCode === 40) { // down arrow
+            player2.pressingDown = true;
+        } else if (event.keyCode === 37) { // left arrow
+            player2.pressingLeft = true;
+        } else if (event.keyCode === 38) { // up arrow
+            player2.pressingUp = true;
+        } else if (event.keyCode === 13) { // Enter key - toggle rotation mode
+            player2.toggleRotationMode();
+        } else if (event.keyCode === 48) { // 0 - attack
+            player2.performAttack();
+        } else if (event.keyCode === 57) { // 9 - special attack
+            player2.performSpecialAttack();
+        } else if (event.keyCode === 80) { //p - pause
+            paused = !paused;
+            paused ? showPausePopup() : hidePausePopup();
+        }
+    };
 
-    else if (event.keyCode === 80) //p
-        paused = !paused;
-        paused ? showPausePopup() : hidePausePopup();
-}
+    document.onkeyup = function(event) {
+        // Player 1 controls
+        if (event.keyCode === 68) //d
+            player1.pressingRight = false;
+        else if (event.keyCode === 83) //s
+            player1.pressingDown = false;
+        else if (event.keyCode === 65) //a
+            player1.pressingLeft = false;
+        else if (event.keyCode === 87) // w
+            player1.pressingUp = false;
 
-document.onkeyup = function(event) {
-    if (event.keyCode === 68) //d
-        player1.pressingRight = false;
-    else if (event.keyCode === 83) //s
-        player1.pressingDown = false;
-    else if (event.keyCode === 65) //a
-        player1.pressingLeft = false;
-    else if (event.keyCode === 87) // w
-        player1.pressingUp = false;
+        // Player 2 controls
+        if (event.keyCode === 39) // right arrow
+            player2.pressingRight = false;
+        else if (event.keyCode === 40) // down arrow
+            player2.pressingDown = false;
+        else if (event.keyCode === 37) // left arrow
+            player2.pressingLeft = false;
+        else if (event.keyCode === 38) // up arrow
+            player2.pressingUp = false;
+    };
 
-    if (event.keyCode === 39) // right arrow
-        player2.pressingRight = false;
-    else if (event.keyCode === 40) // down arrow
-        player2.pressingDown = false;
-    else if (event.keyCode === 37) // left arrow
-        player2.pressingLeft = false;
-    else if (event.keyCode === 38) // up arrow
-        player2.pressingUp = false;
-}
-
+// Update function in Game.js
 function update() {
     if (paused) {return;}
 
@@ -221,35 +223,40 @@ function update() {
     ctx1.clearRect(0, 0, WIDTH, HEIGHT);
     ctx2.clearRect(0, 0, WIDTH, HEIGHT);
 
-    // Draw the map and players on canvas 1 (Player 1's perspective)
+    // Update players
     player1.update(ctx1);
     player2.update(ctx2);
+
+    // Draw the map and players on canvas 1 (Player 1's perspective)
     Maps.current.draw(ctx1, player1);
     player1.draw(ctx1);
 
+    // Draw player2 relative to player1's position
     let p2_x_relative_to_p1 = player2.x - player1.x;
     let p2_y_relative_to_p1 = player2.y - player1.y;
     player2.drawAt(ctx1, p2_x_relative_to_p1, p2_y_relative_to_p1);
-
-    localStorage.setItem('hpPlayer1',player1.hp);
-    localStorage.setItem('scorePlayer1',player1.score);
 
     // Draw the map and players on canvas 2 (Player 2's perspective)
     Maps.current.draw(ctx2, player2);
     player2.draw(ctx2);
 
+    // Draw player1 relative to player2's position
     let p1_x_relative_to_p2 = player1.x - player2.x;
     let p1_y_relative_to_p2 = player1.y - player2.y;
     player1.drawAt(ctx2, p1_x_relative_to_p2, p1_y_relative_to_p2);
 
-
-    localStorage.setItem('hpPlayer2',player2.hp);
-    localStorage.setItem('scorePlayer2',player2.score);
-
+    // Update game state
     frameCount++;
     player1.score++;
     player2.score++;
 
+    // Store player stats in local storage
+    localStorage.setItem('hpPlayer1', player1.hp);
+    localStorage.setItem('scorePlayer1', player1.score);
+    localStorage.setItem('hpPlayer2', player2.hp);
+    localStorage.setItem('scorePlayer2', player2.score);
+
+    // Update game entities
     Bullet.update(ctx1, ctx2, player1, player2);
     Upgrade.update(ctx1, ctx2, player1, player2);
     Enemy.update(ctx1, ctx2, player1, player2);
@@ -257,9 +264,9 @@ function update() {
 }
 
 function startNewGame() {
-    player1.hp = 20;
+    player1.hp = 10;
     player1.score = 0;
-    player2.hp = 20;
+    player2.hp = 10;
     player2.score = 0;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
@@ -268,9 +275,14 @@ function startNewGame() {
     Enemy.list = {};
     Upgrade.list = {};
     Bullet.list = {};
+    /*
     Enemy.randomlyGenerate();
     Enemy.randomlyGenerate();
     Enemy.randomlyGenerate();
+    */
+    EnemyFactory.randomlyGenerate();
+
+
 }
 
 // Pause Popup Logic
