@@ -1,4 +1,12 @@
 [
-  {"pseudo": "Flep", "timer": 20},
-  {"pseudo": "Walter", "timer": 30}
+  {
+    "pseudo": "Alice",
+    "score": "197",
+    "win": true
+  },
+  {
+    "pseudo": "Bob",
+    "score": "145",
+    "win": true
+  }
 ]

@@ -16,6 +16,20 @@ export default function Upgrade (id, x, y, width, height, category, img) {
         if (self.timer >= 20000) { // Remove upgrade after 20 seconds
             self.toRemove = true;
         }
+        this.x = this.x + 250;
+        this.y = this.y + 250;
+        var isColliding = player.testCollision(this);
+        this.x = this.x - 250;
+        this.y = this.y - 250;
+        if (isColliding) {
+            if (this.category === 'score'){
+                player.score += 1000;
+            }
+            if (this.category === 'hp'){
+                player.hp += 3;
+            }
+            this.toRemove = true;
+        }
     };
 
     return self;
@@ -23,23 +37,23 @@ export default function Upgrade (id, x, y, width, height, category, img) {
 
 Upgrade.list = {};
 
-Upgrade.update = function(ctx, player) {
-    if (frameCount % 75 === 0) // every 3 sec
+Upgrade.update = function(ctx1, ctx2, player1, player2) {
+
+    if (frameCount % 10 === 0) { //every 3 sec. 75;
         Upgrade.randomlyGenerate();
+    }
+
     for (var key in Upgrade.list) {
-        Upgrade.list[key].update(ctx, player);
-        var isColliding = player.testCollision(Upgrade.list[key]);
-        if (isColliding) {
-            if (Upgrade.list[key].category === 'score')
-                score += 1000;
-            if (Upgrade.list[key].category === 'atkSpd')
-                player.atkSpd += 3;
+        var u = Upgrade.list[key];
+        u.update(ctx1, player1);
+        u.update(ctx2, player2);
+
+        if (u.toRemove) {
             delete Upgrade.list[key];
         }
-        if (Upgrade.list[key] && Upgrade.list[key].toRemove)
-            delete Upgrade.list[key];
     }
 };
+
 
 Upgrade.randomlyGenerate = function() {
     var x = Math.random() * Maps.current.width;
@@ -53,7 +67,7 @@ Upgrade.randomlyGenerate = function() {
         category = 'score';
         img = Img.upgrade1;
     } else {
-        category = 'atkSpd';
+        category = 'hp';
         img = Img.upgrade2;
     }
     var upgrade = Upgrade(id, x, y, width, height, category, img);

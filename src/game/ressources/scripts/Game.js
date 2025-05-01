@@ -3,6 +3,7 @@ import Player from './Player.js';
 import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import Upgrade from './Upgrade.js';
+import Leaderboard from './Leaderboard.js';
 import { Img } from './Managers/ImagesManager.js';
 import EnemyFactory from './Managers/EnemyFactory.js'
 
@@ -37,10 +38,10 @@ var TILE_SIZE = 32 * 2;
 var WIDTH = 500;
 var HEIGHT = 500;
 var timeWhenGameStarted = Date.now();
-var frameCount = 0;
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
 var paused = false;
+var gameloop;
 
 function testCollisionRectRect(rect1, rect2) {
     return rect1.x <= rect2.x + rect2.width &&
@@ -91,9 +92,9 @@ fetch('../../gameData/collision_map.json')
         player = player1;
         startNewGame();
 
-        setInterval(update, 40);
+        gameloop = setInterval(update, 40);
     })
-    .catch(error => {
+.catch(error => {
         console.error('Error loading collision map:', error);
     });
 
@@ -114,7 +115,7 @@ fetch('../../gameData/collision_map.json')
         } else if (event.keyCode === 69) { // e - special attack
             player1.performSpecialAttack();
         }
-    
+
         // Player 2 controls
         if (event.keyCode === 39) { // right arrow
             player2.pressingRight = true;
@@ -134,7 +135,7 @@ fetch('../../gameData/collision_map.json')
             paused = !paused;
         }
     };
-    
+
     document.onkeyup = function(event) {
         // Player 1 controls
         if (event.keyCode === 68) //d
@@ -145,7 +146,7 @@ fetch('../../gameData/collision_map.json')
             player1.pressingLeft = false;
         else if (event.keyCode === 87) // w
             player1.pressingUp = false;
-    
+
         // Player 2 controls
         if (event.keyCode === 39) // right arrow
             player2.pressingRight = false;
@@ -159,9 +160,30 @@ fetch('../../gameData/collision_map.json')
 
 f// Update function in Game.js
 function update() {
-    if (paused) {
-        ctx1.fillText('Paused', WIDTH / 2, HEIGHT / 2);
-        ctx2.fillText('Paused', WIDTH / 2, HEIGHT / 2);
+    if (paused) {return;}
+
+    // Verification of the end of the game
+    if (player1.hp <= 0 || player2.hp <= 0) {
+
+        clearInterval(gameloop); // stop the game loop
+
+        localStorage.setItem('hpPlayer1',player1.hp);
+        localStorage.setItem('hpPlayer2',player2.hp);
+
+        if(player1.hp <= 0){
+            localStorage.setItem('winner','2');
+            /*TODO color canvas1 in red
+            *  and canvas2 in green*/
+
+        }else{
+            localStorage.setItem('winner','1');
+            /*TODO color canvas1 in green
+            *  and canvas2 in red*/
+        }
+
+        //Leaderboard
+        Leaderboard().saveScore();
+
         return;
     }
 
@@ -171,7 +193,7 @@ function update() {
     // Update players
     player1.update(ctx1);
     player2.update(ctx2);
-    
+
     // Draw the map and players on canvas 1 (Player 1's perspective)
     Maps.current.draw(ctx1, player1);
     player1.draw(ctx1);
@@ -192,25 +214,27 @@ function update() {
 
     // Update game state
     frameCount++;
-    scorePlayer1++;
-    scorePlayer2++;
-    
+    player1.score++;
+    player2.score++;
+
     // Store player stats in local storage
     localStorage.setItem('hpPlayer1', player1.hp);
-    localStorage.setItem('scorePlayer1', scorePlayer1);
+    localStorage.setItem('scorePlayer1', player1.score);
     localStorage.setItem('hpPlayer2', player2.hp);
-    localStorage.setItem('scorePlayer2', scorePlayer2);
+    localStorage.setItem('scorePlayer2', player2.score);
 
     // Update game entities
     Bullet.update(ctx1, ctx2, player1, player2);
-    Upgrade.update(ctx1, player1);
-    Upgrade.update(ctx2, player2);
+    Upgrade.update(ctx1, ctx2, player1, player2);
     Enemy.update(ctx1, ctx2, player1, player2);
+
 }
 
 function startNewGame() {
     player1.hp = 10;
+    player1.score = 0;
     player2.hp = 10;
+    player2.score = 0;
     timeWhenGameStarted = Date.now();
     frameCount = 0;
     scorePlayer1 = 0;
@@ -224,6 +248,38 @@ function startNewGame() {
     Enemy.randomlyGenerate();
     */
     EnemyFactory.randomlyGenerate();
-    
-   
+
+
 }
+
+// Pause Popup Logic
+function showPausePopup() {
+    document.getElementById('pausePopup').style.display = 'flex';
+}
+function hidePausePopup() {
+    document.getElementById('pausePopup').style.display = 'none';
+}
+const resumeGameButton = document.getElementById('resumeGame');
+resumeGameButton.addEventListener('click', function () {
+    paused = false;
+    hidePausePopup();
+});
+const restartGameButton = document.getElementById('restartGame');
+restartGameButton.addEventListener('click', function () {
+    paused = false;
+    hidePausePopup();
+    location.reload();
+});
+const exitGameButton = document.getElementById('exitGame');
+exitGameButton.addEventListener('click', function () {
+    paused = false;
+    hidePausePopup();
+    window.location.href = 'exit.html';
+});
+
+const pauseButton = document.getElementById('pauseButton');
+pauseButton.addEventListener('click', function () {
+    paused = true;
+    showPausePopup();
+});
+

@@ -5,36 +5,36 @@ import Actor from './Actor.js';
 
 export default function Player(startX, startY, name, img) {
     var self = Actor('player', 'myId', startX, startY, 64, 64, img, 10, 1, name);
-    
+
     // Initialize rotating renderer
     self.renderer = new RotatingEntityRenderer();
-    
+
     // Set initial state and rotation
     self.state = 'alive';
     self.rotation = 0;
-    self.maxMoveSpd = 10 * 5;
+    self.maxMoveSpd = 10;
     self.pressingMouseLeft = false;
     self.pressingMouseRight = false;
-    
+
     // Rotation mode properties
     self.rotationMode = false;
     self.rotationModeTimer = 0;
-    self.ROTATION_MODE_DURATION = 60; 
-    
+    self.ROTATION_MODE_DURATION = 60;
+
     // Visual indicator for rotation mode
     self.rotationModeIndicator = {
         active: false,
         alpha: 0.7,
         color: 'rgba(255, 255, 0, 0.7)' // Yellow glow
     };
-    
+
     // Variables to track movement for rotation calculation
     self.lastMoveX = 0;
     self.lastMoveY = 0;
-    
+
     // Store original methods before overriding
     var originalUpdatePosition = self.updatePosition;
-    
+
     // Override updatePosition to handle rotation mode
     self.updatePosition = function() {
         if (self.rotationMode) {
@@ -44,13 +44,13 @@ export default function Player(startX, startY, name, img) {
         // Call the original method when not in rotation mode
         originalUpdatePosition.call(self);
     };
-    
+
     var super_update = self.update;
     self.update = function(ctx) {
         // Store previous position to calculate movement direction
         const oldX = self.x;
         const oldY = self.y;
-        
+
         // Handle rotation mode timer if it's active and not toggled on permanently
         if (self.rotationMode && self.rotationModeTimer > 0) {
             self.rotationModeTimer--;
@@ -59,28 +59,28 @@ export default function Player(startX, startY, name, img) {
                 self.rotationModeIndicator.active = false;
             }
         }
-        
+
         // Call parent update - updatePosition is now handled with our override
         super_update(ctx, self);
-        
+
         // Calculate actual movement that occurred
         self.lastMoveX = self.x - oldX;
         self.lastMoveY = self.y - oldY;
-        
+
         // Update direction and aim angle based on key presses
         self.updateDirectionFromKeys();
-        
+
         // Animation counter update - even in rotation mode to show "turning" animation
         if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp)
             self.spriteAnimCounter += 0.2;
-            
+
         // Handle attacks
         if (self.pressingMouseLeft)
             self.performAttack();
         if (self.pressingMouseRight)
             self.performSpecialAttack();
     };
-    
+
     // New method to update direction and rotation based on key presses
     self.updateDirectionFromKeys = function() {
         // If any directional key is pressed, update rotation and aimAngle
@@ -97,7 +97,7 @@ export default function Player(startX, startY, name, img) {
             self.rotation = 270;
             self.aimAngle = 270;
         }
-        
+
         // Handle diagonal directions
         if (self.pressingRight && self.pressingUp) {
             self.rotation = 315;
@@ -113,25 +113,25 @@ export default function Player(startX, startY, name, img) {
             self.aimAngle = 225;
         }
     };
-    
+
     // Toggle rotation mode on/off
     self.toggleRotationMode = function() {
         self.rotationMode = !self.rotationMode;
         self.rotationModeIndicator.active = self.rotationMode;
-        
+
         // If turning on rotation mode, reset the timer
         if (self.rotationMode) {
             self.rotationModeTimer = self.ROTATION_MODE_DURATION;
         }
-        
+
         // Visual feedback that rotation mode changed
         console.log("Rotation mode " + (self.rotationMode ? "enabled" : "disabled"));
     };
-    
+
     // Original attack methods
     var originalPerformAttack = self.performAttack;
     var originalPerformSpecialAttack = self.performSpecialAttack;
-    
+
     // Override attack methods to enable temporary rotation mode
     self.performAttack = function() {
         // Enable temporary rotation mode when attacking
@@ -140,11 +140,11 @@ export default function Player(startX, startY, name, img) {
             self.rotationModeTimer = 15; // Short duration, about 0.6 seconds
             self.rotationModeIndicator.active = true;
         }
-        
+
         // Call the original attack method
         originalPerformAttack.call(self);
     };
-    
+
     self.performSpecialAttack = function() {
         // Enable temporary rotation mode when special attacking
         if (!self.rotationMode) {
@@ -152,7 +152,7 @@ export default function Player(startX, startY, name, img) {
             self.rotationModeTimer = 15; // Short duration
             self.rotationModeIndicator.active = true;
         }
-        
+
         // Call the original special attack method
         originalPerformSpecialAttack.call(self);
     };
@@ -165,7 +165,7 @@ export default function Player(startX, startY, name, img) {
             // Center of the screen
             var x = WIDTH / 2;
             var y = HEIGHT / 2;
-            
+
             // Draw a semi-transparent circle around the player
             ctx.globalAlpha = self.rotationModeIndicator.alpha;
             ctx.fillStyle = self.rotationModeIndicator.color;
@@ -175,11 +175,11 @@ export default function Player(startX, startY, name, img) {
             ctx.globalAlpha = 1.0;
             ctx.restore();
         }
-        
+
         // Draw the player with rotation
         self.renderer.draw(ctx, self, self);
     };
-    
+
     // Override the drawAt method for player-to-player rendering
     self.drawAt = function(ctx, x, y) {
         // Create a temporary entity with adjusted position
@@ -188,11 +188,11 @@ export default function Player(startX, startY, name, img) {
             x: self.x + x,
             y: self.y + y
         };
-        
+
         // Use the renderer to draw at the specific position
         self.renderer.draw(ctx, tempEntity, self);
     };
-    
+
     // Add a custom drawName method to handle player names
     self.drawName = function(ctx, x, y) {
         ctx.fillStyle = 'black';
