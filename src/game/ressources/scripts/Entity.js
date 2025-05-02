@@ -1,8 +1,8 @@
 // ressources/scripts/Entity.js
 import { Img } from './Managers/ImagesManager.js'; 
 
-const WIDTH = 500;  
-const HEIGHT = 500;
+const WIDTH = 1000;
+const HEIGHT = 250;
 
 function testCollisionRectRect(rect1, rect2) {
     return rect1.x <= rect2.x + rect2.width &&

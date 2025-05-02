@@ -16,11 +16,11 @@ export default function Upgrade (id, x, y, width, height, category, img) {
         if (self.timer >= 20000) { // Remove upgrade after 20 seconds
             self.toRemove = true;
         }
-        this.x = this.x + 250;
-        this.y = this.y + 250;
+        this.x = this.x + WIDTH/2;
+        this.y = this.y + HEIGHT/2;
         var isColliding = player.testCollision(this);
-        this.x = this.x - 250;
-        this.y = this.y - 250;
+        this.x = this.x - WIDTH/2;
+        this.y = this.y - HEIGHT/2;
         if (isColliding) {
             if (this.category === 'score'){
                 player.score += 1000;

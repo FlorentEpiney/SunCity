@@ -6,16 +6,61 @@ import Upgrade from './Upgrade.js';
 import Leaderboard from './Leaderboard.js';
 import { Img } from './Managers/ImagesManager.js';
 import EnemyFactory from './Managers/EnemyFactory.js'
+export { WIDTH, HEIGHT };
 
 
 // Define global variables that will be used by other modules
-window.WIDTH = 500;
-window.HEIGHT = 500;
+window.WIDTH = 1000;
+window.HEIGHT = 250;
 window.TILE_SIZE = 32 * 2;
 window.timeWhenGameStarted = Date.now();
 window.frameCount = 0;
 window.score = 0;
 window.paused = false;
+
+
+// Variables globales pour les dimensions du canvas
+let WIDTH = window.innerWidth * 0.45; // 45% de la largeur de la fenêtre
+let HEIGHT = window.innerHeight * 0.8; // 80% de la hauteur de la fenêtre
+
+
+// Fonction pour redimensionner les canvas
+function resizeCanvases() {
+    WIDTH = window.innerWidth * 0.45;
+    HEIGHT = window.innerHeight * 0.8;
+
+    console.log("WIDTH : " + WIDTH);
+    console.log("HEIGHT : " + HEIGHT);
+    // Limiter les dimensions minimales pour éviter les problèmes de jeu
+    WIDTH = Math.max(WIDTH, 400);
+    HEIGHT = Math.max(HEIGHT, 400);
+
+    // Mettre à jour les dimensions des canvas
+    const canvas1 = document.getElementById('player1Canvas');
+    const canvas2 = document.getElementById('player2Canvas');
+
+    canvas1.width = WIDTH;
+    canvas1.height = HEIGHT;
+    canvas2.width = WIDTH;
+    canvas2.height = HEIGHT;
+
+    // Régénérer le contexte après redimensionnement
+    ctx1 = canvas1.getContext('2d');
+    ctx2 = canvas2.getContext('2d');
+
+    // Réinitialiser les paramètres de contexte si nécessaire
+    ctx1.textAlign = 'center';
+    ctx2.textAlign = 'center';
+}
+
+// Appeler la fonction au chargement et au redimensionnement de la fenêtre
+window.addEventListener('load', resizeCanvases);
+window.addEventListener('resize', function() {
+    // Utiliser un debounce pour éviter des redimensionnements trop fréquents
+    clearTimeout(window.resizeTimer);
+    window.resizeTimer = setTimeout(resizeCanvases, 250);
+});
+
 
 
 
@@ -35,8 +80,8 @@ ctx2.msImageSmoothingEnabled = false;
 ctx2.imageSmoothingEnabled = false;
 
 var TILE_SIZE = 32 * 2;
-var WIDTH = 500;
-var HEIGHT = 500;
+// var WIDTH = 1000;
+// var HEIGHT = 250;
 var timeWhenGameStarted = Date.now();
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
