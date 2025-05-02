@@ -63,6 +63,18 @@ export default function Leaderboard(){
             })
             .catch(error => {
                 console.error('Error loading the JSON file:', error);
+                // Error popup
+                const errorPopup = document.createElement('div');
+                errorPopup.id = 'errorPopup';
+                errorPopup.textContent = 'Connection problem with the server. Score not saved.';
+                document.body.appendChild(errorPopup);
+
+                // Remove the popup after 5 seconds
+                setTimeout(() => {
+                    if (errorPopup && errorPopup.parentNode) {
+                        errorPopup.parentNode.removeChild(errorPopup);
+                    }
+                }, 5000);
             });
     };
 
