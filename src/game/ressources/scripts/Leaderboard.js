@@ -159,6 +159,10 @@ export default function Leaderboard(){
             })
             .catch(error => {
                 console.error('Error loading wall of fame data:', error);
+               // Display error message on HTML
+               const tableContainer = document.getElementById('wallOfFameTable');
+               tableContainer.innerHTML = '<p>Connection problem with the server. Impossible to display the leaderboard.</p>';
+
             });
     };
 
