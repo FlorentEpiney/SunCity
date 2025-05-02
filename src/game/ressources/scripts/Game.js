@@ -189,8 +189,6 @@ function update() {
             ctx2.fillText('You Win!', WIDTH / 2, HEIGHT / 2);
 
             setTimeout(() => showEndGamePopup(2), 5000);
-            /*TODO color canvas1 in red
-            *  and canvas2 in green*/
 
         }else{
             localStorage.setItem('winner','1');
@@ -210,8 +208,6 @@ function update() {
             ctx1.fillText('You Win!', WIDTH / 2, HEIGHT / 2);
 
             setTimeout(() => showEndGamePopup(1), 5000);
-            /*TODO color canvas1 in green
-            *  and canvas2 in red*/
         }
 
         //Leaderboard
