@@ -73,9 +73,11 @@ export default function Leaderboard(){
         wallOfFame = wallOfFame.map(player => {
             if (player.pseudo === pseudo) {
                 // If the score is higher, update it
-                if (score > player.score && win) {
-                    player.score = score;
-                    player.win = win;
+                if (win) {
+                    if (score > player.score){
+                        player.score = score;
+                    }
+                    player.nbVictories++;
                 }
             }
             return player;
@@ -97,12 +99,14 @@ export default function Leaderboard(){
     /*This function adds a new player into the wallOfFame.json if he doesn't exist yet
      */
     const addNewPlayer = function(pseudo, score, win) {
+        let nbVictories = 0;
+        if(win) nbVictories = 1;
 
         // Add the new player
         wallOfFame.push({
             pseudo: pseudo,
             score: score,
-            win: win
+            nbVictories: nbVictories
         });
 
         // Sort by descending score
@@ -156,7 +160,7 @@ export default function Leaderboard(){
         table.setAttribute('cellpadding', '10');
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
-        headerRow.innerHTML = '<th>Rang</th><th>Pseudo</th><th>Score</th><th>Win</th>';
+        headerRow.innerHTML = '<th>Rang</th><th>Pseudo</th><th>Score</th><th>Nb Victories</th>';
         thead.appendChild(headerRow);
         table.appendChild(thead);
 
@@ -168,7 +172,7 @@ export default function Leaderboard(){
                 <td>${data.indexOf(player) + 1}</td>
                 <td>${player.pseudo}</td>
                 <td>${player.score}</td>
-                <td>${player.win ? 'Yes' : 'No'}</td>
+                <td>${player.nbVictories}</td>
             `;
             tbody.appendChild(row);
         });
