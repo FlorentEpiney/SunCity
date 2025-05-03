@@ -2,6 +2,7 @@
 import Entity from './Entity.js';
 import Maps from './Maps.js';  // Import Maps from Maps.js
 import { Img } from './Managers/ImagesManager.js';  // Import Img properly
+import {WIDTH, HEIGHT} from "./Game.js";
 
 
 export default function Upgrade (id, x, y, width, height, category, img) {

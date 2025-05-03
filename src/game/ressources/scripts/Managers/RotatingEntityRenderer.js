@@ -1,9 +1,6 @@
 // RotatingEntityRenderer.js - Improved to handle health bars properly
 // Path: ressources/scripts/Managers/RotatingEntityRenderer.js
-
-// Get WIDTH and HEIGHT from window or set default values
-const WIDTH = window.WIDTH || 1000;
-const HEIGHT = window.HEIGHT || 250;
+import {WIDTH, HEIGHT} from "../Game.js";
 
 /**
  * RotatingEntityRenderer - Renders entities with rotation

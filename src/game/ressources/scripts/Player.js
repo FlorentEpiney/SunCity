@@ -2,6 +2,7 @@
 import { Img } from './Managers/ImagesManager.js';
 import RotatingEntityRenderer from './Managers/RotatingEntityRenderer.js';
 import Actor from './Actor.js';
+import {WIDTH, HEIGHT} from "./Game.js";
 
 export default function Player(startX, startY, name, img, id) {
     var self = Actor('player', id, startX, startY, 64, 64, img, 10, 1, name);

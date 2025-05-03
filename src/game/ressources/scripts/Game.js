@@ -10,32 +10,28 @@ export { WIDTH, HEIGHT };
 
 
 // Define global variables that will be used by other modules
-window.WIDTH = 1000;
-window.HEIGHT = 250;
 window.TILE_SIZE = 32 * 2;
 window.timeWhenGameStarted = Date.now();
 window.frameCount = 0;
 window.score = 0;
 window.paused = false;
 
-
-// Variables globales pour les dimensions du canvas
-let WIDTH = window.innerWidth * 0.45; // 45% de la largeur de la fenêtre
-let HEIGHT = window.innerHeight * 0.8; // 80% de la hauteur de la fenêtre
+let WIDTH = window.innerWidth * 0.45; // 45% of windows width
+let HEIGHT = window.innerHeight * 0.8; // 80% of windows height
 
 
-// Fonction pour redimensionner les canvas
+// Function for redimensioning the canvas
 function resizeCanvases() {
     WIDTH = window.innerWidth * 0.45;
     HEIGHT = window.innerHeight * 0.8;
 
     console.log("WIDTH : " + WIDTH);
     console.log("HEIGHT : " + HEIGHT);
-    // Limiter les dimensions minimales pour éviter les problèmes de jeu
+    // Limit the minimal dimensions in order to avoid game problems
     WIDTH = Math.max(WIDTH, 400);
     HEIGHT = Math.max(HEIGHT, 400);
 
-    // Mettre à jour les dimensions des canvas
+    // Update the canvas dimensions
     const canvas1 = document.getElementById('player1Canvas');
     const canvas2 = document.getElementById('player2Canvas');
 
@@ -44,19 +40,19 @@ function resizeCanvases() {
     canvas2.width = WIDTH;
     canvas2.height = HEIGHT;
 
-    // Régénérer le contexte après redimensionnement
+    // Regenerate context after redimensioning
     ctx1 = canvas1.getContext('2d');
     ctx2 = canvas2.getContext('2d');
 
-    // Réinitialiser les paramètres de contexte si nécessaire
+    // Reinizialise context parameters if necessary
     ctx1.textAlign = 'center';
     ctx2.textAlign = 'center';
 }
 
-// Appeler la fonction au chargement et au redimensionnement de la fenêtre
+// call function by loading or redimensioning the window
 window.addEventListener('load', resizeCanvases);
 window.addEventListener('resize', function() {
-    // Utiliser un debounce pour éviter des redimensionnements trop fréquents
+    // Use the debounce to avoid too frequently redimensioning
     clearTimeout(window.resizeTimer);
     window.resizeTimer = setTimeout(resizeCanvases, 250);
 });
@@ -80,8 +76,6 @@ ctx2.msImageSmoothingEnabled = false;
 ctx2.imageSmoothingEnabled = false;
 
 var TILE_SIZE = 32 * 2;
-// var WIDTH = 1000;
-// var HEIGHT = 250;
 var timeWhenGameStarted = Date.now();
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
