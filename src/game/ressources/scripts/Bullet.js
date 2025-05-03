@@ -2,6 +2,7 @@ import Entity from './Entity.js';
 import { Img } from './Managers/ImagesManager.js'; 
 import Maps from './Maps.js';
 import Enemy from './Enemy.js'; // Import Enemy to check for collisions
+import {WIDTH, HEIGHT} from "./Game.js";
 
 export default function Bullet (id, x, y, spdX, spdY, width, height, combatType, ownerId) {
     var self = Entity('bullet', id, x, y, width, height, Img.bullet);

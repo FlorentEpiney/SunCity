@@ -1,3 +1,5 @@
+import {WIDTH, HEIGHT} from "./Game.js";
+
 export default function Maps (id, imgSrc, grid) {
     const TILE_SIZE = 64; // set your tile size here
 

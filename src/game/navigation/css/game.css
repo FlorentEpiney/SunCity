@@ -34,17 +34,29 @@ h1 {
 
 #canvas-container {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap; /* Permet le passage à la ligne sur petits écrans */
     gap: 10px;
-    position: relative;
+    width: 100%;
+    max-width: 100vw;
 }
 
 canvas {
-    width: 500px;
-    height: 500px;
-    border: 1px solid #000;
-    margin: 0;
-    padding: 0;
+    border: 2px solid black;
+    background-color: #f0f0f0;
+    max-width: 45%;
+}
+
+@media (max-width: 900px) {
+    #canvas-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    canvas {
+        width: 100%;
+        height: auto;
+    }
 }
 
 #pausePopup {

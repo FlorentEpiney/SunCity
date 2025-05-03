@@ -6,16 +6,57 @@ import Upgrade from './Upgrade.js';
 import Leaderboard from './Leaderboard.js';
 import { Img } from './Managers/ImagesManager.js';
 import EnemyFactory from './Managers/EnemyFactory.js'
+export { WIDTH, HEIGHT };
 
 
 // Define global variables that will be used by other modules
-window.WIDTH = 500;
-window.HEIGHT = 500;
 window.TILE_SIZE = 32 * 2;
 window.timeWhenGameStarted = Date.now();
 window.frameCount = 0;
 window.score = 0;
 window.paused = false;
+
+let WIDTH = window.innerWidth * 0.45; // 45% of windows width
+let HEIGHT = window.innerHeight * 0.8; // 80% of windows height
+
+
+// Function for redimensioning the canvas
+function resizeCanvases() {
+    WIDTH = window.innerWidth * 0.45;
+    HEIGHT = window.innerHeight * 0.8;
+
+    console.log("WIDTH : " + WIDTH);
+    console.log("HEIGHT : " + HEIGHT);
+    // Limit the minimal dimensions in order to avoid game problems
+    WIDTH = Math.max(WIDTH, 400);
+    HEIGHT = Math.max(HEIGHT, 400);
+
+    // Update the canvas dimensions
+    const canvas1 = document.getElementById('player1Canvas');
+    const canvas2 = document.getElementById('player2Canvas');
+
+    canvas1.width = WIDTH;
+    canvas1.height = HEIGHT;
+    canvas2.width = WIDTH;
+    canvas2.height = HEIGHT;
+
+    // Regenerate context after redimensioning
+    ctx1 = canvas1.getContext('2d');
+    ctx2 = canvas2.getContext('2d');
+
+    // Reinizialise context parameters if necessary
+    ctx1.textAlign = 'center';
+    ctx2.textAlign = 'center';
+}
+
+// call function by loading or redimensioning the window
+window.addEventListener('load', resizeCanvases);
+window.addEventListener('resize', function() {
+    // Use the debounce to avoid too frequently redimensioning
+    clearTimeout(window.resizeTimer);
+    window.resizeTimer = setTimeout(resizeCanvases, 250);
+});
+
 
 
 
@@ -35,8 +76,6 @@ ctx2.msImageSmoothingEnabled = false;
 ctx2.imageSmoothingEnabled = false;
 
 var TILE_SIZE = 32 * 2;
-var WIDTH = 500;
-var HEIGHT = 500;
 var timeWhenGameStarted = Date.now();
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
