@@ -1,20 +1,19 @@
-
-
 export default function Leaderboard(){
 
     const path = 'http://localhost:3000/wall-of-fame';
     let wallOfFame;
+    let nbVictoriesPlayer1;
+    let nbVictoriesPlayer2;
 
     /*This function uses the localStorage to store the data into the wallOfFame.json
     * with 3 inputs: pseudo, score and if he wins the party or not.
      */
     const saveScore = function() {
         // Get data from localStorage
-        const player1Name = localStorage.getItem('player1Name');
-        const scorePlayer1 = localStorage.getItem('scorePlayer1');
-        const player2Name = localStorage.getItem('player2Name');
-        const scorePlayer2 = localStorage.getItem('scorePlayer2');
-        const winner = localStorage.getItem('winner');
+        const player1Name = player1.name
+        const scorePlayer1 = player1.score;
+        const player2Name = player2.name;
+        const scorePlayer2 = player2.score;
 
         // Get existing data
         fetch(path)
@@ -26,19 +25,26 @@ export default function Leaderboard(){
             })
             .then(data => {
                 wallOfFame = data;
+                wallOfFame.map(player => {
+                    if (player.pseudo === player1Name) {
+                        nbVictoriesPlayer1 = player.nbVictories;
+                    }
+                    if (player.pseudo === player2Name) {
+                        nbVictoriesPlayer2 = player.nbVictories;
+                    }
+                })
 
                 // Check if player1 already exists
                 let playerExists = wallOfFame.some(player => player.pseudo === player1Name);
-
                 if (playerExists) {
                     // Update existing player
-                    if(winner === '1')
-                        updatePlayerScore(player1Name, scorePlayer1, true);
+                    if(winner === 1)
+                        updatePlayerScore(player1Name, scorePlayer1, true, nbVictoriesPlayer1);
                     else
-                        updatePlayerScore(player1Name, scorePlayer1, false);
+                        updatePlayerScore(player1Name, scorePlayer1, false, nbVictoriesPlayer1);
                 } else {
                     // Add new player
-                    if(winner === '1')
+                    if(winner === 1)
                         addNewPlayer(player1Name, scorePlayer1, true);
                     else
                         addNewPlayer(player1Name, scorePlayer1, false);
@@ -49,13 +55,13 @@ export default function Leaderboard(){
 
                 if (playerExists) {
                     // Update existing player
-                    if(winner === '2')
-                        updatePlayerScore(player2Name, scorePlayer2, true);
+                    if(winner === 2)
+                        updatePlayerScore(player2Name, scorePlayer2, true, nbVictoriesPlayer2);
                     else
-                        updatePlayerScore(player2Name, scorePlayer2, false);
+                        updatePlayerScore(player2Name, scorePlayer2, false, nbVictoriesPlayer2);
                 } else {
                     // Add new player
-                    if(winner === '1')
+                    if(winner === 2)
                         addNewPlayer(player2Name, scorePlayer2, true);
                     else
                         addNewPlayer(player2Name, scorePlayer2, false);
@@ -80,7 +86,7 @@ export default function Leaderboard(){
 
     /*This function updates the score and the win if the pseudo already exists in the wallOfFame.json
      */
-    const updatePlayerScore = function(pseudo, score, win) {
+    const updatePlayerScore = function(pseudo, score, win, nbVictories) {
 
         wallOfFame = wallOfFame.map(player => {
             if (player.pseudo === pseudo) {
@@ -89,7 +95,7 @@ export default function Leaderboard(){
                     if (score > player.score){
                         player.score = score;
                     }
-                    player.nbVictories++;
+                    player.nbVictories = nbVictories + 1;
                 }
             }
             return player;

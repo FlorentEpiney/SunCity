@@ -53,17 +53,5 @@
 
 <!-- JS Scripts -->
 <script type="module" src="../../ressources/scripts/Game.js"></script>
-<script>
-    // Info published on life time
-    setInterval(() => {
-        document.getElementById("textarea-player1").innerHTML = `<b>HP: </b>${localStorage.getItem("hpPlayer1")}<br>
-        <b>Score: </b>${localStorage.getItem("scorePlayer1")}<br><br>
-        <b>Keyboard</b><br>w: up<br>s: down<br>a: left<br>d: right<br>q: shoot<br>e: special shoot`;
-
-        document.getElementById("textarea-player2").innerHTML = `<b>HP: </b>${localStorage.getItem("hpPlayer2")}<br>
-        <b>Score: </b>${localStorage.getItem("scorePlayer2")}<br><br>
-        <b>Keyboard</b><br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot`;
-    }, 10);
-</script>
 </body>
 </html>
