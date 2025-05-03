@@ -10,7 +10,7 @@ export { WIDTH, HEIGHT };
 export { player1, player2, winner};
 
 
-// Define global variables that will be used by other modules
+// Define global letiables that will be used by other modules
 window.TILE_SIZE = 32 * 2;
 window.timeWhenGameStarted = Date.now();
 window.frameCount = 0;
@@ -60,10 +60,10 @@ window.addEventListener('resize', function() {
 
 
 
-var canvas1 = document.getElementById("player1Canvas");
-var ctx1 = canvas1.getContext("2d");
-var canvas2 = document.getElementById("player2Canvas");
-var ctx2 = canvas2.getContext("2d");
+let canvas1 = document.getElementById("player1Canvas");
+let ctx1 = canvas1.getContext("2d");
+let canvas2 = document.getElementById("player2Canvas");
+let ctx2 = canvas2.getContext("2d");
 
 ctx1.font = '30px Arial';
 ctx1.mozImageSmoothingEnabled = false;
@@ -75,12 +75,12 @@ ctx2.mozImageSmoothingEnabled = false;
 ctx2.msImageSmoothingEnabled = false;
 ctx2.imageSmoothingEnabled = false;
 
-var TILE_SIZE = 32 * 2;
-var timeWhenGameStarted = Date.now();
-var scorePlayer1 = 0;
-var scorePlayer2 = 0;
-var paused = false;
-var gameloop;
+let TILE_SIZE = 32 * 2;
+let timeWhenGameStarted = Date.now();
+let scorePlayer1 = 0;
+let scorePlayer2 = 0;
+let paused = false;
+let gameloop;
 
 function testCollisionRectRect(rect1, rect2) {
     return rect1.x <= rect2.x + rect2.width &&
@@ -90,18 +90,18 @@ function testCollisionRectRect(rect1, rect2) {
 }
 
 
-var player1;
-var player2;
+let player1;
+let player2;
 
 // Load the collision map data
 fetch('../../gameData/collision_map.json')
     .then(response => response.json())
     .then(response => {
-        var array = response;
-        var array2D = [];
-        for (var i = 0; i < 100; i++) {
+        let array = response;
+        let array2D = [];
+        for (let i = 0; i < 100; i++) {
             array2D[i] = [];
-            for (var j = 0; j < 200; j++) {
+            for (let j = 0; j < 200; j++) {
                 array2D[i][j] = array[i * 200 + j];
             }
         }
@@ -110,11 +110,11 @@ fetch('../../gameData/collision_map.json')
 // fetch('gameData/collision_map_test.json')
 //     .then(response => response.json())
 //     .then(response => {
-//         var array = response;
-//         var array2D = [];
-//         for(var i = 0 ; i < 10; i++){
+//         let array = response;
+//         let array2D = [];
+//         for(let i = 0 ; i < 10; i++){
 //             array2D[i] = [];
-//             for(var j = 0 ; j < 10; j++){
+//             for(let j = 0 ; j < 10; j++){
 //                 array2D[i][j] = array[i * 10 + j];
 //             }
 //         }

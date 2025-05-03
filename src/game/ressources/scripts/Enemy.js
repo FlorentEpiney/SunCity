@@ -6,7 +6,7 @@ import EnemyFactory from './Managers/EnemyFactory.js';
 
 
 export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
-    var self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd,'');
+    let self = Actor('enemy', id, x, y, width, height, img, hp, atkSpd,'');
 
     self.directionChangeTimer = 0;
     self.spriteAnimCounter = 0;
@@ -38,7 +38,7 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
      * self.updateKeyPress is called to update the enemy's movement direction
      * self.performAttack is called to perform the attack
      */
-    var super_update = self.update;
+    let super_update = self.update;
     self.update = function(ctx, player) {
         // Store current position to calculate movement direction
         const oldX = self.x;
@@ -69,8 +69,8 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
         if (!self.targetPlayer) return;
         
         // Calculate direction to player
-        var diffX = self.targetPlayer.x - self.x;
-        var diffY = self.targetPlayer.y - self.y;
+        let diffX = self.targetPlayer.x - self.x;
+        let diffY = self.targetPlayer.y - self.y;
         
         // Determine movement direction based on player position
         self.pressingRight = diffX > 0;
@@ -126,8 +126,8 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
         // Use the stored player reference instead of a global player
         if (!self.targetPlayer) return;
         
-        var diffX = self.targetPlayer.x - self.x;
-        var diffY = self.targetPlayer.y - self.y;
+        let diffX = self.targetPlayer.x - self.x;
+        let diffY = self.targetPlayer.y - self.y;
 
         self.aimAngle = Math.atan2(diffY, diffX) / Math.PI * 180;
     };
@@ -179,7 +179,7 @@ Enemy.update = function(ctx1, ctx2, player1, player2) {
     }
 
     // First update all enemies
-    for (var key in Enemy.list) {
+    for (let key in Enemy.list) {
         // Only update the state, don't draw during update
         const enemy = Enemy.list[key];
         
@@ -237,16 +237,16 @@ Enemy.update = function(ctx1, ctx2, player1, player2) {
     }
     
     // Then draw all enemies separately for each canvas
-    for (var key in Enemy.list) {
+    for (let key in Enemy.list) {
         Enemy.list[key].draw(ctx1, player1);
     }
     
-    for (var key in Enemy.list) {
+    for (let key in Enemy.list) {
         Enemy.list[key].draw(ctx2, player2);
     }
 
     // Clean up dead enemies
-    for (var key in Enemy.list) {
+    for (let key in Enemy.list) {
         if (Enemy.list[key].toRemove) {
             delete Enemy.list[key];
         }
@@ -260,12 +260,12 @@ function calculateDistance(entity1, entity2) {
 }
 
 Enemy.randomlyGenerate = function() {
-    var x = Math.random() * Maps.current.width;
-    var y = Math.random() * Maps.current.height;
-    var height = 64 * 1.5;
-    var width = 64 * 1.5;
-    var id = Math.random();
-    var enemy; // Declare the variable first
+    let x = Math.random() * Maps.current.width;
+    let y = Math.random() * Maps.current.height;
+    let height = 64 * 1.5;
+    let width = 64 * 1.5;
+    let id = Math.random();
+    let enemy; // Declare the letiable first
     
     if (Math.random() < 0.5) {
         enemy = Enemy(id, x, y, width, height, Img.guard_white, 10, 1);

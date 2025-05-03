@@ -5,7 +5,7 @@ import Actor from './Actor.js';
 import {WIDTH, HEIGHT} from "./Game.js";
 
 export default function Player(startX, startY, name, img, id) {
-    var self = Actor('player', id, startX, startY, 64, 64, img, 10, 1, name);
+    let self = Actor('player', id, startX, startY, 64, 64, img, 10, 1, name);
 
     // Initialize rotating renderer
     self.renderer = new RotatingEntityRenderer();
@@ -35,7 +35,7 @@ export default function Player(startX, startY, name, img, id) {
     self.lastMoveY = 0;
 
     // Store original methods before overriding
-    var originalUpdatePosition = self.updatePosition;
+    let originalUpdatePosition = self.updatePosition;
 
     // Override updatePosition to handle rotation mode
     self.updatePosition = function() {
@@ -47,7 +47,7 @@ export default function Player(startX, startY, name, img, id) {
         originalUpdatePosition.call(self);
     };
 
-    var super_update = self.update;
+    let super_update = self.update;
     self.update = function(ctx) {
         // Store previous position to calculate movement direction
         const oldX = self.x;
@@ -128,8 +128,8 @@ export default function Player(startX, startY, name, img, id) {
     };
 
     // Original attack methods
-    var originalPerformAttack = self.performAttack;
-    var originalPerformSpecialAttack = self.performSpecialAttack;
+    let originalPerformAttack = self.performAttack;
+    let originalPerformSpecialAttack = self.performSpecialAttack;
 
     // Override attack methods to enable temporary rotation mode
     self.performAttack = function() {
@@ -162,8 +162,8 @@ export default function Player(startX, startY, name, img, id) {
         if (self.rotationModeIndicator.active) {
             ctx.save();
             // Center of the screen
-            var x = WIDTH / 2;
-            var y = HEIGHT / 2;
+            let x = WIDTH / 2;
+            let y = HEIGHT / 2;
 
             // Draw a semi-transparent circle around the player
             ctx.globalAlpha = self.rotationModeIndicator.alpha;
@@ -182,7 +182,7 @@ export default function Player(startX, startY, name, img, id) {
     // Override the drawAt method for player-to-player rendering
     self.drawAt = function(ctx, x, y) {
         // Create a temporary entity with adjusted position
-        var tempEntity = {
+        let tempEntity = {
             ...self,
             x: self.x + x,
             y: self.y + y
@@ -203,7 +203,7 @@ export default function Player(startX, startY, name, img, id) {
     // Override onDeath to update state
     self.onDeath = function() {
         self.state = 'dead';  // Update state for the renderer
-        var timeSurvived = Date.now() - timeWhenGameStarted;
+        let timeSurvived = Date.now() - timeWhenGameStarted;
         console.log("You lost! You survived for " + timeSurvived + " ms.");
         startNewGame();
     };
