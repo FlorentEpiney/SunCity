@@ -1,0 +1,46 @@
+body {
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #222;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#wallOfFameTable table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#wallOfFameTable th {
+    background-color: #f8b500;
+    color: white;
+    padding: 12px;
+    text-transform: uppercase;
+}
+
+#wallOfFameTable td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#wallOfFameTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#wallOfFameTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Optionnel : une petite médaille pour le top 1 */
+#wallOfFameTable tr:first-child td:first-child {
+    font-weight: bold;
+    color: #e67e22;
+}

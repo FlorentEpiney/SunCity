@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>SUN City</title>
-        <link rel="stylesheet" href="../css/start-screen.css">
-        <style>
-            body{
-                background-color: white;
-            }
-            h1{
-                color: black;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Leaderboard</h1>
-        <div id="wallOfFameTable"></div>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>SUN City - Leaderboard</title>
+    <link rel="stylesheet" href="../css/start-screen.css">
+    <link rel="stylesheet" href="../css/leaderboard.css">
+</head>
+<body>
 
-    <script type="module">
-       import Leaderboard from "../../ressources/scripts/Leaderboard.js";
-       document.addEventListener('DOMContentLoaded', function() {
-           const leaderboard = Leaderboard();
-           leaderboard.displayWallOfFame();
-       });
-    </script>
+<h1>🏆 Wall of Fame</h1>
+<div id="wallOfFameTable"></div>
+
+<script type="module">
+    import Leaderboard from "../../ressources/scripts/Leaderboard.js";
+    document.addEventListener('DOMContentLoaded', function() {
+        const leaderboard = Leaderboard();
+        leaderboard.displayWallOfFame();
+    });
+</script>
+
+</body>
 </html>
