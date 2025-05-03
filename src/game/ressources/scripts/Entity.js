@@ -10,7 +10,7 @@ function testCollisionRectRect(rect1, rect2) {
 }
 
 export default function Entity(type, id, x, y, width, height, img) {
-    var self = {
+    let self = {
         type: type,
         id: id,
         x: x,
@@ -31,8 +31,8 @@ export default function Entity(type, id, x, y, width, height, img) {
             return;
         }
         ctx.save();
-        var x = self.x - player.x + WIDTH / 2;
-        var y = self.y - player.y + HEIGHT / 2;
+        let x = self.x - player.x + WIDTH / 2;
+        let y = self.y - player.y + HEIGHT / 2;
 
         x += WIDTH / 2;
         y += HEIGHT / 2;
@@ -49,19 +49,19 @@ export default function Entity(type, id, x, y, width, height, img) {
     };
 
     self.getDistance = function(entity2) {
-        var vx = self.x - entity2.x;
-        var vy = self.y - entity2.y;
+        let vx = self.x - entity2.x;
+        let vy = self.y - entity2.y;
         return Math.sqrt(vx * vx + vy * vy);
     };
 
     self.testCollision = function(entity2) {
-        var rect1 = {
+        let rect1 = {
             x: self.x - self.width / 2,
             y: self.y - self.height / 2,
             width: self.width,
             height: self.height,
         };
-        var rect2 = {
+        let rect2 = {
             x: entity2.x - entity2.width / 2,
             y: entity2.y - entity2.height / 2,
             width: entity2.width,

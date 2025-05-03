@@ -5,7 +5,7 @@ import Enemy from './Enemy.js'; // Import Enemy to check for collisions
 import {WIDTH, HEIGHT} from "./Game.js";
 
 export default function Bullet (id, x, y, spdX, spdY, width, height, combatType, ownerId) {
-    var self = Entity('bullet', id, x, y, width, height, Img.bullet);
+    let self = Entity('bullet', id, x, y, width, height, Img.bullet);
     self.timer = 0;
     self.combatType = combatType;
     self.ownerId = ownerId;
@@ -13,7 +13,7 @@ export default function Bullet (id, x, y, spdX, spdY, width, height, combatType,
     self.spdY = spdY;
     self.toRemove = false;
 
-    var super_update = self.update;
+    let super_update = self.update;
     self.update = function(ctx, player) {
         self.updatePosition();
         super_update(ctx, player);
@@ -22,8 +22,8 @@ export default function Bullet (id, x, y, spdX, spdY, width, height, combatType,
             self.toRemove = true;
 
         if (self.combatType === 'player') { // bullet was shot by player
-            for (var key2 in Enemy.list) {
-                var enemy = Enemy.list[key2];
+            for (let key2 in Enemy.list) {
+                let enemy = Enemy.list[key2];
                 
                 // Only check collision with living enemies
                 // Skip collision detection for dead enemies or specifically for rotating enemies in 'dead' state
@@ -68,8 +68,8 @@ export default function Bullet (id, x, y, spdX, spdY, width, height, combatType,
 
     self.draw = function(ctx, player) {
         ctx.save();
-        var x = self.x - player.x + WIDTH / 2;
-        var y = self.y - player.y + HEIGHT / 2;
+        let x = self.x - player.x + WIDTH / 2;
+        let y = self.y - player.y + HEIGHT / 2;
 
         x -= self.width / 2;
         y -= self.height / 2;
@@ -88,8 +88,8 @@ export default function Bullet (id, x, y, spdX, spdY, width, height, combatType,
 Bullet.list = {};
 
 Bullet.update = function(ctx1, ctx2, player1, player2) {
-    for (var key in Bullet.list) {
-        var b = Bullet.list[key];
+    for (let key in Bullet.list) {
+        let b = Bullet.list[key];
         b.update(ctx1, player1);
         b.update(ctx2, player2);
         b.draw(ctx1, player1);
@@ -102,18 +102,18 @@ Bullet.update = function(ctx1, ctx2, player1, player2) {
 };
 
 Bullet.generate = function(actor, aimOverwrite) {
-    var x = actor.x;
-    var y = actor.y;
-    var height = 24;
-    var width = 24;
-    var id = Math.random();
+    let x = actor.x;
+    let y = actor.y;
+    let height = 24;
+    let width = 24;
+    let id = Math.random();
 
-    var angle;
+    let angle;
     if (aimOverwrite !== undefined)
         angle = aimOverwrite;
     else angle = actor.aimAngle;
 
-    var spdX = Math.cos(angle / 180 * Math.PI) * 5;
-    var spdY = Math.sin(angle / 180 * Math.PI) * 5;
+    let spdX = Math.cos(angle / 180 * Math.PI) * 5;
+    let spdY = Math.sin(angle / 180 * Math.PI) * 5;
     Bullet(id, x, y, spdX, spdY, width, height, actor.type, actor.id);
 };

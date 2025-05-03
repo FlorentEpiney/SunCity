@@ -6,11 +6,11 @@ import {WIDTH, HEIGHT} from "./Game.js";
 
 
 export default function Upgrade (id, x, y, width, height, category, img) {
-    var self = Entity('upgrade', id, x, y, width, height, img);
+    let self = Entity('upgrade', id, x, y, width, height, img);
     self.category = category;
     self.timer = 0; // Add timer property
 
-    var super_update = self.update;
+    let super_update = self.update;
     self.update = function(ctx, player) {
         super_update(ctx, player);
         self.timer += 40; // Assuming update is called every 40ms
@@ -19,7 +19,7 @@ export default function Upgrade (id, x, y, width, height, category, img) {
         }
         this.x = this.x + WIDTH/2;
         this.y = this.y + HEIGHT/2;
-        var isColliding = player.testCollision(this);
+        let isColliding = player.testCollision(this);
         this.x = this.x - WIDTH/2;
         this.y = this.y - HEIGHT/2;
         if (isColliding) {
@@ -44,8 +44,8 @@ Upgrade.update = function(ctx1, ctx2, player1, player2) {
         Upgrade.randomlyGenerate();
     }
 
-    for (var key in Upgrade.list) {
-        var u = Upgrade.list[key];
+    for (let key in Upgrade.list) {
+        let u = Upgrade.list[key];
         u.update(ctx1, player1);
         u.update(ctx2, player2);
 
@@ -57,13 +57,13 @@ Upgrade.update = function(ctx1, ctx2, player1, player2) {
 
 
 Upgrade.randomlyGenerate = function() {
-    var x = Math.random() * Maps.current.width;
-    var y = Math.random() * Maps.current.height;
-    var height = 32;
-    var width = 32;
-    var id = Math.random();
+    let x = Math.random() * Maps.current.width;
+    let y = Math.random() * Maps.current.height;
+    let height = 32;
+    let width = 32;
+    let id = Math.random();
 
-    var category, img;
+    let category, img;
     if (Math.random() < 0.5) {
         category = 'score';
         img = Img.upgrade1;
@@ -71,6 +71,6 @@ Upgrade.randomlyGenerate = function() {
         category = 'hp';
         img = Img.upgrade2;
     }
-    var upgrade = Upgrade(id, x, y, width, height, category, img);
+    let upgrade = Upgrade(id, x, y, width, height, category, img);
     Upgrade.list[id] = upgrade;
 };

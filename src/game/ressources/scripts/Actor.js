@@ -5,7 +5,7 @@ import Bullet from './Bullet.js';
 
 
 export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, name) {
-    var self = Entity(type, id, x, y, width, height, img);
+    let self = Entity(type, id, x, y, width, height, img);
 
     self.hp = hp;
     self.hpMax = hp;
@@ -23,8 +23,8 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
 
     self.draw = function(ctx) {
         ctx.save();
-        var x = self.x - self.x;
-        var y = self.y - self.y;
+        let x = self.x - self.x;
+        let y = self.y - self.y;
 
         x += WIDTH / 2;
         y += HEIGHT / 2;
@@ -32,14 +32,14 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
         x -= self.width / 2;
         y -= self.height / 2;
 
-        var frameWidth = self.img.width / 3;
-        var frameHeight = self.img.height / 4;
+        let frameWidth = self.img.width / 3;
+        let frameHeight = self.img.height / 4;
 
-        var aimAngle = self.aimAngle;
+        let aimAngle = self.aimAngle;
         if (aimAngle < 0)
             aimAngle = 360 + aimAngle;
 
-        var directionMod = 3; // draw right
+        let directionMod = 3; // draw right
         if (aimAngle >= 45 && aimAngle < 135) // down
             directionMod = 2;
         else if (aimAngle >= 135 && aimAngle < 225) // left
@@ -47,7 +47,7 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
         else if (aimAngle >= 225 && aimAngle < 315) // up
             directionMod = 0;
 
-        var walkingMod = Math.floor(self.spriteAnimCounter) % 3; // 1,2
+        let walkingMod = Math.floor(self.spriteAnimCounter) % 3; // 1,2
 
         ctx.drawImage(self.img,
             walkingMod * frameWidth, directionMod * frameHeight, frameWidth, frameHeight,
@@ -69,14 +69,14 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
         x -= self.width / 2;
         y -= self.height / 2;
 
-        var frameWidth = self.img.width / 3;
-        var frameHeight = self.img.height / 4;
+        let frameWidth = self.img.width / 3;
+        let frameHeight = self.img.height / 4;
 
-        var aimAngle = self.aimAngle;
+        let aimAngle = self.aimAngle;
         if (aimAngle < 0)
             aimAngle = 360 + aimAngle;
 
-        var directionMod = 3; // draw right
+        let directionMod = 3; // draw right
         if (aimAngle >= 45 && aimAngle < 135) // down
             directionMod = 2;
         else if (aimAngle >= 135 && aimAngle < 225) // left
@@ -84,7 +84,7 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
         else if (aimAngle >= 225 && aimAngle < 315) // up
             directionMod = 0;
 
-        var walkingMod = Math.floor(self.spriteAnimCounter) % 3; // 1,2
+        let walkingMod = Math.floor(self.spriteAnimCounter) % 3; // 1,2
 
         ctx.drawImage(self.img,
             walkingMod * frameWidth, directionMod * frameHeight, frameWidth, frameHeight,
@@ -99,10 +99,10 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
 
 
     self.updatePosition = function() {
-        var leftBumper = { x: self.x - 40, y: self.y };
-        var rightBumper = { x: self.x + 40, y: self.y };
-        var upBumper = { x: self.x, y: self.y - 16 };
-        var downBumper = { x: self.x, y: self.y + 64 };
+        let leftBumper = { x: self.x - 40, y: self.y };
+        let rightBumper = { x: self.x + 40, y: self.y };
+        let upBumper = { x: self.x, y: self.y - 16 };
+        let downBumper = { x: self.x, y: self.y + 64 };
 
         if (Maps.current.isPositionWall(rightBumper)) {
             self.x -= 5;
@@ -141,7 +141,7 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
             self.y = Maps.current.height - self.height / 2;
     };
 
-    var super_update = self.update;
+    let super_update = self.update;
     self.update = function(ctx, player) {
         super_update(ctx,player);
         self.attackCounter += self.atkSpd;
