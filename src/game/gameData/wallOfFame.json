@@ -1,12 +1,12 @@
 [
   {
     "pseudo": "Alice",
-    "score": "294",
+    "score": 270,
     "nbVictories": 1
   },
   {
     "pseudo": "Bob",
-    "score": "386",
-    "nbVictories": 2
+    "score": 270,
+    "nbVictories": 0
   }
 ]

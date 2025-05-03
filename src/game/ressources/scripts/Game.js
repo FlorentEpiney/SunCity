@@ -7,6 +7,7 @@ import Leaderboard from './Leaderboard.js';
 import { Img } from './Managers/ImagesManager.js';
 import EnemyFactory from './Managers/EnemyFactory.js'
 export { WIDTH, HEIGHT };
+export { player1, player2, winner};
 
 
 // Define global variables that will be used by other modules
@@ -19,14 +20,13 @@ window.paused = false;
 let WIDTH = window.innerWidth * 0.45; // 45% of windows width
 let HEIGHT = window.innerHeight * 0.8; // 80% of windows height
 
+let winner;
 
 // Function for redimensioning the canvas
 function resizeCanvases() {
     WIDTH = window.innerWidth * 0.45;
     HEIGHT = window.innerHeight * 0.8;
 
-    console.log("WIDTH : " + WIDTH);
-    console.log("HEIGHT : " + HEIGHT);
     // Limit the minimal dimensions in order to avoid game problems
     WIDTH = Math.max(WIDTH, 400);
     HEIGHT = Math.max(HEIGHT, 400);
@@ -92,7 +92,6 @@ function testCollisionRectRect(rect1, rect2) {
 
 var player1;
 var player2;
-var player;
 
 // Load the collision map data
 fetch('../../gameData/collision_map.json')
@@ -128,7 +127,8 @@ fetch('../../gameData/collision_map.json')
         let player2Img =  Img.player[localStorage.getItem("player2Img")];
         player1 = Player(250, 100, player1Name, player1Img, 'player1'); // Starting position for player1
         player2 = Player(350, 100, player2Name, player2Img, 'player2'); // Starting position for player2
-        player = player1;
+        window.player1 = player1;
+        window.player2 = player2;
         startNewGame();
 
         gameloop = setInterval(update, 40);
@@ -202,16 +202,23 @@ fetch('../../gameData/collision_map.json')
 function update() {
     if (paused) {return;}
 
+
+    // Info published on lifetime
+    document.getElementById("textarea-player1").innerHTML = `<b>HP: </b>${player1.hp}<br>
+            <b>Score: </b>${player1.score}<br><br>
+            <b>Keyboard</b><br>w: up<br>s: down<br>a: left<br>d: right<br>q: shoot<br>e: special shoot`;
+
+    document.getElementById("textarea-player2").innerHTML = `<b>HP: </b>${player2.hp}<br>
+            <b>Score: </b>${player2.score}<br><br>
+            <b>Keyboard</b><br>arrow: up<br>arrow: down<br>arrow: left<br>arrow: right<br>9: shoot<br>0: special shoot`;
+
     // Verification of the end of the game
     if (player1.hp <= 0 || player2.hp <= 0) {
 
         clearInterval(gameloop); // stop the game loop
 
-        localStorage.setItem('hpPlayer1',player1.hp);
-        localStorage.setItem('hpPlayer2',player2.hp);
-
         if(player1.hp <= 0){
-            localStorage.setItem('winner','2');
+            winner = 2;
             ctx1.fillStyle = 'rgba(255, 0, 0, 0.3)';
             ctx1.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
             ctx2.fillStyle = 'rgba(0, 255, 0, 0.3)';
@@ -230,7 +237,7 @@ function update() {
             setTimeout(() => showEndGamePopup(2), 5000);
 
         }else{
-            localStorage.setItem('winner','1');
+            winner = 1;
             ctx2.fillStyle = 'rgba(255, 0, 0, 0.3)';
             ctx2.fillRect(2, 2, WIDTH - 4, HEIGHT - 4);
             ctx1.fillStyle = 'rgba(0, 255, 0, 0.3)';
@@ -250,6 +257,7 @@ function update() {
         }
 
         //Leaderboard
+        window.winner = winner;
         Leaderboard().saveScore();
 
         return;
@@ -285,17 +293,10 @@ function update() {
     player1.score++;
     player2.score++;
 
-    // Store player stats in local storage
-    localStorage.setItem('hpPlayer1', player1.hp);
-    localStorage.setItem('scorePlayer1', player1.score);
-    localStorage.setItem('hpPlayer2', player2.hp);
-    localStorage.setItem('scorePlayer2', player2.score);
-
     // Update game entities
     Bullet.update(ctx1, ctx2, player1, player2);
     Upgrade.update(ctx1, ctx2, player1, player2);
     Enemy.update(ctx1, ctx2, player1, player2);
-
 }
 
 function startNewGame() {
@@ -352,8 +353,6 @@ pauseButton.addEventListener('click', function () {
 });
 function showEndGamePopup(winner) {
     const popup = document.getElementById('endGamePopup');
-    const localPlayer = localStorage.getItem('playerNumber');
-
     popup.style.display = 'flex';
 }
 
