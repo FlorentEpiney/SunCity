@@ -10,6 +10,7 @@
     <!-- Character Selection Screen -->
     <div class="screen character-selection" id="characterSelection">
         <h1 id="selectionTitle">Player 1: Drag your avatar to the box below</h1>
+        <!-- 
         <div class="characters">
             <div class="character" draggable="true" ondragstart="drag(event)" data-img="../images/julio.jpg">
                 <img src="../images/julio.jpg" alt="Player 1">
@@ -18,6 +19,25 @@
                 <img src="../images/florent.jpg" alt="Player 2">
             </div>
         </div>
+        -->
+        
+        <!-- Player selection -->
+        <div class="characters">
+            <div class="character" draggable="true" ondragstart="drag(event)" data-img="../../ressources/images/player-img/avatar_hitman.png">
+                <img src="../../ressources/images/player-img/avatar_hitman.png" alt="Hitman">
+            </div>
+            <div class="character" draggable="true" ondragstart="drag(event)" data-img="../../ressources/images/player-img/avatar_soldier.png">
+                <img src="../../ressources/images/player-img/avatar_soldier.png" alt="Soldier">
+            </div>
+            <div class="character" draggable="true" ondragstart="drag(event)" data-img="../../ressources/images/player-img/avatar_survivor.png">
+                <img src="../../ressources/images/player-img/avatar_survivor.png" alt="Survivor">
+            </div>
+            <div class="character" draggable="true" ondragstart="drag(event)" data-img="../../ressources/images/player-img/avatar_woman.png">
+                <img src="../../ressources/images/player-img/avatar_woman.png" alt="Woman">
+            </div>
+        </div>
+        
+
         <div class="drop-box" id="playerDropBox" ondrop="drop(event)" ondragover="allowDrop(event)">
             Drop your character here
         </div>
@@ -146,20 +166,39 @@
         // Drop avatar and assign it to current player step
         function drop(ev) {
             ev.preventDefault();
-            const imgSrc = ev.dataTransfer.getData("text/plain");
+            const fullImgSrc = ev.dataTransfer.getData("text/plain");
+
+            // Extract only the file name
+            const filename = fullImgSrc.split("/").pop();
+
+            // Match filename to index
+            const indexMap = {
+                "avatar_soldier.png": "0",
+                "avatar_hitman.png": "1",
+                "avatar_survivor.png": "2",
+                "avatar_woman.png": "3"
+            };
+
+            const index = indexMap[filename] ?? "0";
+
             const dropBox = document.getElementById("playerDropBox");
             dropBox.innerHTML = "";
             const img = document.createElement("img");
-            img.src = imgSrc;
+            img.src = fullImgSrc;
             img.alt = step === 1 ? "Player 1" : "Player 2";
             dropBox.appendChild(img);
-            if (step === 1) selectedPlayers.player1 = imgSrc;
-            else selectedPlayers.player2 = imgSrc;
+
+            if (step === 1) {
+                selectedPlayers.player1 = { index: index, avatar: fullImgSrc };
+            } else {
+                selectedPlayers.player2 = { index: index, avatar: fullImgSrc };
+            }
         }
 
         // Continue to next player or show recap
         function continueToNextStep() {
             const nameInput = document.getElementById("playerNameInput").value.trim();
+
             if (step === 1 && !selectedPlayers.player1) {
                 alert("Player 1 must choose a character!");
                 return;
@@ -168,6 +207,7 @@
                 alert("Player 2 must choose a character!");
                 return;
             }
+
             if (step === 1) {
                 if (nameInput) playerNames.player1 = nameInput;
                 step++;
@@ -176,6 +216,10 @@
                 document.getElementById("playerNameInput").value = "";
             } else {
                 if (nameInput) playerNames.player2 = nameInput;
+
+                // Ensure selections are persisted immediately
+                persistPlayerSelection();
+
                 document.getElementById("characterSelection").classList.add("hide");
                 setTimeout(() => {
                     document.getElementById("characterSelection").style.display = "none";
@@ -186,13 +230,15 @@
 
         // Fill in recap screen and trigger geolocation
         function showRecapScreen() {
-            document.getElementById("recapP1").src = selectedPlayers.player1;
-            document.getElementById("recapP2").src = selectedPlayers.player2;
+            document.getElementById("recapP1").src = selectedPlayers.player1.avatar;
+            document.getElementById("recapP2").src = selectedPlayers.player2.avatar;
             document.getElementById("recapName1").innerText = playerNames.player1;
             document.getElementById("recapName2").innerText = playerNames.player2;
             document.getElementById("recapScreen").style.display = "flex";
             fetchLocationForPlayer("1");
             fetchLocationForPlayer("2");
+
+            persistPlayerSelection();
         }
 
         // Prevent starting game without valid location
@@ -277,10 +323,22 @@
         document.getElementById("characterSelection").style.display = "flex";
     </script>
     <script>
-        localStorage.setItem("player1Name", "Alice");
-        localStorage.setItem("player2Name", "Bob");
-        localStorage.setItem("player1Img", "0");
-        localStorage.setItem("player2Img", "1");
+         const avatarToIndexMap = {
+            "../../ressources/images/player-img/avatar_soldier.png": "0",
+            "../../ressources/images/player-img/avatar_hitman.png": "1",
+            "../../ressources/images/player-img/avatar_survivor.png": "2",
+            "../../ressources/images/player-img/avatar_woman.png": "3"
+        };
+
+        function persistPlayerSelection() {
+            const p1Index = selectedPlayers.player1?.index ?? "0";
+            const p2Index = selectedPlayers.player2?.index ?? "1";  // fallback to hitman if missing
+
+            localStorage.setItem("player1Name", playerNames.player1);
+            localStorage.setItem("player2Name", playerNames.player2);
+            localStorage.setItem("player1Img", p1Index);
+            localStorage.setItem("player2Img", p2Index);
+        }
     </script>
 </body>
 </html>
