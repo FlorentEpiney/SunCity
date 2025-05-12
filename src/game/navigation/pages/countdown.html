@@ -5,13 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SUN City</title>
     <link rel="stylesheet" href="../css/start-screen.css">
+    <link rel="stylesheet" href="../css/game.css" />
 </head>
 <body>
+
 <!-- Countdown Section -->
 <div class="countdown" id="countdown">
-    <div class="countdown-text" id="countdown-text">3</div>
+    <div class="countdown-text" id="countdown-text">5</div>
     <video class="video-background" src="../../ressources/video/sunCity.mp4" autoplay loop muted></video>
-</div>
+
+        <!-- Zone Player 1 à gauche -->
+    <div id="textarea-player1">
+        <b>Keyboard</b><br>
+        w: up<br>
+        s: down<br>
+        a: left<br>
+        d: right<br>
+        q: shoot<br>
+        e: special shoot
+    </div>
+    <!-- Zone Player 2 à droite -->
+    <div id="textarea-player2">
+        <b>Keyboard</b><br>
+        arrow: up<br>
+        arrow: down<br>
+        arrow: left<br>
+        arrow: right<br>
+        9: shoot<br>
+        0: special shoot
+    </div>
 
 <script>
     window.onload = function() {
@@ -20,19 +42,21 @@
 
     function startCountdown() {
         let countdownText = document.getElementById("countdown-text");
-        let count = 3;
+        let count = 5;
 
         let interval = setInterval(() => {
             count--;
             countdownText.innerText = count > 0 ? count : "GO!";
 
             if (count < 0) {
-                clearInterval(interval);setTimeout(() => {
-                    window.location.href = "gamePage.html"; // Change this to your destination page
-                }, 1000);
+                clearInterval(interval);
+                setTimeout(() => {
+                    window.location.href = "gamePage.html";
+                }, 2000);
             }
         }, 1000);
     }
 </script>
+
 </body>
 </html>

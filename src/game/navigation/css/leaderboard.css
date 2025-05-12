@@ -1,0 +1,90 @@
+body {
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.3rem;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #e74c3c;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+#wallOfFameTable table {
+    width: 85%;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#wallOfFameTable th {
+    background-color: #e74c3c;
+    color: white;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+#wallOfFameTable td {
+    padding: 14px;
+    text-align: center;
+    font-size: 1rem;
+    color: #2c3e50;
+}
+
+#wallOfFameTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#wallOfFameTable tr:nth-child(odd) {
+    background-color: #fefefe;
+}
+
+#wallOfFameTable tr:hover {
+    background-color: #ffecea;
+    transition: background-color 0.3s;
+}
+
+
+#wallOfFameTable tr:first-child td:first-child {
+    font-weight: bold;
+    color: #e74c3c;
+    position: relative;
+}
+
+#wallOfFameTable tr:first-child td:first-child::before {
+    content: "🥇 ";
+}
+
+
+#wallOfFameTable table thead tr th:first-child {
+    border-top-left-radius: 12px;
+}
+
+#wallOfFameTable table thead tr th:last-child {
+    border-top-right-radius: 12px;
+}
+
+#wallOfFameTable table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+
+#wallOfFameTable table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}

@@ -57,19 +57,26 @@
         const enterBtn = document.getElementById("enterBtn");
         const exitBtn = document.getElementById("exitBtn");
         const screen = document.getElementById("startScreen");
+        const music = document.getElementById("background-music");
 
-        // Floute l'écran tant que le popup est affiché
         screen.classList.add("blur");
 
         enterBtn.addEventListener("click", function () {
             popup.style.display = "none";
             screen.classList.remove("blur");
+            music.muted = false;
+
         });
 
         exitBtn.addEventListener("click", function () {
             window.location.href = 'deniedAccess.html';
         });
     });
+
+
+
+
+
 
 
 </script>
