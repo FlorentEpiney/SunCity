@@ -23,13 +23,23 @@ h1 {
 #textarea-player2 {
     width: 200px;
     height: 500px;
-    border: 1px solid #ccc;
     padding: 8px;
     font-family: monospace;
+    color: black;
     white-space: pre-wrap;
-    background-color: #fff;
     overflow-y: auto;
     flex-shrink: 0;
+    font-size: 12px;  /* Texte en petit */
+    position: absolute;
+    top: 20px;
+}
+
+#textarea-player1 {
+    left: 20px;  /* Positionné à gauche */
+}
+
+#textarea-player2 {
+    right: 20px;  /* Positionné à droite */
 }
 
 #canvas-container {

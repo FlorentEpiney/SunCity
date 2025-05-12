@@ -61,7 +61,7 @@ h1::after {
     transition: background-color 0.3s;
 }
 
-/* Rang médaille (Top 1) */
+
 #wallOfFameTable tr:first-child td:first-child {
     font-weight: bold;
     color: #e74c3c;
@@ -72,7 +72,7 @@ h1::after {
     content: "🥇 ";
 }
 
-/* Bordures arrondies */
+
 #wallOfFameTable table thead tr th:first-child {
     border-top-left-radius: 12px;
 }
