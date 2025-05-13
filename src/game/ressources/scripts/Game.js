@@ -205,8 +205,8 @@ function update() {
 
     // Info published on lifetime
     // Mise à jour pour afficher uniquement HP et Score pour chaque joueur
-    document.getElementById("textarea-player1").innerHTML = `<b>HP: </b>${player1.hp}<br><b>Score: </b>${player1.score}`;
-    document.getElementById("textarea-player2").innerHTML = `<b>HP: </b>${player2.hp}<br><b>Score: </b>${player2.score}`;
+    document.getElementById("infos-player1").innerHTML = `<b>HP: </b>${player1.hp}<br><b>Score: </b>${player1.score}`;
+    document.getElementById("infos-player2").innerHTML = `<b>HP: </b>${player2.hp}<br><b>Score: </b>${player2.score}`;
 
     // Verification of the end of the game
     if (player1.hp <= 0 || player2.hp <= 0) {
