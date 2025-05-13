@@ -10,6 +10,48 @@ h1 {
     color: #333;
     margin-top: 20px;
 }
+.player-info {
+    position: absolute;
+    top: 10px;
+    width: 45%; /* Ajustez selon la largeur de votre canvas */
+    font-size: 20px; /* Taille de police plus grande */
+    font-weight: bold;
+    text-align: center;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#infos-player1 {
+    left: 25%; /* Position centrée au-dessus du canvas gauche */
+    transform: translateX(-50%);
+}
+
+#infos-player2 {
+    right: 25%; /* Position centrée au-dessus du canvas droit */
+    transform: translateX(50%);
+}
+
+/* Si vous souhaitez une solution plus responsive */
+@media (max-width: 900px) {
+    .player-info {
+        width: 90%;
+        top: auto;
+    }
+
+    #infos-player1 {
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #infos-player2 {
+        top: 50%; /* Si vos canvas sont empilés en mode responsive */
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
 
 #canvas-style {
     display: flex;
@@ -25,13 +67,21 @@ h1 {
     height: 500px;
     padding: 8px;
     font-family: monospace;
-    color: black;
+    color: white;
     white-space: pre-wrap;
     overflow-y: auto;
     flex-shrink: 0;
-    font-size: 12px;  /* Texte en petit */
+    font-size: 16px;
     position: absolute;
-    top: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    text-shadow:
+            1px 1px 2px black,
+            -1px -1px 2px black,
+            1px -1px 2px black,
+            -1px 1px 2px black,
+            0 0 3px black;
 }
 
 #textarea-player1 {
