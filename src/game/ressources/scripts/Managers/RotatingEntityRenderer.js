@@ -9,7 +9,7 @@ import {WIDTH, HEIGHT} from "../Game.js";
  */
 export default class RotatingEntityRenderer {
     constructor() {
-        // No configuration needed for now
+
     }
     
     /**

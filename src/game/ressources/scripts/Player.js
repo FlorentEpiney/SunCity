@@ -14,7 +14,7 @@ export default function Player(startX, startY, name, img, id) {
     self.name = name;
     self.state = 'alive';
     self.rotation = 0;
-    self.maxMoveSpd = 10*5;
+    self.maxMoveSpd = 10;
     self.pressingMouseLeft = false;
     self.pressingMouseRight = false;
 
@@ -205,7 +205,7 @@ export default function Player(startX, startY, name, img, id) {
         self.state = 'dead';  // Update state for the renderer
         let timeSurvived = Date.now() - timeWhenGameStarted;
         console.log("You lost! You survived for " + timeSurvived + " ms.");
-        startNewGame();
+
     };
 
     return self;
