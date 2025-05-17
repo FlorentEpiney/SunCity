@@ -204,7 +204,6 @@ function update() {
 
 
     // Info published on lifetime
-    // Mise à jour pour afficher uniquement HP et Score pour chaque joueur
     document.getElementById("infos-player1").innerHTML = `<b>HP: </b>${player1.hp}<br><b>Score: </b>${player1.score}`;
     document.getElementById("infos-player2").innerHTML = `<b>HP: </b>${player2.hp}<br><b>Score: </b>${player2.score}`;
 

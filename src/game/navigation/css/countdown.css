@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.countdown {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.countdown-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    font-weight: bold;
+    color: white;
+    text-shadow:
+            2px 2px 5px black,
+            -2px -2px 5px black,
+            2px -2px 5px black,
+            -2px 2px 5px black;
+    z-index: 10;
+}
+
+#textarea-player1,
+#textarea-player2 {
+    width: 200px;
+    height: 500px;
+    padding: 8px;
+    font-family: monospace;
+    color: white;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    flex-shrink: 0;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    text-shadow:
+            1px 1px 2px black,
+            -1px -1px 2px black,
+            1px -1px 2px black,
+            -1px 1px 2px black,
+            0 0 3px black;
+    background-color: rgba(128, 128, 128, 0.8);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 5;
+}
+
+#textarea-player1 {
+    left: 20px;
+}
+
+#textarea-player2 {
+    right: 20px;
+}
+
+@media (max-width: 900px) {
+    #textarea-player1,
+    #textarea-player2 {
+        width: 90%;
+        height: auto;
+        font-size: 18px;
+        top: auto;
+        bottom: 20px;
+        transform: none;
+        position: static;
+        margin: 10px auto;
+    }
+
+    .countdown-text {
+        font-size: 60px;
+    }
+}
