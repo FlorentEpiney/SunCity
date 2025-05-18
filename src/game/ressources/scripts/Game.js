@@ -125,6 +125,7 @@ document.onkeydown = function(event) {
         player1.performAttack();
     } else if (event.keyCode === 69) { // e - special attack
         player1.performSpecialAttack();
+
     }
 
     // Player 2 controls

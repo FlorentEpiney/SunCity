@@ -141,10 +141,11 @@ button:hover {
 
 /* Video stays in the background */
 .video-background {
-    position:relative;
-    width: 200px;
-    height: 200px;
-    padding: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
     z-index: -1;  /* Moves video behind everything */
 }

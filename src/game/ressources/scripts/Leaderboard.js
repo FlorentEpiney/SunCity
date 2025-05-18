@@ -101,6 +101,7 @@ export default function Leaderboard(){
             return player;
         });
 
+
         fetch('http://localhost:3000/update-wall-of-fame', {
             method: 'POST',
             headers: {
