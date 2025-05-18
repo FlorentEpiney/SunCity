@@ -15,6 +15,7 @@ export const Img = {
     //upgrades images
     upgrade1: new Image(),
     upgrade2: new Image(),
+    upgrade3: new Image(),
 
     //enemy images
     handgunEnemy: new Image(),
@@ -38,7 +39,7 @@ function loadImage(image, src, fallbackSrc = null) {
     
     image.src = src;
 }
-
+/** Preload Player images */
 // Preload player sprites
 Img.player[0] = new Image();
 loadImage(Img.player[0], '../../ressources/images/player-img/player_soldier.png');
@@ -67,26 +68,17 @@ for (let i = 0; i < 4; i++) {
     }
 }
 
-// Assigning image sources with error handling
-/*
-Img.player[0] = new Image();
-loadImage(Img.player[0], '../../ressources/images/player-img/player_soldier.png');
 
-Img.player[1] = new Image();
-loadImage(Img.player[1], '../../ressources/images/player-img/player_hitman.png');
-*/
+/** Preload bullet image */
+loadImage(Img.bullet, '../../ressources/images/bullet/Bullet.png');
 
-
+/** Preload upgrade images */
+loadImage(Img.upgrade1, '../../ressources/images/upgrades/upgrade1.png');
+loadImage(Img.upgrade2, '../../ressources/images/upgrades/upgrade2.png');
+loadImage(Img.upgrade3, '../../ressources/images/upgrades/upgrade3.png');
 
 
-loadImage(Img.bullet, '../../ressources/images/bullet.png');
-
-
-loadImage(Img.upgrade1, '../../ressources/images/upgrade1.png');
-loadImage(Img.upgrade2, '../../ressources/images/upgrade2.png');
-
-
-
+/** Preload enemy images */
 loadImage(Img.handgunEnemy, '../../ressources/images/enemy-img/enemy_9mmhandgun.png');
 
 loadImage(Img.flameThrowerEnemy, '../../ressources/images/enemy-img/enemy_flamethrower.png');
@@ -97,20 +89,4 @@ loadImage(Img.knifeEnemy, '../../ressources/images/enemy-img/enemy_knife.gif');
 
 loadImage(Img.rotatingEnemyDead, '../../ressources/images/enemy-img/rotating_enemy_dead.png');
 
-// Adding custom metadata for sprite sheets
-/**
-Img.bat.rows = 4;
-Img.bat.columns = 3;
 
-Img.bee.rows = 4;
-Img.bee.columns = 3;
-
-Img.guard_white.rows = 4;
-Img.guard_white.columns = 4;
-
-Img.guard_yellow.rows = 4;
-Img.guard_yellow.columns = 4;
-
-Img.inspector.rows = 4;
-Img.inspector.columns = 4;
-*/

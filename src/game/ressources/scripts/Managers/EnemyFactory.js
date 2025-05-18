@@ -11,22 +11,6 @@ import RotatingEnemy from '../RotatingEnemy.js';
  */
 export default class EnemyFactory {
     /**
-     * Creates a standard enemy using the existing implementation
-     * @param {string} id - Unique identifier for the enemy
-     * @param {number} x - X position
-     * @param {number} y - Y position
-     * @param {number} width - Width of the enemy
-     * @param {number} height - Height of the enemy
-     * @param {Image} img - Image object for the enemy sprite
-     * @param {number} hp - Health points
-     * @param {number} atkSpd - Attack speed
-     * @returns {Object} - Enemy instance
-     */
-    static createStandardEnemy(id, x, y, width, height, img, hp, atkSpd) {
-        return Enemy(id, x, y, width, height, img, hp, atkSpd);
-    }
-
-    /**
      * Creates a rotating enemy using the new implementation
      * @param {string} id - Unique identifier for the enemy
      * @param {number} x - X position
@@ -66,26 +50,25 @@ export default class EnemyFactory {
     switch (enemyType) {
         case 0:
             // Handgun Enemy
-            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.handgunEnemy, 5, 1, 200);
+            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.handgunEnemy, 4, 1, 400);
             break;
         case 1:
             // Flamethrower Enemy
-            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.flameThrowerEnemy, 20, 0.5, 100);
+            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.flameThrowerEnemy, 16, 8, 200);
             break;
         case 2:
             // Pumpgun Enemy (Using RotatingEnemy implementation)
-            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.pumpgunEnemy, 12, 1.5, 150);
+            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.pumpgunEnemy, 12, 1.5, 200);
+            enemy.useSpecialAttack = true;
             break;
         case 3:
             // Knife Enemy (Using standard enemy implementation)
-            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.knifeEnemy, 8, 2, 100);
-            enemy.maxMoveSpd = 4; // Knife enemies move faster
+            enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.knifeEnemy, 8, 12, 50);
+            enemy.maxMoveSpd = 6; // Knife enemies move faster
             break;
     }
-
-     //enemy = EnemyFactory.createRotatingEnemy(id, x, y, Img.rotatingEnemy, 8, 2);
     
-    // Add to the existing enemy list to maintain compatibility
+    // Add to the existing enemy list
     Enemy.list[id] = enemy;
     
     return enemy;

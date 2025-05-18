@@ -1,4 +1,4 @@
-import EntityRenderer from './Managers/EntityRenderer.js';
+
 import Maps from './Maps.js';
 import { Img } from './Managers/ImagesManager.js'; 
 import Actor from './Actor.js';
@@ -19,17 +19,6 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
     // Providing fallback defaults if properties are missing:
     const columns = img.columns || 3; // Fallback to 3 columns if not defined
     const rows = img.rows || 4;       // Fallback to 4 rows if not defined
-    /**
-     * Renderer for drawing the enemy
-     * Creates an instance of EntityRenderer with the sprite configuration
-     * 
-     * @type {EntityRenderer}
-     */
-    self.renderer = new EntityRenderer({
-        frameCount: columns,
-        frameWidth: img.width / columns,
-        frameHeight: img.height / rows
-    });
 
     /**
      * Update method for the enemy
@@ -132,21 +121,6 @@ export default function Enemy(id, x, y, width, height, img, hp, atkSpd) {
         self.aimAngle = Math.atan2(diffY, diffX) / Math.PI * 180;
     };
 
-    self.updateKeyPress = function() {
-        /*
-        // Randomly change direction every 2 seconds
-        self.directionChangeTimer += 40; // Assuming update is called every 40ms
-
-        if (self.directionChangeTimer >= 20d00) {
-            self.pressingRight = Math.random() < 0.5;
-            self.pressingLeft = Math.random() < 0.5;
-            self.pressingDown = Math.random() < 0.5;
-            self.pressingUp = Math.random() < 0.5;
-            self.directionChangeTimer = 0;
-        }
-            */
-    };
-
     /**
      * Call the draw method of the EntityRenderer
      * 
@@ -168,10 +142,13 @@ Enemy.list = {};
 
 // Modify the Enemy.update function in Enemy.js to prevent duplicate drawing
 Enemy.update = function(ctx1, ctx2, player1, player2) {
+    // Get the current enemy scaling factor from the window object (set by GameLoop)
+    const scalingFactor = window.enemyScalingFactor || 1.0;
+
     if (window.frameCount % 100 === 0) { // every 4 sec
         // Check if EnemyFactory exists, otherwise use the original method
         if (typeof EnemyFactory !== 'undefined') {
-            EnemyFactory.randomlyGenerate();
+            EnemyFactory.randomlyGenerate(scalingFactor);
         } else {
             // Fallback to original method
             Enemy.randomlyGenerate();
@@ -259,19 +236,4 @@ function calculateDistance(entity1, entity2) {
     return Math.sqrt(dx * dx + dy * dy);
 }
 
-Enemy.randomlyGenerate = function() {
-    let x = Math.random() * Maps.current.width;
-    let y = Math.random() * Maps.current.height;
-    let height = 64 * 1.5;
-    let width = 64 * 1.5;
-    let id = Math.random();
-    let enemy; // Declare the letiable first
-    
-    if (Math.random() < 0.5) {
-        enemy = Enemy(id, x, y, width, height, Img.guard_white, 10, 1);
-    } else {
-        enemy = Enemy(id, x, y, width, height, Img.guard_yellow, 5, 3);
-    }
-    
-    Enemy.list[id] = enemy;
-};
+

@@ -12,6 +12,7 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
     self.atkSpd = atkSpd;
     self.attackCounter = 0;
     self.aimAngle = 0;
+    self.name = name;
 
     self.spriteAnimCounter = 0;
 
@@ -143,11 +144,17 @@ export default function Actor(type, id, x, y, width, height, img, hp, atkSpd, na
 
     let super_update = self.update;
     self.update = function(ctx, player) {
-        super_update(ctx,player);
-        self.attackCounter += self.atkSpd;
+        super_update(ctx, player);
+
+        // Only increment attack counter if the actor is alive
+        if (self.hp > 0) {
+            self.attackCounter += self.atkSpd;
+        }
+
         if (self.hp <= 0)
             self.onDeath();
     };
+
     self.onDeath = function() {};
 
     self.performAttack = function() {

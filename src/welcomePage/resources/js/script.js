@@ -57,9 +57,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
-
-
 function calculateTimeFromDocument(doc) {
     let totalMinutes = 0;
     

@@ -1,11 +1,10 @@
-// Upgrade function
 import Entity from './Entity.js';
-import Maps from './Maps.js';  // Import Maps from Maps.js
-import { Img } from './Managers/ImagesManager.js';  // Import Img properly
+import Maps from './Maps.js';
+import { Img } from './Managers/ImagesManager.js';
 import {WIDTH, HEIGHT} from "./Game.js";
 
 
-export default function Upgrade (id, x, y, width, height, category, img) {
+export default function Upgrade(id, x, y, width, height, category, img) {
     let self = Entity('upgrade', id, x, y, width, height, img);
     self.category = category;
     self.timer = 0; // Add timer property
@@ -13,23 +12,28 @@ export default function Upgrade (id, x, y, width, height, category, img) {
     let super_update = self.update;
     self.update = function(ctx, player) {
         super_update(ctx, player);
-        self.timer += 40; // Assuming update is called every 40ms
+        self.timer += 40; // update is called every 40ms
         if (self.timer >= 20000) { // Remove upgrade after 20 seconds
             self.toRemove = true;
         }
-        this.x = this.x + WIDTH/2;
-        this.y = this.y + HEIGHT/2;
-        let isColliding = player.testCollision(this);
-        this.x = this.x - WIDTH/2;
-        this.y = this.y - HEIGHT/2;
+
+        self.x = self.x + WIDTH/2;
+        self.y = self.y + HEIGHT/2;
+        let isColliding = player.testCollision(self);
+        self.x = self.x - WIDTH/2;
+        self.y = self.y - HEIGHT/2;
+
         if (isColliding) {
-            if (this.category === 'score'){
+            if (self.category === 'score') {
                 player.score += 1000;
             }
-            if (this.category === 'hp'){
+            if (self.category === 'hp') {
                 player.hp += 3;
             }
-            this.toRemove = true;
+            if (self.category === 'atkSpeed') {
+                player.atkSpd += 1;
+            }
+            self.toRemove = true; // Mark for removal when collected
         }
     };
 
@@ -39,8 +43,7 @@ export default function Upgrade (id, x, y, width, height, category, img) {
 Upgrade.list = {};
 
 Upgrade.update = function(ctx1, ctx2, player1, player2) {
-
-    if (frameCount % 10 === 0) { //every 3 sec. 75;
+    if (frameCount % 10 === 0) { // Generate a new upgrade every 10 frames
         Upgrade.randomlyGenerate();
     }
 
@@ -55,7 +58,6 @@ Upgrade.update = function(ctx1, ctx2, player1, player2) {
     }
 };
 
-
 Upgrade.randomlyGenerate = function() {
     let x = Math.random() * Maps.current.width;
     let y = Math.random() * Maps.current.height;
@@ -64,13 +66,26 @@ Upgrade.randomlyGenerate = function() {
     let id = Math.random();
 
     let category, img;
-    if (Math.random() < 0.5) {
-        category = 'score';
-        img = Img.upgrade1;
-    } else {
-        category = 'hp';
-        img = Img.upgrade2;
+
+    let upgradeType = Math.floor(Math.random() * 3); // 0-2
+    switch (upgradeType) {
+        case 0:
+            // Score Upgrade
+            category = 'score';
+            img = Img.upgrade1; // Fallback to existing upgrade1 if scoreUpgrade doesn't exist
+            break;
+        case 1:
+            // Health Upgrade
+            category = 'hp';
+            img = Img.upgrade2; // Fallback to existing upgrade2 if hpUpgrade doesn't exist
+            break;
+        case 2:
+            // Attack Speed Upgrade
+            category = 'atkSpeed';
+            img = Img.upgrade3; // Fallback to upgrade1 if atkSpeedUpgrade doesn't exist
+            break;
     }
+
     let upgrade = Upgrade(id, x, y, width, height, category, img);
     Upgrade.list[id] = upgrade;
 };
