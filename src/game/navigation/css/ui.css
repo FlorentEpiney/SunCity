@@ -1,0 +1,250 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    background-color: #222;
+    color: white;
+}
+
+.game-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    width: 100%;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+    text-shadow: 0 0 5px #ff6600;
+}
+
+.game-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+    transition: background 0.2s;
+}
+
+.control-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.control-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.canvas-area {
+    display: flex;
+    position: relative;
+    height: 100%;
+}
+
+.player-side {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    position: relative;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.player-ui {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.player-ui.top {
+    top: 10px;
+}
+
+.player-ui.bottom {
+    bottom: 10px;
+}
+
+/* Player Stats Styling */
+.player-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.health-bar {
+    width: 100px;
+    height: 12px;
+    background: #333;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 2px;
+}
+
+.health-fill {
+    height: 100%;
+    background: linear-gradient(to right, #ff3333, #ff6633);
+    transition: width 0.3s ease;
+}
+
+.health-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    line-height: 12px;
+    font-size: 10px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.score-container {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.enemy-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+}
+
+.enemy-level {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 2px;
+}
+
+.level-tag, .power-tag {
+    background: #8a43e8;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.power-tag {
+    background: #d10000;
+}
+
+.level-timer-bar {
+    width: 80px;
+    height: 4px;
+    background: #333;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.level-timer-fill {
+    height: 100%;
+    background: #f8c51b;
+}
+
+.controls-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.key-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.key-row {
+    display: flex;
+    gap: 1px;
+}
+
+.key {
+    width: 16px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8px;
+    border-radius: 2px;
+    margin: 1px;
+}
+
+.action-keys {
+    display: flex;
+    gap: 5px;
+}
+
+.key.action {
+    background: rgba(255, 165, 0, 0.5);
+}
+
+/* Popup styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.popup-content {
+    background: #333;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 200px;
+}
+
+.popup-button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.popup-button:hover {
+    background: #ff8533;
+}
