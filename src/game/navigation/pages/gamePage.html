@@ -2,57 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Game</title>
-    <link rel="stylesheet" href="../css/game.css">
+    <title>SUNCITY</title>
+    <link rel="stylesheet" href="../css/ui.css">
 </head>
 <body>
-
-<h1>SUNCITY</h1>
-
-<audio id="background-music" src="../../ressources/sounds/chrisRea_Josephine.mp3" autoplay loop></audio>
-
-<div id="canvas-style">
-    <!-- Player 1 -->
-    <div id="textarea-player1"></div>
-
-    <div id="canvas-container">
-        <canvas id="player1Canvas"></canvas>
-        <canvas id="player2Canvas"></canvas>
-        <div id="game-message-player1" class="game-message"></div>
-        <div id="game-message-player2" class="game-message"></div>
+<div class="game-container">
+    <!-- Game Header -->
+    <div class="game-header">
+        <h1>SUNCITY</h1>
+        <div class="game-controls">
+            <button class="control-button" onclick="document.getElementById('background-music').play()">
+                <img src="../../ressources/images/volume.png" alt="Volume On" />
+            </button>
+            <button class="control-button" onclick="document.getElementById('background-music').pause()">
+                <img src="../../ressources/images/volume_off.png" alt="Volume Off" />
+            </button>
+            <button id="pauseButton" class="control-button">Pause</button>
+        </div>
     </div>
 
-    <!-- Player 2 -->
-    <div id="textarea-player2"></div>
+    <!-- Game Canvas Area -->
+    <div class="canvas-area">
+        <!-- Player 1 Side -->
+        <div class="player-side">
+            <div id="textarea-player1" class="player-ui top"></div>
+            <canvas id="player1Canvas"></canvas>
+            <div id="game-message-player1" class="game-message"></div>
+        </div>
+
+        <!-- Player 2 Side -->
+        <div class="player-side">
+            <div id="textarea-player2" class="player-ui top"></div>
+            <canvas id="player2Canvas"></canvas>
+            <div id="game-message-player2" class="game-message"></div>
+        </div>
+    </div>
 </div>
 
-<div id="infos-player1" class="player-info"></div>
-<div id="infos-player2" class="player-info"></div>
+<!-- Background Music -->
+<audio id="background-music" src="../../ressources/sounds/chrisRea_Josephine.mp3" loop autoplay></audio>
 
 <!-- Pause Popup -->
-<div id="pausePopup">
-    <button id="resumeGame">Play</button>
-    <button id="restartGame">Replay</button>
-    <button id="exitGame">Exit</button>
-</div>
-
-<div id="endGamePopup">
-        <button id="replayGame">Replay</button>
-        <button id="exitGameEnd">Exit</button>
+<div id="pausePopup" class="popup">
+    <div class="popup-content">
+        <button id="resumeGame" class="popup-button">Play</button>
+        <button id="restartGame" class="popup-button">Replay</button>
+        <button id="exitGame" class="popup-button">Exit</button>
     </div>
 </div>
 
-<!-- Volume Buttons -->
-<br/><br/>
-<button onclick="document.getElementById('background-music').play()">
-    <img src="../../ressources/images/volume.png" />
-</button>
-<button onclick="document.getElementById('background-music').pause()">
-    <img src="../../ressources/images/volume_off.png" />
-</button>
-
-<!-- Pause Button -->
-<button id="pauseButton">Pause</button>
+<!-- End Game Popup -->
+<div id="endGamePopup" class="popup">
+    <div class="popup-content">
+        <button id="replayGame" class="popup-button">Replay</button>
+        <button id="exitGameEnd" class="popup-button">Exit</button>
+    </div>
+</div>
 
 <!-- JS Scripts -->
 <script type="module" src="../../ressources/scripts/Game.js"></script>
