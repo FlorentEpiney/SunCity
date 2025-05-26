@@ -8,6 +8,9 @@
 </head>
 <body>
 
+    <button onclick="backHome()">Home</button>
+
+
 <h1>🏆 Wall of Fame</h1>
 <div id="wallOfFameTable"></div>
 
@@ -17,6 +20,12 @@
         const leaderboard = Leaderboard();
         leaderboard.displayWallOfFame();
     });
+</script>
+<script>
+    function backHome() {
+        window.location.href = 'homePage.html';
+    }
+
 </script>
 
 </body>

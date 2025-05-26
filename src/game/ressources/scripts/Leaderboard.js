@@ -101,6 +101,8 @@ export default function Leaderboard(){
             return player;
         });
 
+        // Sort the wallOfFame after updating
+        sortWallOfFame();
 
         fetch('http://localhost:3000/update-wall-of-fame', {
             method: 'POST',
@@ -128,8 +130,8 @@ export default function Leaderboard(){
             nbVictories: nbVictories
         });
 
-        // Sort by descending score
-        wallOfFame.sort((a, b) => b.score - a.score);
+        // Sort the wallOfFame
+        sortWallOfFame();
 
         fetch('http://localhost:3000/update-wall-of-fame', {
             method: 'POST',
@@ -142,6 +144,20 @@ export default function Leaderboard(){
             .then(result => console.log(result))
             .catch(error => console.error('Error sending data:', error));
 
+    };
+
+    /*
+     * Sort the wallOfFame by score (descending) and then by number of victories (descending)
+     */
+    const sortWallOfFame = function() {
+        wallOfFame.sort((a, b) => {
+            // First sort by score (descending)
+            if (b.score !== a.score) {
+                return b.score - a.score;
+            }
+            // If scores are equal, sort by number of victories (descending)
+            return b.nbVictories - a.nbVictories;
+        });
     };
 
     /*
@@ -161,14 +177,17 @@ export default function Leaderboard(){
             .then(data => {
                 wallOfFame = data;
 
+                // Sort the wall of fame before displaying
+                sortWallOfFame();
+
                 // Call the function to display the table
                 createTable(wallOfFame);
             })
             .catch(error => {
                 console.error('Error loading wall of fame data:', error);
-               // Display error message on HTML
-               const tableContainer = document.getElementById('wallOfFameTable');
-               tableContainer.innerHTML = '<p>Connection problem with the server. Impossible to display the leaderboard.</p>';
+                // Display error message on HTML
+                const tableContainer = document.getElementById('wallOfFameTable');
+                tableContainer.innerHTML = '<p>Connection problem with the server. Impossible to display the leaderboard.</p>';
 
             });
     };
@@ -189,10 +208,10 @@ export default function Leaderboard(){
 
         // Create the table body
         const tbody = document.createElement('tbody');
-        data.forEach(player => {
+        data.forEach((player, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${data.indexOf(player) + 1}</td>
+                <td>${index + 1}</td>
                 <td>${player.pseudo}</td>
                 <td>${player.score}</td>
                 <td>${player.nbVictories}</td>
@@ -211,6 +230,7 @@ export default function Leaderboard(){
         updatePlayerScore,
         addNewPlayer,
         displayWallOfFame,
-        createTable
+        createTable,
+        sortWallOfFame
     };
 }

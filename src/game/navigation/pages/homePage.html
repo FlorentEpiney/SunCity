@@ -24,33 +24,34 @@
         <button id="exitBtn">I am under 18 - Exit</button>
     </div>
 </div>
-    <audio id="background-music" src="../../ressources/sounds/boneyM_Sunny.mp3" autoplay loop></audio>
-    <div class="screen" id="startScreen">
-        <img src="../images/suncity.jpg" alt="SUN City" class="background-image">
-        <button onclick="openExitpage()">Exit</button>
-        <h1>Welcome to SUN City</h1>
-        <button onclick="openGamePage()">PLAY</button>
-        <button onclick="openLeaderBoard()">Leaderboard</button>
-        <br>
-        <br>
-        <button onclick="document.getElementById('background-music').play()">
-            <img src="../../ressources/images/volume.png" style="width: 20px; height: 20px;"/>
-        </button>
-        <button onclick="document.getElementById('background-music').pause()">
-            <img src="../../ressources/images/volume_off.png" style="width: 20px; height: 20px;"/>
-        </button>
-    </div>
-    <script>
-        function openExitpage() {
-            window.location.href = 'exit.html';
-        }
-        function openGamePage() {
-            window.location.href = 'select-players.html';
-        }
-        function openLeaderBoard() {
-            window.location.href = 'leaderboard.html';
-        }
-    </script>
+<audio id="background-music" src="../../ressources/sounds/boneyM_Sunny.mp3" autoplay loop></audio>
+<div class="screen" id="startScreen">
+    <img src="../images/suncity.jpg" alt="SUN City" class="background-image">
+    <button onclick="openExitpage()">Exit</button>
+    <h1>Welcome to SUN City</h1>
+    <button onclick="openGamePage()">PLAY</button>
+    <button onclick="openLeaderBoard()">Leaderboard</button>
+    <br>
+    <br>
+    <button onclick="document.getElementById('background-music').play()">
+        <img src="../../ressources/images/volume.png" style="width: 20px; height: 20px;"/>
+    </button>
+    <button onclick="document.getElementById('background-music').pause()">
+        <img src="../../ressources/images/volume_off.png" style="width: 20px; height: 20px;"/>
+    </button>
+</div>
+<script>
+    function openExitpage() {
+        window.location.href = 'exit.html';
+    }
+    function openGamePage() {
+        window.location.href = 'select-players.html';
+    }
+    function openLeaderBoard() {
+        window.location.href = 'leaderboard.html';
+    }
+
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const popup = document.getElementById("agePopup");
@@ -59,9 +60,25 @@
         const screen = document.getElementById("startScreen");
         const music = document.getElementById("background-music");
 
-        screen.classList.add("blur");
+        // Check if the user has already verified their age in this session
+        const isAgeVerified = sessionStorage.getItem('ageVerified') === 'true';
+
+        if (isAgeVerified) {
+            // If age has already been verified, hide the popup directly
+            popup.style.display = "none";
+            screen.classList.remove("blur");
+            music.muted = false;
+            music.play();
+        } else {
+            // Otherwise, display the age verification
+            screen.classList.add("blur");
+        }
 
         enterBtn.addEventListener("click", function () {
+            // Store the age verification in sessionStorage
+            sessionStorage.setItem('ageVerified', 'true');
+
+            // Hide the popup
             popup.style.display = "none";
             screen.classList.remove("blur");
             music.muted = false;
@@ -72,7 +89,6 @@
             window.location.href = 'deniedAccess.html';
         });
     });
-
 </script>
 </body>
 </html>

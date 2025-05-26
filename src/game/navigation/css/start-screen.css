@@ -173,6 +173,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     z-index: 999;
+
 }
 
 .popup-box {
@@ -183,6 +184,7 @@ button:hover {
     max-width: 500px;
     box-shadow: 0 0 20px rgba(0,0,0,0.6);
     font-family: Arial, sans-serif;
+
 }
 
 .popup-box h2 {
