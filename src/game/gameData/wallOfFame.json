@@ -1,12 +1,27 @@
 [
   {
-    "pseudo": "Alice",
-    "score": 270,
+    "pseudo": "Walter",
+    "score": 2053,
+    "nbVictories": 2
+  },
+  {
+    "pseudo": "alfonso",
+    "score": 569,
     "nbVictories": 1
+  },
+  {
+    "pseudo": "Florent",
+    "score": 569,
+    "nbVictories": 0
   },
   {
     "pseudo": "Bob",
     "score": 402,
     "nbVictories": 3
+  },
+  {
+    "pseudo": "Alice",
+    "score": 270,
+    "nbVictories": 1
   }
 ]

@@ -21,6 +21,19 @@ h1::after {
     margin: 10px auto 0;
     border-radius: 2px;
 }
+.backHome{
+    top: 20px;
+    left: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease-in-out;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
 #wallOfFameTable table {
     width: 85%;
