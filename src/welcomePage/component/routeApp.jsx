@@ -4,6 +4,7 @@ import Logbook from "../pages/logbook";
 import Models from "../pages/models";
 import Mockup from "../pages/mockup";
 import Flow from "../pages/flow";
+import Game from "../pages/game";
 import {BrowserRouter, NavLink, Navigate, Route, Routes} from "react-router-dom";
 
 function RouteApp() {
@@ -31,6 +32,9 @@ function RouteApp() {
                         <li>
                             <NavLink to="/logbook">Project Logbook</NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/game">Game</NavLink>
+                        </li>
                     </ul>
                 </nav>
                 <Routes>
@@ -39,6 +43,7 @@ function RouteApp() {
                     <Route path="/mockup" element={<Mockup/>}/>
                     <Route path="/flow" element={<Flow/>}/>
                     <Route path="/logbook" element={<Logbook/>}/>
+                    <Route path="/game" element={<Game/>}/>
                     <Route path="*" element={<Navigate to="/description" replace/>}/>
                 </Routes>
                 <footer>
