@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
@@ -8,10 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Servir les fichiers statiques
-app.use(express.static(path.join(__dirname, 'dist')));
 
-// Routes existantes
 app.get('/wall-of-fame', (req, res) => {
     const filePath = path.join(__dirname, 'src', 'game', 'gameData', 'wallOfFame.json');
 
@@ -26,21 +24,22 @@ app.get('/wall-of-fame', (req, res) => {
     });
 });
 
-app.post('/update-wall-of-fame', (req, res) => {
-    const filePath = path.join(__dirname, 'src', 'game', 'gameData', 'wallOfFame.json');
 
-    fs.writeFile(filePath, JSON.stringify(req.body, null, 2), (err) => {
+app.post('/update-wall-of-fame', (req, res) => {
+    const newData = req.body;
+
+    const filePath = path.join(__dirname, 'src', 'game','gameData', 'wallOfFame.json');
+    if (!fs.existsSync(filePath)) {
+        console.error("File does not exist:", filePath);
+    }
+
+    fs.writeFile(filePath, JSON.stringify(newData, null, 2), (err) => {
         if (err) {
             console.error('Error writing file:', err);
             return res.status(500).send('Failed to write data');
         }
         res.send('Data successfully written');
     });
-});
-
-// Route par défaut pour React
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(port, () => {
