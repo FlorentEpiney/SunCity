@@ -11,16 +11,12 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
       "src": "/wall-of-fame",
       "dest": "/api/wall-of-fame"
     },
     {
       "src": "/update-wall-of-fame",
-      "dest": "/api/update-wall-of-fame"
+      "dest": "/api/wall-of-fame"
     },
     {
       "src": "/game/(.*)",

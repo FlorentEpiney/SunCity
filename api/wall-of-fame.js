@@ -1,4 +1,7 @@
 // api/wall-of-fame.js
+// This is our serverless function that handles both GET and POST requests
+
+// Our simple in-memory data store (remember, this resets periodically)
 let wallOfFameData = [
     {
         "pseudo": "Walter",
@@ -11,7 +14,7 @@ let wallOfFameData = [
         "nbVictories": 0
     },
     {
-        "pseudo": "alfonso",
+        "pseudo": "Alfonso",
         "score": 569,
         "nbVictories": 1
     },
@@ -32,59 +35,56 @@ let wallOfFameData = [
     }
 ];
 
+// This is the main function that Vercel calls when someone requests this endpoint
 export default async function handler(req, res) {
-    // Set CORS headers to allow requests from your domain
+    console.log(`Received ${req.method} request to /api/wall-of-fame`);
+
+    // Set up CORS headers so browsers allow requests from your game
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
 
-    // Handle preflight requests (browsers send these before actual requests)
+    // Handle preflight requests (browsers send these automatically)
     if (req.method === 'OPTIONS') {
+        console.log('Handling OPTIONS preflight request');
         res.status(200).end();
         return;
     }
 
-    if (req.method === 'GET') {
-        try {
-            res.setHeader('Content-Type', 'application/json');
+    try {
+        if (req.method === 'GET') {
+            console.log('Handling GET request - returning leaderboard data');
             res.status(200).json(wallOfFameData);
-        } catch (error) {
-            console.error('Error in GET /api/wall-of-fame:', error);
-            res.status(500).json({ error: 'Failed to retrieve leaderboard data' });
-        }
-    }
-    else if (req.method === 'POST') {
-        try {
+
+        } else if (req.method === 'POST') {
+            console.log('Handling POST request - updating leaderboard data');
             const newData = req.body;
 
-            // Validate the incoming data structure
+            // Basic validation
             if (!Array.isArray(newData)) {
+                console.error('Invalid data format received:', typeof newData);
                 return res.status(400).json({ error: 'Expected an array of player data' });
             }
 
-            // Validate each player object has required fields
-            const isValidData = newData.every(player =>
-                player.pseudo &&
-                typeof player.score === 'number' &&
-                typeof player.nbVictories === 'number'
-            );
-
-            if (!isValidData) {
-                return res.status(400).json({ error: 'Invalid player data format' });
-            }
-
-            // Update the leaderboard (note: this will reset when function restarts)
+            // Update our data
             wallOfFameData = newData;
+            console.log('Leaderboard updated successfully with', newData.length, 'players');
 
-            console.log('Leaderboard updated successfully');
-            res.status(200).json({ message: 'Leaderboard updated successfully' });
+            res.status(200).json({
+                message: 'Leaderboard updated successfully',
+                playerCount: newData.length
+            });
 
-        } catch (error) {
-            console.error('Error in POST /api/wall-of-fame:', error);
-            res.status(500).json({ error: 'Failed to update leaderboard' });
+        } else {
+            console.log(`Unsupported method: ${req.method}`);
+            res.status(405).json({ error: `Method ${req.method} not allowed` });
         }
-    }
-    else {
-        res.status(405).json({ error: `Method ${req.method} not allowed` });
+
+    } catch (error) {
+        console.error('Error in wall-of-fame API:', error);
+        res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        });
     }
 }
