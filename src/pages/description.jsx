@@ -68,7 +68,7 @@ function Description(){
                         <h3>Links</h3>
                         <ul>
                             <li><a href="https://github.com/FlorentEpiney/SunCity">GitLab Repository</a></li>
-                            <li><a href="#">Play the Game</a></li>
+                            <li><a href="/game/navigation/pages/homePage.html">Play the Game</a></li>
                         </ul>
                     </div>
                 </article>
