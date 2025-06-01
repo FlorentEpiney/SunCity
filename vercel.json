@@ -1,13 +1,26 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
-  "installCommand": "npm install",
-  "framework": "create-react-app",
-  "rewrites": [
+  "builds": [
     {
-      "source": "/game/(.*)",
-      "destination": "/$1"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/wall-of-fame",
+      "dest": "/api/wall-of-fame.js"
+    },
+    {
+      "src": "/game/(.*)",
+      "dest": "/game/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
