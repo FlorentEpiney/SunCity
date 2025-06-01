@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";import flowDiag from "../resources/images/flowDiag.png";
 
 function Flow(){
     const navigate = useNavigate();
@@ -21,8 +21,7 @@ function Flow(){
                         these
                         sections connect.
                     </p>
-                    <a href="../resources/images/flowDiag.png"><img src="../resources/images/flowDiag.png" alt="Flow diagram"
-                                                                 title="Game Flow"/></a>
+                    <img src={flowDiag} alt="Flow diagram" title="Game Flow"/>
 
                     <h3>Game Process</h3>
                     <p>

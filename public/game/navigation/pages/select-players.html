@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN City</title>
+    <link rel="stylesheet" href="../css/start-screen.css">
+
+    <!-- Content Security Policy for enhanced security -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self';
+                   style-src 'self' 'unsafe-inline';
+                   img-src 'self' data: https:;
+                   connect-src 'self' https:;">
+</head>
+<body>
+<!-- Character Selection Screen -->
+<div class="screen character-selection" id="characterSelection">
+    <h1 id="selectionTitle">Player 1: Drag your avatar to the box below</h1>
+
+    <!-- Player selection -->
+    <div class="characters">
+        <!--
+            Notice: We removed the inline event handlers (ondragstart) for better security.
+            These will be attached via JavaScript in our external file instead.
+        -->
+        <div class="character" draggable="true" data-img="../../ressources/images/player-img/avatar_hitman.png">
+            <img src="../../ressources/images/player-img/avatar_hitman.png" alt="Hitman">
+        </div>
+        <div class="character" draggable="true" data-img="../../ressources/images/player-img/avatar_soldier.png">
+            <img src="../../ressources/images/player-img/avatar_soldier.png" alt="Soldier">
+        </div>
+        <div class="character" draggable="true" data-img="../../ressources/images/player-img/avatar_survivor.png">
+            <img src="../../ressources/images/player-img/avatar_survivor.png" alt="Survivor">
+        </div>
+        <div class="character" draggable="true" data-img="../../ressources/images/player-img/avatar_woman.png">
+            <img src="../../ressources/images/player-img/avatar_woman.png" alt="Woman">
+        </div>
+    </div>
+
+    <!--
+        Notice: We removed inline event handlers (ondrop, ondragover) for security.
+        We also added input validation attributes for additional client-side protection.
+    -->
+    <div class="drop-box" id="playerDropBox">
+        Drop your character here
+    </div>
+
+    <!-- Added pattern and maxlength for basic HTML validation as first line of defense -->
+    <input type="text"
+           id="playerNameInput"
+           class="player-name-input"
+           placeholder="Enter your name"
+           maxlength="20"
+           pattern="[a-zA-Z0-9\s\-_]+"
+           title="Only letters, numbers, spaces, dashes, and underscores allowed">
+
+    <!-- Removed inline onclick handler -->
+    <button id="continueButton">CONTINUE</button>
+</div>
+
+<!-- Recap Screen -->
+<div class="screen recap" id="recapScreen">
+    <h1>Players Ready!</h1>
+
+    <div class="player-recap">
+        <div class="avatar-wrapper">
+            <img id="recapP1" alt="Player 1 Avatar">
+        </div>
+        <div class="player-info">
+            <h2 id="recapName1">Player 1</h2>
+            <div class="location-box">
+                <p id="location1Display">📍 Detecting location...</p>
+                <!-- Removed inline onclick handler -->
+                <button class="location-change-btn" data-player="1">Change Location</button>
+                <div class="manualInput" id="manualInput1">
+                    <!-- Added validation attributes for location inputs -->
+                    <input type="text"
+                           id="manualCity1"
+                           placeholder="City"
+                           maxlength="50"
+                           pattern="[a-zA-Z\s\-]+"
+                           title="Only letters, spaces, and dashes allowed">
+                    <input type="text"
+                           id="manualCountry1"
+                           placeholder="Country"
+                           maxlength="50"
+                           pattern="[a-zA-Z\s\-]+"
+                           title="Only letters, spaces, and dashes allowed">
+                    <!-- Removed inline onclick handler -->
+                    <button class="save-location-btn" data-player="1">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="player-recap">
+        <div class="avatar-wrapper">
+            <img id="recapP2" alt="Player 2 Avatar">
+        </div>
+        <div class="player-info">
+            <h2 id="recapName2">Player 2</h2>
+            <div class="location-box">
+                <p id="location2Display">📍 Detecting location...</p>
+                <!-- Removed inline onclick handler -->
+                <button class="location-change-btn" data-player="2">Change Location</button>
+                <div class="manualInput" id="manualInput2">
+                    <input type="text"
+                           id="manualCity2"
+                           placeholder="City"
+                           maxlength="50"
+                           pattern="[a-zA-Z\s\-]+"
+                           title="Only letters, spaces, and dashes allowed">
+                    <input type="text"
+                           id="manualCountry2"
+                           placeholder="Country"
+                           maxlength="50"
+                           pattern="[a-zA-Z\s\-]+"
+                           title="Only letters, spaces, and dashes allowed">
+                    <button class="save-location-btn" data-player="2">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Removed inline onclick handler -->
+    <button id="startCountdownButton">CONTINUE</button>
+</div>
+
+
+<script type="module" src="../../ressources/scripts/PlayerSelection.js"></script>
+</body>
+</html>
