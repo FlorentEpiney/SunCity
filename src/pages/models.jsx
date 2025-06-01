@@ -13,22 +13,22 @@ function Models(){
                     </header>
                     <h3>Players</h3>
                     <p> At the start of the game players are asked to choose between a male or female figure.</p>
-                    <img id="playerMale" src="../resources/images/models/figures/man/npcmaleidle.png" alt="playerMan"/>
-                    <img id="playerFemale" src="../resources/images/models/figures/woman/npcfemaleidle.png"
+                    <img id="playerMale" src="/resources/images/models/figures/man/npcmaleidle.png" alt="playerMan"/>
+                    <img id="playerFemale" src="/resources/images/models/figures/woman/npcfemaleidle.png"
                          alt="playerWoman"/>
 
                     <p>Additionally, there is a specific alias of each player that will be displayed above the figure to
                         indicate which player is which.</p>
-                    <img src="../resources/images/models/figures/man/leon.png" alt="leonPlayer"/>
-                    <img src="../resources/images/models/figures/woman/madeline.png" alt="madelinePlayer"/>
+                    <img src="/resources/images/models/figures/man/leon.png" alt="leonPlayer"/>
+                    <img src="/resources/images/models/figures/woman/madeline.png" alt="madelinePlayer"/>
 
                     <h3>Enemies</h3>
                     <p>There is a generic enemy model. Every enemy spawned on the map will look like the enemy figure
                         presented in different orientations.</p>
-                    <img src="../resources/images/models/figures/enemy/dudeWutIsScratch.png" alt="enemy"/>
+                    <img src="/resources/images/models/figures/enemy/dudeWutIsScratch.png" alt="enemy"/>
 
                     <p>The health bar on top of each enemy indicates how much health points are left.</p>
-                    <img src="../resources/images/models/figures/enemy/enemy.png" alt="enemyLifeBar"/>
+                    <img src="/resources/images/models/figures/enemy/enemy.png" alt="enemyLifeBar"/>
 
                     <h3>Sun City Map</h3>
                     <p>
@@ -41,26 +41,26 @@ function Models(){
                         The player will be blocked from walking on top of buildings or water or from walking through
                         trees.
                     </p>
-                    <img src="../resources/images/mockup/suncity_map.png" alt="suncitymap"/>
+                    <img src="/resources/images/mockup/suncity_map.png" alt="suncitymap"/>
 
                     <h3>Building</h3>
                     <p>The game map is filled with some well-known buildings of Sierre such as the followin
                         buildings.</p>
 
                     <h4>Bus station</h4>
-                    <img src="../resources/images/models/buildings/bus_depo_0.png" alt="busstation"/>
+                    <img src="/resources/images/models/buildings/bus_depo_0.png" alt="busstation"/>
 
                     <h4>Hospital</h4>
-                    <img src="../resources/images/models/buildings/spr_hospital.png" alt="hospital"/>
+                    <img src="/resources/images/models/buildings/spr_hospital.png" alt="hospital"/>
 
                     <h4>Church</h4>
-                    <img src="../resources/images/models/buildings/church.gif" alt="church"/>
+                    <img src="/resources/images/models/buildings/church.gif" alt="church"/>
 
                     <h4>Petrol station</h4>
-                    <img src="../resources/images/models/buildings/petrol_station_0.png" alt="petrolstation"/>
+                    <img src="/resources/images/models/buildings/petrol_station_0.png" alt="petrolstation"/>
 
                     <h4>Football pitch</h4>
-                    <img src="../resources/images/models/buildings/football-pitch.png" alt="footballpitch"/>
+                    <img src="/resources/images/models/buildings/football-pitch.png" alt="footballpitch"/>
 
                 </article>
             </section>
