@@ -1,8 +1,8 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 function Game(){
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     return(
         <div>
             <section id="articles">

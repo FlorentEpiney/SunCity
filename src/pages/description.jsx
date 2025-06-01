@@ -1,8 +1,8 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 function Description(){
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     return(
         <div>
             <section id="articles">
@@ -16,7 +16,7 @@ function Description(){
                         <p>
                             Welcome to <strong>Sun City</strong>, a 2-player survival game developed as part of the Web
                             development course at
-                            <a href="https://www.hevs.ch" target="_blank"><strong>HES-SO Valais</strong></a>.
+                            <a href="https://www.hevs.ch" target="_blank" rel="noreferrer"><strong>HES-SO Valais</strong></a>.
                             Set in a post-apocalyptic version of the city Sierre, the game immerses you in a World
                             devastated by a virus outbreak.
                             With society in ruins and the law of the jungle prevailing, your only goal is to survive
