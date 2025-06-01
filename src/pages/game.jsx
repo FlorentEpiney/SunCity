@@ -24,7 +24,7 @@ function Game(){
                             The game is designed to be fun and engaging, with colorful graphics and sound effects. It is
                             a great way to test your reflexes and compete with friends.
                         </p>
-                        <button onClick={() => window.location.href = '../src/game/navigation/pages/homePage.html'}>
+                        <button onClick={() => window.location.href = '/game/navigation/pages/homePage.html'}>
                             Start Game
                         </button>
                     </div>
