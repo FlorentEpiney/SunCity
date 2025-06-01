@@ -1,4 +1,4 @@
-
+// api/wall-of-fame.js
 let wallOfFameData = [
     {
         "pseudo": "Walter",
@@ -33,54 +33,58 @@ let wallOfFameData = [
 ];
 
 export default async function handler(req, res) {
-    // Allow requests from any origin
+    // Set CORS headers to allow requests from your domain
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
 
-    // Handle preflight requests
+    // Handle preflight requests (browsers send these before actual requests)
     if (req.method === 'OPTIONS') {
         res.status(200).end();
         return;
     }
 
     if (req.method === 'GET') {
-        // Return the current leaderboard data
-
         try {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(wallOfFameData);
         } catch (error) {
-            console.error('Error in GET /wall-of-fame:', error);
+            console.error('Error in GET /api/wall-of-fame:', error);
             res.status(500).json({ error: 'Failed to retrieve leaderboard data' });
         }
     }
-
     else if (req.method === 'POST') {
-        // Handle updates to the leaderboard
-
         try {
             const newData = req.body;
 
-            // Basic validation (same as your original server)
+            // Validate the incoming data structure
             if (!Array.isArray(newData)) {
-                return res.status(400).json({ error: 'Invalid data format' });
+                return res.status(400).json({ error: 'Expected an array of player data' });
             }
 
-            // Update our in-memory data
+            // Validate each player object has required fields
+            const isValidData = newData.every(player =>
+                player.pseudo &&
+                typeof player.score === 'number' &&
+                typeof player.nbVictories === 'number'
+            );
+
+            if (!isValidData) {
+                return res.status(400).json({ error: 'Invalid player data format' });
+            }
+
+            // Update the leaderboard (note: this will reset when function restarts)
             wallOfFameData = newData;
 
-            console.log('Leaderboard updated with new data:', newData);
-            res.status(200).json({ message: 'Data successfully updated' });
+            console.log('Leaderboard updated successfully');
+            res.status(200).json({ message: 'Leaderboard updated successfully' });
 
         } catch (error) {
-            console.error('Error in POST /wall-of-fame:', error);
-            res.status(500).json({ error: 'Failed to update leaderboard data' });
+            console.error('Error in POST /api/wall-of-fame:', error);
+            res.status(500).json({ error: 'Failed to update leaderboard' });
         }
     }
-
     else {
-        // Handle any other HTTP methods
-        res.status(405).json({ error: 'Method not allowed' });
+        res.status(405).json({ error: `Method ${req.method} not allowed` });
     }
 }

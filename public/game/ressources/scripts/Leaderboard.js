@@ -3,13 +3,14 @@ import SecurityUtils from './SecurityUtils.js';
 
 export default function Leaderboard(){
 
-    // Smart API path detection - works locally and on Vercel automatically
+
     const getApiPath = () => {
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+
             return 'http://localhost:3000';
         }
-        // On Vercel, we use our single API endpoint
-        return '/api';
+        // On Vercel, we use direct paths
+        return '';  // Empty string means use the current domain
     };
 
     let wallOfFame;
@@ -20,7 +21,7 @@ export default function Leaderboard(){
     const loadLeaderboardRateLimit = SecurityUtils.createRateLimiter(20, 60000);
 
     /*
-     * Save score function - now much simpler!
+     * Save score function
      * We make one call to get current data, modify it, then save it back
      */
     const saveScore = function() {
@@ -30,7 +31,7 @@ export default function Leaderboard(){
             return;
         }
 
-        // Get player information (same validation as before)
+        // Get player information (keeping your existing validation logic)
         const player1Name = SecurityUtils.getSecureLocalStorage(
             'player1Name',
             'Player1',
@@ -53,39 +54,54 @@ export default function Leaderboard(){
             0, 1000000
         );
 
-        // Get current leaderboard data
-        fetch(`${getApiPath()}/wall-of-fame`)
+        // Step 1: Get current leaderboard data
+        const apiBase = getApiPath();
+        const getUrl = apiBase ? `${apiBase}/wall-of-fame` : '/wall-of-fame';
+
+        fetch(getUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
+                    throw new Error(`Failed to fetch leaderboard: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
+                // Process the data (keeping your existing logic)
                 wallOfFame = SecurityUtils.validateApiResponse(data) || [];
 
                 if (!Array.isArray(wallOfFame)) {
                     wallOfFame = [];
                 }
 
-                // Process both players (same logic as your original code)
+                // Process both players
                 processPlayerScore(player1Name, scorePlayer1, window.winner === 1);
                 processPlayerScore(player2Name, scorePlayer2, window.winner === 2);
 
                 // Sort the leaderboard
                 sortWallOfFame();
 
-                // Send the updated data back to our API
-                return fetch(`${getApiPath()}/wall-of-fame`, {
+                // Step 2: Save the updated data back
+                const postUrl = apiBase ? `${apiBase}/update-wall-of-fame` : '/update-wall-of-fame';
+
+                return fetch(postUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest'
                     },
-                    body: JSON.stringify(wallOfFame)
+                    body: JSON.stringify(wallOfFame.map(player => ({
+                        pseudo: SecurityUtils.sanitizeInput(player.pseudo || ''),
+                        score: SecurityUtils.validateNumericValue(player.score, 0, 1000000),
+                        nbVictories: SecurityUtils.validateNumericValue(player.nbVictories, 0, 10000)
+                    })))
                 });
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to save leaderboard: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
             .then(result => {
                 console.log('Score saved successfully:', result);
             })
@@ -132,7 +148,7 @@ export default function Leaderboard(){
     }
 
     /*
-     * Display the leaderboard - now extremely simple!
+     * Display the leaderboard
      */
     const displayWallOfFame = function() {
         if (!loadLeaderboardRateLimit()) {
@@ -143,15 +159,18 @@ export default function Leaderboard(){
 
         console.log('Loading leaderboard...');
 
-        fetch(`${getApiPath()}/wall-of-fame`)
+        const apiBase = getApiPath();
+        const getUrl = apiBase ? `${apiBase}/wall-of-fame` : '/wall-of-fame';
+
+        fetch(getUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
+                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
-                // Validate and sanitize the data
+                // Validate and sanitize the data (keeping your existing logic)
                 wallOfFame = SecurityUtils.validateApiResponse(data) || [];
 
                 if (!Array.isArray(wallOfFame)) {
