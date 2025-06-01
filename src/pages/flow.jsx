@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";import flowDiag from "../resources/images/flowDiag.png";
+import { useNavigate } from "react-router-dom";
+
 
 function Flow(){
     const navigate = useNavigate();
@@ -21,7 +22,10 @@ function Flow(){
                         these
                         sections connect.
                     </p>
-                    <img src={flowDiag} alt="Flow diagram" title="Game Flow"/>
+                    <a href="/resources/images/flowDiag.png"><img
+                        src="/resources/images/flowDiag.png" alt="Flow diagram"
+                        title="Game Flow"/></a>
+
 
                     <h3>Game Process</h3>
                     <p>
@@ -30,8 +34,8 @@ function Flow(){
                         ensures a responsible gaming environment,
                         while smooth transitions and loading screens provide a seamless experience throughout the site.
                     </p>
-                    <a href="../resources/images/GameProcessDiagram.drawio.png"><img
-                        src="../resources/images/GameProcessDiagram.drawio.png" alt="Process diagram"
+                    <a href="/resources/images/GameProcessDiagram.drawio.png"><img
+                        src="/resources/images/GameProcessDiagram.drawio.png" alt="Process diagram"
                         title="Game Process"/></a>
 
                     <h3>Gameplay Process</h3>
@@ -41,8 +45,8 @@ function Flow(){
                         helpful health kits at key intervals.
                         Your mission is to outlast every challenge and see how long you can survive.
                     </p>
-                    <a href="../resources/images/GamePlayDiagram.drawio.png"><img
-                        src="../resources/images/GamePlayDiagram.drawio.png" alt="Gameplay process"
+                    <a href="/resources/images/GamePlayDiagram.drawio.png"><img
+                        src="/resources/images/GamePlayDiagram.drawio.png" alt="Gameplay process"
                         title="Gameplay Process"/></a>
 
                     <h3>Game Sequence</h3>
@@ -51,8 +55,8 @@ function Flow(){
                         compare your performance with others.
                         Every playthrough is a fresh challenge in this unpredictable, post-apocalyptic world.
                     </p>
-                    <a href="../resources/images/SequenceDiag.drawio.png"><img
-                        src="../resources/images/SequenceDiag.drawio.png"
+                    <a href="/resources/images/SequenceDiag.drawio.png"><img
+                        src="/resources/images/SequenceDiag.drawio.png"
                         alt="Sequence diagram" title="Game Sequence"/></a>
                 </article>
             </section>

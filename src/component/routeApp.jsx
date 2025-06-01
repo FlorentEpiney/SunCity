@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Description from "../pages/description";
 import Logbook from "../pages/logbook";
 import Models from "../pages/models";
@@ -8,6 +8,36 @@ import Game from "../pages/game";
 import {BrowserRouter, NavLink, Navigate, Route, Routes} from "react-router-dom";
 
 function RouteApp() {
+    useEffect(() => {
+        // Hamburger menu functionality
+        const burger = document.querySelector("li.hamburger");
+        const navList = burger?.parentElement;
+
+        const handleBurgerClick = () => {
+            navList?.classList.toggle("open");
+        };
+
+        if (burger) {
+            burger.addEventListener("click", handleBurgerClick);
+        }
+
+        // Total time calculation
+        const timeSpan = document.getElementById("total-time");
+        if (timeSpan) {
+            // Calculate total time from logbook data
+            // You'll need to implement this based on your logbook data
+            // For now, setting a placeholder
+            timeSpan.textContent = "20h 30m"; // Replace with actual calculation
+        }
+
+        // Cleanup
+        return () => {
+            if (burger) {
+                burger.removeEventListener("click", handleBurgerClick);
+            }
+        };
+    }, []);
+
     return (
         <>
             <BrowserRouter>
@@ -15,7 +45,7 @@ function RouteApp() {
                 <nav>
                     <ul>
                         <li className="hamburger">
-                            <img src="../resources/images/hamburger_icon.svg"/>
+                            <img src="/resources/images/hamburger_icon.svg" alt="Menu"/>
                         </li>
                         <li>
                             <NavLink to="/description">Description</NavLink>
@@ -47,10 +77,8 @@ function RouteApp() {
                     <Route path="*" element={<Navigate to="/description" replace/>}/>
                 </Routes>
                 <footer>
-                    <img id="logo" src="../resources/images/logo.png"/>
+                    <img id="logo" src="/resources/images/logo.png" alt="Logo"/>
                 </footer>
-
-                <script src="../resources/js/script.js"></script>
             </BrowserRouter>
         </>
     );
