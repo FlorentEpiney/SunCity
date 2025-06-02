@@ -91,9 +91,9 @@ fetch('../../gameData/collision_map.json')
 
         // Initialize players
         let player1Name = localStorage.getItem("player1Name");
-        let player1Img = Img.player[parseInt(localStorage.getItem("player1Img")) || 0];
+        let player1Img = Img.player[localStorage.getItem("player1Img") === null ? 0 : parseInt(localStorage.getItem("player1Img"))];
         let player2Name = localStorage.getItem("player2Name");
-        let player2Img = Img.player[parseInt(localStorage.getItem("player2Img")) || 1];
+        let player2Img = Img.player[localStorage.getItem("player2Img") === null ? 1 : parseInt(localStorage.getItem("player2Img"))];
         player1 = Player(250, 100, player1Name, player1Img, 'player1');
         player2 = Player(10000, 100, player2Name, player2Img, 'player2');
         window.player1 = player1;
