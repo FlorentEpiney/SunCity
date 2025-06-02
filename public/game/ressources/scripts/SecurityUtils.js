@@ -198,7 +198,8 @@ class SecurityUtils {
         // Define allowed domains for content loading
         const allowedDomains = [
             window.location.origin,
-            'https://cdnjs.cloudflare.com'
+            'https://cdnjs.cloudflare.com',
+            'https://api.opencagedata.com'
         ];
 
         try {
