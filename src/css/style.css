@@ -106,6 +106,14 @@ img{
     height: 250px;
 }
 
+.white-image{
+    background-color: #888888;
+}
+
+.upgrade-image{
+    margin: 1em;
+}
+
 /* navigation bar */
 nav {
     background-color: var(--color-primary);

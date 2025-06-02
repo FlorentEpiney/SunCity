@@ -10,7 +10,6 @@ function Flow(){
                 <article>
                     <header>
                         <h2>Game's Website Flow and Interaction</h2>
-                        <p>By Micha Meichtry the 29/03/2025 at 16:30</p>
                     </header>
 
                     <h3>Game Flow</h3>
@@ -60,27 +59,6 @@ function Flow(){
                         alt="Sequence diagram" title="Game Sequence"/></a>
                 </article>
             </section>
-            <aside>
-                <div>
-                    <h3>Summary of the project data</h3>
-                    <p>Total time of project so far: <span id="total-time">0h 0m</span></p>
-                    <p><strong>Development team:</strong></p>
-                    <ul>
-                        <li>
-                            <p><strong>Fernandes Walter</strong>: Design & Gameplay</p>
-                        </li>
-                        <li>
-                            <p><strong>Epiney Florent</strong>: JavaScript Specialist</p>
-                        </li>
-                        <li>
-                            <p><strong>Meichtry Micha</strong>: Style CSS Specialist </p>
-                        </li>
-                        <li>
-                            <p><strong>Cortés Julio</strong>: Game Architect</p>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
         </div>
     );
 }

@@ -9,14 +9,12 @@ function Description(){
                 <article>
                     <header>
                         <h2>Description</h2>
-                        <p>By Micha Meichtry the 29/03/2025 at 16:30</p>
                     </header>
                     <div className="container">
                         <h3>Sun City</h3>
                         <p>
                             Welcome to <strong>Sun City</strong>, a 2-player survival game developed as part of the Web
-                            development course at
-                            <a href="https://www.hevs.ch" target="_blank" rel="noreferrer"><strong>HES-SO Valais</strong></a>.
+                            development course at <a href="https://www.hevs.ch" target="_blank" rel="noreferrer"><strong>HES-SO Valais</strong></a>.
                             Set in a post-apocalyptic version of the city Sierre, the game immerses you in a World
                             devastated by a virus outbreak.
                             With society in ruins and the law of the jungle prevailing, your only goal is to survive
@@ -25,22 +23,19 @@ function Description(){
 
                         <h3>Objective</h3>
                         <p>
-                            In <strong>Sun City</strong>, survival means everything.<br/>
-                            A timer tracks how long each player stays alive.
-                            The longer you survive, the more points you earn.
-                            But danger increases with time — enemies multiply, stamina drops.
-                            If an enemy touches you, you lose health. Fortunately for you, by contaminating you, the
-                            enemy loses all its vital energy and dies.
-                            To regain life points, you need to pick up health kits that are scattered around the map.
-                            As soon as one player dies, the match ends.
+                            The objective of <strong>Sun City</strong> is simple: survive for as long as possible.
+                            A timer tracks each player's survival time, and the longer you stay alive, the more points you accumulate.
+                            However, with time comes increasing difficulty—more enemies appear, stamina decreases, and survival becomes harder.
+                            The ultimate challenge is to outlast your opponent while staying alive in a harsh, enemy-filled environment.
                         </p>
 
                         <h3>Gameplay Overview</h3>
                         <ul>
-                            <li>Select your avatar and enter the desolate streets of Sierre..</li>
-                            <li>Use your weapon to fight off enemies and extend your survival.</li>
-                            <li>Pick up health kits to stay in the game longer.</li>
-                            <li>The difficulty scales: more time = more enemies = higher challenge.</li>
+                            <li>Choose your avatar and enter the destroyed streets of Sierre.</li>
+                            <li>Use your weapon to fight enemies and extend your survival time.</li>
+                            <li>Collect health kits scattered around the map to recover lost life points.</li>
+                            <li>The difficulty increases over time: more time = more enemies = higher challenge.</li>
+                            <li>The match ends as soon as one of the two players dies.</li>
                         </ul>
 
                         <h3>Technology Stack</h3>
@@ -68,32 +63,10 @@ function Description(){
                         <h3>Links</h3>
                         <ul>
                             <li><a href="https://github.com/FlorentEpiney/SunCity">GitLab Repository</a></li>
-                            <li><a href="/game/navigation/pages/homePage.html">Play the Game</a></li>
                         </ul>
                     </div>
                 </article>
             </section>
-            <aside>
-                <div>
-                    <h3>Summary of the project data</h3>
-                    <p>Total time of project so far: <span id="total-time">0h 0m</span></p>
-                    <p><strong>Development team:</strong></p>
-                    <ul>
-                        <li>
-                            <p><strong>Fernandes Walter</strong>: Design & Gameplay</p>
-                        </li>
-                        <li>
-                            <p><strong>Epiney Florent</strong>: JavaScript Specialist</p>
-                        </li>
-                        <li>
-                            <p><strong>Meichtry Micha</strong>: Style CSS Specialist </p>
-                        </li>
-                        <li>
-                            <p><strong>Cortés Julio</strong>: Game Architect</p>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
         </div>
     );
 }
