@@ -608,12 +608,6 @@ description page
     text-align: center;
 }
 
-#articles article .container ul:nth-of-type(2) li {
-    display: inline-block;
-    margin: var(--spacing-sm) var(--spacing-md);
-    max-width: none;
-}
-
 #articles article .container ul:last-child {
     text-align: center;
     list-style: none;
