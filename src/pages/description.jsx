@@ -62,7 +62,7 @@ function Description(){
 
                         <h3>Links</h3>
                         <ul>
-                            <li><a href="https://github.com/FlorentEpiney/SunCity">GitHub Repository</a></li>
+                            <li><a href="https://github.com/FlorentEpiney/SunCity">Github Repository</a></li>
                         </ul>
                     </div>
                 </article>
