@@ -1,200 +1,89 @@
-
+import { getWallOfFame, updateWallOfFame } from './Firebase.js';
 import SecurityUtils from './SecurityUtils.js';
 
-export default function Leaderboard(){
-
-
-    const getApiPath = () => {
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-
-            return 'http://localhost:3000';
-        }
-        // On Vercel, we use direct paths
-        return '';  // Empty string means use the current domain
-    };
-
+export default function Leaderboard() {
     let wallOfFame;
-    let nbVictoriesPlayer1;
-    let nbVictoriesPlayer2;
-
     const saveScoreRateLimit = SecurityUtils.createRateLimiter(5, 60000);
     const loadLeaderboardRateLimit = SecurityUtils.createRateLimiter(20, 60000);
 
-    /*
-     * Save score function
-     * We make one call to get current data, modify it, then save it back
-     */
-    const saveScore = function() {
+    const saveScore = async function() {
         if (!saveScoreRateLimit()) {
             console.warn('Rate limit exceeded for score saving');
-            showSecurityError('Too many requests. Please wait before submitting again.');
+            showSecurityError('Too many request. Please wait before to submit a new one.');
             return;
         }
 
-        // Get player information (keeping your existing validation logic)
-        const player1Name = SecurityUtils.getSecureLocalStorage(
-            'player1Name',
-            'Player1',
-            SecurityUtils.validatePlayerName
-        );
+        try {
+            const player1Name = SecurityUtils.getSecureLocalStorage(
+                'player1Name',
+                'Player1',
+                SecurityUtils.validatePlayerName
+            );
 
-        const scorePlayer1 = SecurityUtils.validateNumericValue(
-            SecurityUtils.getSecureLocalStorage('player1Score', window.player1?.score || 0),
-            0, 1000000
-        );
+            const scorePlayer1 = SecurityUtils.validateNumericValue(
+                SecurityUtils.getSecureLocalStorage('player1Score', window.player1?.score || 0),
+                0, 1000000
+            );
 
-        const player2Name = SecurityUtils.getSecureLocalStorage(
-            'player2Name',
-            'Player2',
-            SecurityUtils.validatePlayerName
-        );
+            const player2Name = SecurityUtils.getSecureLocalStorage(
+                'player2Name',
+                'Player2',
+                SecurityUtils.validatePlayerName
+            );
 
-        const scorePlayer2 = SecurityUtils.validateNumericValue(
-            SecurityUtils.getSecureLocalStorage('player2Score', window.player2?.score || 0),
-            0, 1000000
-        );
+            const scorePlayer2 = SecurityUtils.validateNumericValue(
+                SecurityUtils.getSecureLocalStorage('player2Score', window.player2?.score || 0),
+                0, 1000000
+            );
 
-        // Step 1: Get current leaderboard data
-        const apiBase = getApiPath();
-        const getUrl = apiBase ? `${apiBase}/wall-of-fame` : '/wall-of-fame';
+            // Update of the players' scores
+            if (window.winner === 1) {
+                await updateWallOfFame(player1Name, scorePlayer1, 1);
+                await updateWallOfFame(player2Name, scorePlayer2, 0);
+            } else if (window.winner === 2) {
+                await updateWallOfFame(player1Name, scorePlayer1, 0);
+                await updateWallOfFame(player2Name, scorePlayer2, 1);
+            }
 
-        fetch(getUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch leaderboard: ${response.status} ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Process the data (keeping your existing logic)
-                wallOfFame = SecurityUtils.validateApiResponse(data) || [];
-
-                if (!Array.isArray(wallOfFame)) {
-                    wallOfFame = [];
-                }
-
-                // Process both players
-                processPlayerScore(player1Name, scorePlayer1, window.winner === 1);
-                processPlayerScore(player2Name, scorePlayer2, window.winner === 2);
-
-                // Sort the leaderboard
-                sortWallOfFame();
-
-                // Step 2: Save the updated data back
-                const postUrl = apiBase ? `${apiBase}/update-wall-of-fame` : '/update-wall-of-fame';
-
-                return fetch(postUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: JSON.stringify(wallOfFame.map(player => ({
-                        pseudo: SecurityUtils.sanitizeInput(player.pseudo || ''),
-                        score: SecurityUtils.validateNumericValue(player.score, 0, 1000000),
-                        nbVictories: SecurityUtils.validateNumericValue(player.nbVictories, 0, 10000)
-                    })))
-                });
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to save leaderboard: ${response.status} ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(result => {
-                console.log('Score saved successfully:', result);
-            })
-            .catch(error => {
-                console.error('Error saving score:', error);
-                showSecurityError('Failed to save score. Please try again.');
-            });
+            console.log('Score saved with success');
+            displayWallOfFame();
+        } catch (error) {
+            console.error('Error by saving the score: ', error);
+            showSecurityError('Score save failed. Please retry.');
+        }
     };
 
-    /*
-     * Helper function to process individual player scores
-     * This combines the logic from your updatePlayerScore and addNewPlayer functions
-     */
-    function processPlayerScore(playerName, score, didWin) {
-        const safeName = SecurityUtils.validatePlayerName(playerName);
-        const safeScore = SecurityUtils.validateNumericValue(score, 0, 1000000);
-
-        // Find existing player
-        let existingPlayer = wallOfFame.find(player => {
-            const playerPseudo = SecurityUtils.sanitizeInput(player.pseudo || '');
-            return playerPseudo === safeName;
-        });
-
-        if (existingPlayer) {
-            // Update existing player
-            existingPlayer.score = SecurityUtils.validateNumericValue(existingPlayer.score, 0, 1000000);
-            existingPlayer.nbVictories = SecurityUtils.validateNumericValue(existingPlayer.nbVictories, 0, 10000);
-
-            if (didWin) {
-                // Only update score if it's higher than current
-                if (safeScore > existingPlayer.score) {
-                    existingPlayer.score = safeScore;
-                }
-                existingPlayer.nbVictories += 1;
-            }
-        } else {
-            // Add new player
-            wallOfFame.push({
-                pseudo: safeName,
-                score: safeScore,
-                nbVictories: didWin ? 1 : 0
-            });
-        }
-    }
-
-    /*
-     * Display the leaderboard
-     */
-    const displayWallOfFame = function() {
+    const displayWallOfFame = async function() {
         if (!loadLeaderboardRateLimit()) {
             console.warn('Rate limit exceeded for leaderboard loading');
-            showSecurityError('Too many requests. Please wait before loading leaderboard again.');
+            showSecurityError('Too many request. Please wait before to submit a new one.');
             return;
         }
 
-        console.log('Loading leaderboard...');
+        try {
+            wallOfFame = await getWallOfFame();
 
-        const apiBase = getApiPath();
-        const getUrl = apiBase ? `${apiBase}/wall-of-fame` : '/wall-of-fame';
+            if (!Array.isArray(wallOfFame)) {
+                wallOfFame = [];
+            }
 
-        fetch(getUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Validate and sanitize the data (keeping your existing logic)
-                wallOfFame = SecurityUtils.validateApiResponse(data) || [];
+            // Clean up the data
+            wallOfFame = wallOfFame.map(player => ({
+                pseudo: SecurityUtils.validatePlayerName(player.pseudo || 'Unknown'),
+                score: SecurityUtils.validateNumericValue(player.score, 0, 1000000),
+                nbVictories: SecurityUtils.validateNumericValue(player.nbVictories, 0, 10000)
+            })).filter(player => player.pseudo !== 'Unknown');
 
-                if (!Array.isArray(wallOfFame)) {
-                    wallOfFame = [];
-                }
-
-                // Clean up the data
-                wallOfFame = wallOfFame.map(player => ({
-                    pseudo: SecurityUtils.validatePlayerName(player.pseudo || 'Unknown'),
-                    score: SecurityUtils.validateNumericValue(player.score, 0, 1000000),
-                    nbVictories: SecurityUtils.validateNumericValue(player.nbVictories, 0, 10000)
-                })).filter(player => player.pseudo !== 'Unknown');
-
-                // Sort and display
-                sortWallOfFame();
-                createTable(wallOfFame);
-            })
-            .catch(error => {
-                console.error('Error loading leaderboard:', error);
-                const tableContainer = document.getElementById('wallOfFameTable');
-                if (tableContainer) {
-                    tableContainer.textContent = 'Connection problem with the server. Unable to display leaderboard.';
-                }
-            });
+            // Sort and display
+            sortWallOfFame();
+            createTable(wallOfFame);
+        } catch (error) {
+            console.error('Error by loading the leaderboard:', error);
+            const tableContainer = document.getElementById('wallOfFameTable');
+            if (tableContainer) {
+                tableContainer.textContent = 'Connection problem with the server. Unable to display leaderboard.';
+            }
+        }
     };
 
     // All the helper functions remain exactly the same as your original code
@@ -214,11 +103,6 @@ export default function Leaderboard(){
 
     const createTable = function(data) {
         const tableContainer = document.getElementById('wallOfFameTable');
-
-        if (!tableContainer) {
-            console.error('Table container not found');
-            return;
-        }
 
         const table = document.createElement('table');
         table.setAttribute('border', '1');
@@ -240,27 +124,23 @@ export default function Leaderboard(){
         data.forEach((player, index) => {
             const row = document.createElement('tr');
 
-            const rankCell = document.createElement('td');
-            rankCell.textContent = (index + 1).toString();
+            const cells = [
+                (index + 1).toString(),
+                player.pseudo,
+                player.score.toString(),
+                player.nbVictories.toString()
+            ];
 
-            const nameCell = document.createElement('td');
-            nameCell.textContent = player.pseudo;
-
-            const scoreCell = document.createElement('td');
-            scoreCell.textContent = player.score.toString();
-
-            const victoriesCell = document.createElement('td');
-            victoriesCell.textContent = player.nbVictories.toString();
-
-            row.appendChild(rankCell);
-            row.appendChild(nameCell);
-            row.appendChild(scoreCell);
-            row.appendChild(victoriesCell);
+            cells.forEach(text => {
+                const td = document.createElement('td');
+                td.textContent = text;
+                row.appendChild(td);
+            });
 
             tbody.appendChild(row);
         });
-        table.appendChild(tbody);
 
+        table.appendChild(tbody);
         tableContainer.innerHTML = '';
         tableContainer.appendChild(table);
     };
