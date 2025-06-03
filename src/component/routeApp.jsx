@@ -78,9 +78,6 @@ function RouteApp() {
                     <Route path="*" element={<Navigate to="/description" replace/>}/>
                 </Routes>
                 <SummaryProject/>
-                <footer>
-                    <img id="logo" src="/resources/images/logo.png" alt="Logo"/>
-                </footer>
             </BrowserRouter>
         </>
     );

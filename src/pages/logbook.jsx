@@ -32,14 +32,14 @@ function Logbook(){
                                 <td>28.02.2025</td>
                                 <td>Brainstorm game ideas</td>
                                 <td>Julio</td>
-                                <td>Micha, Florent, Walter, Julio</td>
+                                <td>Florent, Julio, Micha, Walter</td>
                                 <td>2H</td>
                             </tr>
                             <tr>
                                 <td>28.02.2025</td>
                                 <td>Define game mechanics and core concept</td>
                                 <td>Julio</td>
-                                <td>Micha, Florent, Walter, Julio</td>
+                                <td>Florent, Julio, Micha, Walter</td>
                                 <td>3H</td>
                             </tr>
                             <tr>
@@ -53,7 +53,7 @@ function Logbook(){
                                 <td>21.03.2025</td>
                                 <td>Set up project structure (HTML, CSS, JS)</td>
                                 <td>Florent</td>
-                                <td>Julio, Florent</td>
+                                <td>Florent, Julio</td>
                                 <td>2H</td>
                             </tr>
                             <tr>
@@ -78,128 +78,119 @@ function Logbook(){
                                 <td>3H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>10.04.2025</td>
                                 <td>Code main game loop</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent</td>
+                                <td>Florent, Julio</td>
+                                <td>5H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>10.04.2025</td>
                                 <td>Add player movement</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent</td>
+                                <td>Florent</td>
+                                <td>5H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>10.04.2025</td>
                                 <td>Implement collision detection</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent</td>
+                                <td>Florent</td>
+                                <td>6H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>30.04.2025</td>
                                 <td>Develop enemies and obstacles</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Julio</td>
+                                <td>Julio</td>
+                                <td>5H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>12.05.2025</td>
                                 <td>Develop textures</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Walter</td>
+                                <td>Walter</td>
+                                <td>4H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>15.05.2025</td>
                                 <td>Add animations</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Walter</td>
+                                <td>Walter</td>
+                                <td>3H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>03.03.2025</td>
                                 <td>Implement game sounds and music</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent</td>
+                                <td>Florent</td>
+                                <td>1H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>24.04.2025</td>
                                 <td>Develop scoring system</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent</td>
+                                <td>Florent</td>
+                                <td>2H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>01.05.2025</td>
                                 <td>Create UI elements (menus, buttons, scoreboard)</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Walter</td>
+                                <td>Micha, Walter</td>
+                                <td>4H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>23.05.2025</td>
                                 <td>Optimize performance</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Julio</td>
+                                <td>Julio</td>
+                                <td>3H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>05.06.2025</td>
                                 <td>Test and debug</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent, Micha</td>
+                                <td>Florent, Julio, Micha, Walter</td>
+                                <td>2H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
-                                <td>Add responsive design for mobile</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
+                                <td>20.05.2025</td>
                                 <td>Implement game over & restart logic</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Julio</td>
+                                <td>Florent, Julio</td>
+                                <td>2H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>29.05.2025</td>
                                 <td>Refactor code and optimize</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Julio</td>
+                                <td>Florent, Julio</td>
+                                <td>5H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>31.05.2025</td>
                                 <td>Deploy game online (GitHub Pages / Netlify)</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Julio</td>
+                                <td>Julio</td>
+                                <td>3H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>05.06.2025</td>
                                 <td>Final bug fixes and polish</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent, Julio, Walter</td>
+                                <td>Florent, Julio, Walter</td>
+                                <td>5H</td>
                             </tr>
                             <tr>
-                                <td>TBD</td>
+                                <td>09.06.2025</td>
                                 <td>Prepare for presentation/demo</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>Florent, Julio, Micha, Walter</td>
+                                <td>Florent, Julio, Micha, Walter</td>
+                                <td>2H</td>
                             </tr>
                         </tbody>
                     </table>
-
-
                 </article>
             </section>
         </div>
