@@ -1,3 +1,2 @@
 # Ignore the config file with sensitive data
-public/game/configuration/apiConfig.json
 .vercel
