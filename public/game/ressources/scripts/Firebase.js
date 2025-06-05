@@ -28,7 +28,7 @@ export async function updateWallOfFame(pseudo, score, victories) {
         const playerIndex = wallOfFame.findIndex(player => player.pseudo === pseudo);
 
         if (playerIndex !== -1) {
-            if (score > wallOfFame[playerIndex].score) {
+            if (score > wallOfFame[playerIndex].score && victories > 0) {
                 wallOfFame[playerIndex].score = score;
             }
             if (victories > 0) {
