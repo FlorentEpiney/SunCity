@@ -9,6 +9,7 @@ function Description(){
                 <article>
                     <header>
                         <h2>Description</h2>
+                        <p>By Micha Meichtry the 05/06/2025 at 16:30</p>
                     </header>
                     <div className="container">
                         <h3>Sun City</h3>

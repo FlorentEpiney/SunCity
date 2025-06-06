@@ -10,11 +10,12 @@ function Flow(){
                 <article>
                     <header>
                         <h2>Game's Website Flow and Interaction</h2>
+                        <p>By Julio Cortes the 29/03/2025 at 16:30</p>
                     </header>
 
                     <h3>Game Flow</h3>
                     <p>
-                        The website guides you through a series of engaging pages: a warm welcome that introduces the
+                    The website guides you through a series of engaging pages: a warm welcome that introduces the
                         game,
                         a selection screen for your avatar and personal details,
                         the main gameplay area, and a leaderboard to track your progress. The visual below shows how

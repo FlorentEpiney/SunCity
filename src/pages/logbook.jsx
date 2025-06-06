@@ -9,6 +9,7 @@ function Logbook(){
                 <article>
                     <header>
                         <h2>Project Logbook</h2>
+                        <p>By Micha Meichtry the 06/06/2025 at 16:30</p>
                     </header>
                     <table>
                         <thead>

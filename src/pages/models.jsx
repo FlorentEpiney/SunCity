@@ -9,6 +9,7 @@ function Models(){
                 <article>
                     <header>
                         <h2>Visual Models of the Project</h2>
+                        <p>By Florent Epiney and Julio Cortes the 06/06/2025 at 16:30</p>
                     </header>
                     <h3>Players</h3>
                     <p> At the start of the game, players are asked to choose between 4 figures: <br/>

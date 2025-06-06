@@ -9,6 +9,7 @@ function Mockup(){
                 <article>
                     <header>
                         <h2>Mockup of the Project</h2>
+                        <p>By Florent Epiney the 29/03/2025 at 16:30</p>
                     </header>
                     <div className="container">
                         <h3>Warning Page</h3>
