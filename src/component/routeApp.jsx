@@ -1,11 +1,13 @@
+// src/component/routeApp.jsx
 import React, { useEffect } from 'react';
-import Description from "../pages/description";
-import Logbook from "../pages/logbook";
-import Models from "../pages/models";
-import Mockup from "../pages/mockup";
-import Flow from "../pages/flow";
-import Game from "../pages/game";
-import {BrowserRouter, NavLink, Navigate, Route, Routes} from "react-router-dom";
+import { BrowserRouter, NavLink, Navigate, Route, Routes } from "react-router-dom";
+
+// Import the WordPress-powered components
+import WordPressPage from "./WordPressPage";
+import { getWordPressPageId } from "../config/wordpressConfig";
+
+// Keep your existing Game component since it's not WordPress-managed
+
 
 function RouteApp() {
     useEffect(() => {
@@ -24,10 +26,8 @@ function RouteApp() {
         // Total time calculation
         const timeSpan = document.getElementById("total-time");
         if (timeSpan) {
-            // Calculate total time from logbook data
-            // You'll need to implement this based on your logbook data
-            // For now, setting a placeholder
-            timeSpan.textContent = "20h 30m"; // Replace with actual calculation
+
+            timeSpan.textContent = "20h 30m"; // UPDATE !!!
         }
 
         // Cleanup
@@ -68,12 +68,60 @@ function RouteApp() {
                     </ul>
                 </nav>
                 <Routes>
-                    <Route path="/description" element={<Description/>}/>
-                    <Route path="/models" element={<Models/>}/>
-                    <Route path="/mockup" element={<Mockup/>}/>
-                    <Route path="/flow" element={<Flow/>}/>
-                    <Route path="/logbook" element={<Logbook/>}/>
-                    <Route path="/game" element={<Game/>}/>
+                    {/* WordPress-powered pages */}
+                    <Route
+                        path="/description"
+                        element={
+                            <WordPressPage
+                                pageId={getWordPressPageId('description')}
+                                fallbackTitle="Description"
+                            />
+                        }
+                    />
+                    <Route
+                        path="/models"
+                        element={
+                            <WordPressPage
+                                pageId={getWordPressPageId('models')}
+                                fallbackTitle="Visual Models of the Project"
+                            />
+                        }
+                    />
+                    <Route
+                        path="/mockup"
+                        element={
+                            <WordPressPage
+                                pageId={getWordPressPageId('mockup')}
+                                fallbackTitle="Mockup of the Project"
+                            />
+                        }
+                    />
+                    <Route
+                        path="/flow"
+                        element={
+                            <WordPressPage
+                                pageId={getWordPressPageId('flow')}
+                                fallbackTitle="Game Flow and Interaction"
+                            />
+                        }
+                    />
+                    <Route
+                        path="/logbook"
+                        element={
+                            <WordPressPage
+                                pageId={getWordPressPageId('logbook')}
+                                fallbackTitle="Project Logbook"
+                            />
+                        }
+                    />
+
+                    {/* Keep your existing Game component */}
+                    <Route path="/game" element={<WordPressPage
+                        pageId={getWordPressPageId('game')}
+                        fallbackTitle="Game"
+                    />}/>
+
+                    {/* Default redirect */}
                     <Route path="*" element={<Navigate to="/description" replace/>}/>
                 </Routes>
                 <footer>

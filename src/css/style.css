@@ -510,3 +510,109 @@ responsive design
         display: none;
     }
 }
+
+/*
+=============================
+WordPress Content Styling
+=============================
+*/
+
+
+/* WordPress Content Fix Styles */
+.wordpress-content-fixed {
+    line-height: 1.6;
+    color: var(--color-text, #333333);
+}
+
+/* Style the converted WordPress content sections */
+.wordpress-content-fixed .wp-content-section {
+    margin: 1em 0;
+    padding: 0;
+    font-family: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    white-space: normal;
+    display: block;
+}
+
+/* Style WordPress images */
+.wordpress-content-fixed .content-image {
+    margin: 1.5em 0;
+    text-align: center;
+}
+
+.wordpress-content-fixed .content-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-sm, 6px);
+    box-shadow: var(--box-shadow-light, 0 2px 5px rgba(0,0,0,0.1));
+}
+
+/* Style WordPress figures */
+.wordpress-content-fixed figure {
+    margin: 1.5em 0;
+    text-align: center;
+    clear: both;
+}
+
+.wordpress-content-fixed figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Ensure all content is visible */
+.wordpress-content-fixed * {
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
+    visibility: visible;
+}
+
+/* Inline elements that should stay inline */
+.wordpress-content-fixed strong,
+.wordpress-content-fixed em,
+.wordpress-content-fixed a,
+.wordpress-content-fixed span,
+.wordpress-content-fixed code {
+    display: inline;
+}
+
+/* Paragraph spacing */
+.wordpress-content-fixed p,
+.wordpress-content-fixed .wp-content-section {
+    margin: 0.75em 0;
+}
+
+/* Make sure headings look good */
+.wordpress-content-fixed h1,
+.wordpress-content-fixed h2,
+.wordpress-content-fixed h3,
+.wordpress-content-fixed h4 {
+    margin: 1.5em 0 0.75em 0;
+    color: var(--color-primary, #004080);
+    font-weight: bold;
+}
+
+/* Debug styles - remove in production */
+.debug-content-info {
+    background: #e7f3ff;
+    border: 1px solid #b3d9ff;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+/* Force visibility for debugging (remove in production) */
+.wordpress-content-fixed.debug-mode {
+    border: 2px solid #007cba !important;
+    background: #f9f9f9 !important;
+    padding: 15px !important;
+}
+
+.wordpress-content-fixed.debug-mode * {
+    border: 1px dotted #ccc !important;
+    padding: 2px !important;
+}
