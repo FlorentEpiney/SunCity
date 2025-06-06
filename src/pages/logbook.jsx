@@ -9,7 +9,7 @@ function Logbook(){
                 <article>
                     <header>
                         <h2>Project Logbook</h2>
-                        <p>By Micha Meichtry the 29/03/2025 at 16:30</p>
+                        <p>By Micha Meichtry the 06/06/2025 at 16:30</p>
                     </header>
                     <table>
                         <thead>
@@ -22,208 +22,185 @@ function Logbook(){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>01.03.2025</td>
-                                <td>Create GitHub repository</td>
-                                <td>Florent</td>
-                                <td>Florent</td>
-                                <td>30M</td>
-                            </tr>
-                            <tr>
-                                <td>28.02.2025</td>
-                                <td>Brainstorm game ideas</td>
-                                <td>Julio</td>
-                                <td>Micha, Florent, Walter, Julio</td>
-                                <td>2H</td>
-                            </tr>
-                            <tr>
-                                <td>28.02.2025</td>
-                                <td>Define game mechanics and core concept</td>
-                                <td>Julio</td>
-                                <td>Micha, Florent, Walter, Julio</td>
-                                <td>3H</td>
-                            </tr>
-                            <tr>
-                                <td>21.03.2025</td>
-                                <td>Create wireframes and UI mockups</td>
-                                <td>Florent</td>
-                                <td>Florent</td>
-                                <td>2H</td>
-                            </tr>
-                            <tr>
-                                <td>21.03.2025</td>
-                                <td>Set up project structure (HTML, CSS, JS)</td>
-                                <td>Florent</td>
-                                <td>Julio, Florent</td>
-                                <td>2H</td>
-                            </tr>
-                            <tr>
-                                <td>22.03.2025</td>
-                                <td>Implement CSS styles</td>
-                                <td>Micha</td>
-                                <td>Micha</td>
-                                <td>5H30M</td>
-                            </tr>
-                            <tr>
-                                <td>28.03.2025</td>
-                                <td>Mockup & Models</td>
-                                <td>Florent</td>
-                                <td>Florent</td>
-                                <td>3H</td>
-                            </tr>
-                            <tr>
-                                <td>29.03.2025</td>
-                                <td>HTML & CSS modification & clean up</td>
-                                <td>Micha</td>
-                                <td>Micha</td>
-                                <td>3H</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Code main game loop</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Add player movement</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Implement collision detection</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Develop enemies and obstacles</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Develop textures</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Add animations</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Implement game sounds and music</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Develop scoring system</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Create UI elements (menus, buttons, scoreboard)</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Optimize performance</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Test and debug</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Add responsive design for mobile</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Implement game over & restart logic</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Refactor code and optimize</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Deploy game online (GitHub Pages / Netlify)</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Final bug fixes and polish</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
-                            <tr>
-                                <td>TBD</td>
-                                <td>Prepare for presentation/demo</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                            </tr>
+                        <tr>
+                            <td>01.03.2025</td>
+                            <td>Create GitHub repository</td>
+                            <td>Florent</td>
+                            <td>Florent</td>
+                            <td>30M</td>
+                        </tr>
+                        <tr>
+                            <td>28.02.2025</td>
+                            <td>Brainstorm game ideas</td>
+                            <td>Julio</td>
+                            <td>Florent, Julio, Micha, Walter</td>
+                            <td>2H</td>
+                        </tr>
+                        <tr>
+                            <td>28.02.2025</td>
+                            <td>Define game mechanics and core concept</td>
+                            <td>Julio</td>
+                            <td>Florent, Julio, Micha, Walter</td>
+                            <td>3H</td>
+                        </tr>
+                        <tr>
+                            <td>21.03.2025</td>
+                            <td>Create wireframes and UI mockups</td>
+                            <td>Florent</td>
+                            <td>Florent</td>
+                            <td>2H</td>
+                        </tr>
+                        <tr>
+                            <td>21.03.2025</td>
+                            <td>Set up project structure (HTML, CSS, JS)</td>
+                            <td>Florent</td>
+                            <td>Florent, Julio</td>
+                            <td>2H</td>
+                        </tr>
+                        <tr>
+                            <td>22.03.2025</td>
+                            <td>Implement CSS styles</td>
+                            <td>Micha</td>
+                            <td>Micha</td>
+                            <td>5H30M</td>
+                        </tr>
+                        <tr>
+                            <td>28.03.2025</td>
+                            <td>Mockup & Models</td>
+                            <td>Florent</td>
+                            <td>Florent</td>
+                            <td>3H</td>
+                        </tr>
+                        <tr>
+                            <td>29.03.2025</td>
+                            <td>HTML & CSS modification & clean up</td>
+                            <td>Micha</td>
+                            <td>Micha</td>
+                            <td>3H</td>
+                        </tr>
+                        <tr>
+                            <td>10.04.2025</td>
+                            <td>Code main game loop</td>
+                            <td>Florent</td>
+                            <td>Florent, Julio</td>
+                            <td>5H</td>
+                        </tr>
+                        <tr>
+                            <td>10.04.2025</td>
+                            <td>Add player movement</td>
+                            <td>Florent</td>
+                            <td>Florent</td>
+                            <td>5H</td>
+                        </tr>
+                        <tr>
+                            <td>10.04.2025</td>
+                            <td>Implement collision detection</td>
+                            <td>Florent</td>
+                            <td>Florent</td>
+                            <td>6H</td>
+                        </tr>
+                        <tr>
+                            <td>30.04.2025</td>
+                            <td>Develop enemies and obstacles</td>
+                            <td>Julio</td>
+                            <td>Julio</td>
+                            <td>5H</td>
+                        </tr>
+                        <tr>
+                            <td>12.05.2025</td>
+                            <td>Develop textures</td>
+                            <td>Walter</td>
+                            <td>Walter</td>
+                            <td>4H</td>
+                        </tr>
+                        <tr>
+                            <td>15.05.2025</td>
+                            <td>Add animations</td>
+                            <td>Walter</td>
+                            <td>Walter</td>
+                            <td>3H</td>
+                        </tr>
+                        <tr>
+                            <td>03.03.2025</td>
+                            <td>Implement game sounds and music</td>
+                            <td>Florent</td>
+                            <td>Florent</td>
+                            <td>1H</td>
+                        </tr>
+                        <tr>
+                            <td>24.04.2025</td>
+                            <td>Develop scoring system</td>
+                            <td>Florent</td>
+                            <td>Florent</td>
+                            <td>2H</td>
+                        </tr>
+                        <tr>
+                            <td>01.05.2025</td>
+                            <td>Create UI elements (menus, buttons, scoreboard)</td>
+                            <td>Walter</td>
+                            <td>Micha, Walter</td>
+                            <td>4H</td>
+                        </tr>
+                        <tr>
+                            <td>23.05.2025</td>
+                            <td>Optimize performance</td>
+                            <td>Julio</td>
+                            <td>Julio</td>
+                            <td>3H</td>
+                        </tr>
+                        <tr>
+                            <td>05.06.2025</td>
+                            <td>Test and debug</td>
+                            <td>Florent, Micha</td>
+                            <td>Florent, Julio, Micha, Walter</td>
+                            <td>2H</td>
+                        </tr>
+                        <tr>
+                            <td>20.05.2025</td>
+                            <td>Implement game over & restart logic</td>
+                            <td>Julio</td>
+                            <td>Florent, Julio</td>
+                            <td>2H</td>
+                        </tr>
+                        <tr>
+                            <td>29.05.2025</td>
+                            <td>Refactor code and optimize</td>
+                            <td>Julio</td>
+                            <td>Florent, Julio</td>
+                            <td>5H</td>
+                        </tr>
+                        <tr>
+                            <td>31.05.2025</td>
+                            <td>Deploy game online (GitHub Pages / Netlify)</td>
+                            <td>Julio</td>
+                            <td>Julio</td>
+                            <td>3H</td>
+                        </tr>
+                        <tr>
+                            <td>05.06.2025</td>
+                            <td>Final bug fixes and polish</td>
+                            <td>Florent, Julio, Walter</td>
+                            <td>Florent, Julio, Walter</td>
+                            <td>5H</td>
+                        </tr>
+                        <tr>
+                            <td>09.06.2025</td>
+                            <td>Prepare for presentation/demo</td>
+                            <td>Florent, Julio, Micha, Walter</td>
+                            <td>Florent, Julio, Micha, Walter</td>
+                            <td>2H</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>72H</strong></td>
+                        </tr>
                         </tbody>
                     </table>
-
-
                 </article>
             </section>
-            <aside>
-                <div>
-                    <h3>Summary of the project data</h3>
-                    <p>Total time of project so far: <span id="total-time">0h 0m</span></p>
-                    <p><strong>Development team:</strong></p>
-                    <ul>
-                        <li>
-                            <p><strong>Fernandes Walter</strong>: Design & Gameplay</p>
-                        </li>
-                        <li>
-                            <p><strong>Epiney Florent</strong>: JavaScript Specialist</p>
-                        </li>
-                        <li>
-                            <p><strong>Meichtry Micha</strong>: Style CSS Specialist </p>
-                        </li>
-                        <li>
-                            <p><strong>Cortés Julio</strong>: Game Architect</p>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
         </div>
     );
 }

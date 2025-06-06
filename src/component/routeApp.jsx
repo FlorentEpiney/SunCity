@@ -6,6 +6,7 @@ import Mockup from "../pages/mockup";
 import Flow from "../pages/flow";
 import Game from "../pages/game";
 import {BrowserRouter, NavLink, Navigate, Route, Routes} from "react-router-dom";
+import SummaryProject from "../pages/summaryProject";
 
 function RouteApp() {
     useEffect(() => {
@@ -76,9 +77,7 @@ function RouteApp() {
                     <Route path="/game" element={<Game/>}/>
                     <Route path="*" element={<Navigate to="/description" replace/>}/>
                 </Routes>
-                <footer>
-                    <img id="logo" src="/resources/images/logo.png" alt="Logo"/>
-                </footer>
+                <SummaryProject/>
             </BrowserRouter>
         </>
     );
