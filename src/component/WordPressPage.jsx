@@ -1,17 +1,15 @@
 import React from 'react';
 import useWordPress from '../hooks/useWordPress';
+//import WordPressAPIChecker from './WordPressAPIChecker';
 
-const WordPressPage = ({ pageId, fallbackTitle = "Page" }) => {
+const WordPressPage = ({ pageId, fallbackTitle = "Page", showDebug = false }) => {
     const { data, loading, error } = useWordPress(pageId);
 
-    // Simple content processing
+    // Content processing
     const processWordPressContent = (content) => {
         if (!content || content.length === 0) {
-            console.log('❌ No content to process');
             return '';
         }
-
-        console.log(`🔧 Processing content (${content.length} chars):`, content.substring(0, 100) + '...');
 
         const processed = content
             .replace(/<pre class="wp-block-preformatted">/g, '<div class="wp-content-section">')
@@ -23,7 +21,6 @@ const WordPressPage = ({ pageId, fallbackTitle = "Page" }) => {
             .replace(/&amp;/g, "&")
             .trim();
 
-        console.log(`✅ Processed content (${processed.length} chars):`, processed.substring(0, 100) + '...');
         return processed;
     };
 
@@ -46,9 +43,7 @@ const WordPressPage = ({ pageId, fallbackTitle = "Page" }) => {
                             <h2>Loading...</h2>
                         </header>
                         <div className="container">
-                            <p>🔄 Loading content from WordPress...</p>
-                            <p>📄 Page ID: {pageId}</p>
-                            <p>🌐 API URL: https://dev-webdevheso.pantheonsite.io/wp-json/wp/v2/pages/{pageId}</p>
+                            <p>Loading content from WordPress...</p>
                         </div>
                     </article>
                 </section>
@@ -66,51 +61,11 @@ const WordPressPage = ({ pageId, fallbackTitle = "Page" }) => {
                             <h2>⚠️ WordPress Connection Issue</h2>
                         </header>
                         <div className="container">
-                            <div style={{
-                                background: '#ffe6e6',
-                                border: '1px solid #ff9999',
-                                padding: '15px',
-                                borderRadius: '5px',
-                                marginBottom: '20px'
-                            }}>
-                                <h3>🚨 Error Details:</h3>
-                                <p><strong>Error:</strong> {error}</p>
-                                <p><strong>Page ID:</strong> {pageId}</p>
-                                <p><strong>API URL:</strong> https://dev-webdevheso.pantheonsite.io/wp-json/wp/v2/pages/{pageId}</p>
-                            </div>
+                            <p><strong>Error:</strong> {error}</p>
+                            <p>Unable to load content from WordPress. Please try again later.</p>
 
-                            <h3>🔧 Troubleshooting Steps:</h3>
-                            <ol>
-                                <li><strong>Check WordPress:</strong>
-                                    <a href={`https://dev-webdevheso.pantheonsite.io/wp-admin/post.php?post=${pageId}&action=edit`}
-                                       target="_blank" rel="noopener noreferrer">
-                                        Edit page {pageId} in WordPress
-                                    </a>
-                                </li>
-                                <li><strong>Test API directly:</strong>
-                                    <a href={`https://dev-webdevheso.pantheonsite.io/wp-json/wp/v2/pages/${pageId}`}
-                                       target="_blank" rel="noopener noreferrer">
-                                        View raw API response
-                                    </a>
-                                </li>
-                                <li><strong>Check if page exists:</strong> Make sure page ID {pageId} exists in WordPress</li>
-                                <li><strong>CORS issues:</strong> Check WordPress CORS settings</li>
-                            </ol>
-
-                            {data && (
-                                <details style={{ marginTop: '20px' }}>
-                                    <summary>🔍 Available Data (if any)</summary>
-                                    <pre style={{
-                                        background: '#f0f0f0',
-                                        padding: '10px',
-                                        borderRadius: '3px',
-                                        fontSize: '12px',
-                                        overflow: 'auto'
-                                    }}>
-                                        {JSON.stringify(data, null, 2)}
-                                    </pre>
-                                </details>
-                            )}
+                            {/* Optional debug info */}
+                            {/*showDebug && <WordPressAPIChecker pageId={pageId} />*/}
                         </div>
                     </article>
                 </section>
@@ -125,10 +80,13 @@ const WordPressPage = ({ pageId, fallbackTitle = "Page" }) => {
                 <section id="articles">
                     <article>
                         <header>
-                            <h2>❓ No Data Available</h2>
+                            <h2>No Data Available</h2>
                         </header>
                         <div className="container">
                             <p>No data was returned from WordPress for page ID: {pageId}</p>
+
+                            {/* Optional debug info */}
+                            {/*showDebug && <WordPressAPIChecker pageId={pageId} />*/}
                         </div>
                     </article>
                 </section>
@@ -146,161 +104,54 @@ const WordPressPage = ({ pageId, fallbackTitle = "Page" }) => {
                 <article>
                     <header>
                         <h2>{cleanTitle}</h2>
-                        <p>📄 WordPress Page ID: {pageId} | 🆔 Actual ID: {data.id}</p>
-                        <p>📅 Last modified: {new Date(data.modified).toLocaleString()}</p>
-                        <p>📊 Status: {data.status}</p>
                     </header>
 
-                    {/* Enhanced Debug Info */}
-                    <div style={{
-                        background: data.content ? '#e7f3ff' : '#fff3cd',
-                        padding: '15px',
-                        margin: '15px 0',
-                        fontSize: '13px',
-                        border: `1px solid ${data.content ? '#b3d9ff' : '#ffeaa7'}`,
-                        borderRadius: '5px'
-                    }}>
-                        <h4>🔍 Debug Information:</h4>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                            <div>
-                                <strong>📏 Raw content length:</strong> {data.content?.length || 0} chars<br/>
-                                <strong>🔧 Processed length:</strong> {processedContent?.length || 0} chars<br/>
-                                <strong>✅ Has content:</strong> {!!processedContent ? 'Yes' : 'No'}<br/>
-                            </div>
-                            <div>
-                                <strong>📄 Title:</strong> {data.title || 'None'}<br/>
-                                <strong>🌐 Slug:</strong> {data.slug || 'None'}<br/>
-                                <strong>📝 Excerpt:</strong> {data.excerpt ? 'Yes' : 'No'}<br/>
-                            </div>
-                        </div>
-
-                        <details style={{ marginTop: '10px' }}>
-                            <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>
-                                📄 Show Raw Content
-                            </summary>
-                            <pre style={{
-                                background: 'white',
-                                padding: '10px',
-                                fontSize: '11px',
-                                maxHeight: '150px',
-                                overflow: 'auto',
-                                marginTop: '5px',
-                                border: '1px solid #ddd'
-                            }}>
-                                {data.content || 'No raw content available'}
-                            </pre>
-                        </details>
-                    </div>
+                    {/* Optional debug component */}
+                    {/*showDebug && <WordPressAPIChecker pageId={pageId} hideByDefault={true} />*/}
 
                     <div className="container">
                         {processedContent ? (
                             <>
                                 <div
                                     className="wordpress-content"
-                                    style={{
-                                        lineHeight: '1.6',
-                                        color: '#333'
-                                    }}
                                     dangerouslySetInnerHTML={{ __html: processedContent }}
                                 />
 
-                                {/* Add game button if this is the game page (ID 13) */}
+                                {/* Game button for game page (ID 13) */}
                                 {pageId === 13 && (
-                                    <div style={{
-                                        marginTop: '30px',
-                                        padding: '20px',
-                                        background: 'linear-gradient(135deg, #007cba 0%, #005a87 100%)',
-                                        borderRadius: '10px',
-                                        textAlign: 'center',
-                                        boxShadow: '0 4px 15px rgba(0, 124, 186, 0.3)'
-                                    }}>
-                                        <h3 style={{ color: 'white', marginBottom: '15px', fontSize: '1.5em' }}>
+                                    <div className="game-section">
+                                        <h3 className="game-section-title">
                                             🎮 Ready to Play?
                                         </h3>
-                                        <p style={{ color: '#e6f3ff', marginBottom: '20px' }}>
+                                        <p className="game-section-description">
                                             Enter the post-apocalyptic world of Sun City and test your survival skills!
                                         </p>
                                         <button
                                             onClick={() => window.location.href = '/game/navigation/pages/homePage.html'}
-                                            style={{
-                                                background: '#28a745',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '15px 30px',
-                                                fontSize: '1.2em',
-                                                fontWeight: 'bold',
-                                                borderRadius: '25px',
-                                                cursor: 'pointer',
-                                                boxShadow: '0 3px 10px rgba(40, 167, 69, 0.4)',
-                                                transition: 'all 0.3s ease',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '1px'
-                                            }}
-                                            onMouseOver={(e) => {
-                                                e.target.style.background = '#218838';
-                                                e.target.style.transform = 'translateY(-2px)';
-                                                e.target.style.boxShadow = '0 5px 15px rgba(40, 167, 69, 0.6)';
-                                            }}
-                                            onMouseOut={(e) => {
-                                                e.target.style.background = '#28a745';
-                                                e.target.style.transform = 'translateY(0)';
-                                                e.target.style.boxShadow = '0 3px 10px rgba(40, 167, 69, 0.4)';
-                                            }}
+                                            className="game-start-btn"
                                         >
                                             🚀 Start Game
                                         </button>
-                                        <p style={{
-                                            color: '#b3d9ff',
-                                            fontSize: '0.9em',
-                                            marginTop: '15px',
-                                            fontStyle: 'italic'
-                                        }}>
+                                        <p className="game-section-disclaimer">
                                             ⚠️ Players must be 18+ to play
                                         </p>
                                     </div>
                                 )}
                             </>
                         ) : (
-                            <div style={{
-                                background: '#fff3cd',
-                                border: '1px solid #ffeaa7',
-                                padding: '20px',
-                                borderRadius: '5px',
-                                textAlign: 'center'
-                            }}>
-                                <h3>📭 No Content Available</h3>
-                                <p>This WordPress page appears to be empty.</p>
-                                <div style={{ marginTop: '15px' }}>
-                                    <a href={`https://dev-webdevheso.pantheonsite.io/wp-admin/post.php?post=${pageId}&action=edit`}
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       style={{
-                                           background: '#007cba',
-                                           color: 'white',
-                                           padding: '10px 20px',
-                                           textDecoration: 'none',
-                                           borderRadius: '5px',
-                                           display: 'inline-block'
-                                       }}>
-                                        ✏️ Edit Page in WordPress
-                                    </a>
-                                </div>
+                            <div className="no-content-section">
+                                <h3 className="no-content-title">📭 No Content Available</h3>
+                                <p>This page appears to be empty.</p>
+
+                                {/* Show debug info if no content and debug is enabled */}
+                                {/*showDebug && <WordPressAPIChecker pageId={pageId} /> */}
 
                                 {/* Show game button even if no content, if this is the game page */}
                                 {pageId === 13 && (
-                                    <div style={{ marginTop: '20px' }}>
+                                    <div>
                                         <button
                                             onClick={() => window.location.href = '/game/navigation/pages/homePage.html'}
-                                            style={{
-                                                background: '#28a745',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '15px 30px',
-                                                fontSize: '1.1em',
-                                                fontWeight: 'bold',
-                                                borderRadius: '5px',
-                                                cursor: 'pointer'
-                                            }}
+                                            className="game-start-btn simple"
                                         >
                                             🎮 Start Game Anyway
                                         </button>

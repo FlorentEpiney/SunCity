@@ -69,7 +69,9 @@ General Reset
 
 /* apply default font styles */
 body {
-    margin: 0;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: var(--font-size-base);
     font-family: var(--font-primary);
     background-color: var(--color-background);
     color: var(--color-text);
@@ -97,13 +99,20 @@ header h1 {
     background-position: center;
     padding: 1em 1em;
     text-shadow:
-        0 0 5px rgba(255, 255, 255, 0.8),
-        0 0 10px rgba(255, 255, 255, 0.6),
-        0 0 15px rgba(255, 255, 255, 0.4);
+            0 0 5px rgba(255, 255, 255, 0.8),
+            0 0 10px rgba(255, 255, 255, 0.6),
+            0 0 15px rgba(255, 255, 255, 0.4);
 }
 
 img{
-    height: 250px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+
+}
+.wordpress-content figure:nth-of-type(5) img,
+.wordpress-content figure:nth-of-type(6) img{
+    background-color: #B8A992;
 }
 
 /* navigation bar */
@@ -321,12 +330,12 @@ list styling
 #articles article ol {
     margin-left: var(--spacing-lg);
     padding-left: var(--spacing-md);
-    margin-bottom: var(--spacing-ml); 
+    margin-bottom: var(--spacing-ml);
 }
 
 /* space between list items */
 #articles article li {
-    margin-bottom: var(--spacing-sm);   
+    margin-bottom: var(--spacing-sm);
 }
 
 /* keep sidebar lists unindented */
@@ -354,14 +363,14 @@ table {
     overflow: hidden;
     text-align: left;
 }
-  
+
 /* table header row */
 table thead tr {
     background-color: var(--color-primary-light);
     color: var(--color-text);
     font-weight: var(--font-weight-bold);
 }
-  
+
 /* table header and cell styling */
 table th,
 table td {
@@ -378,7 +387,7 @@ table tbody tr:nth-child(even) {
 table tbody tr:hover {
     background-color: var(--color-hover-animation);
 }
-  
+
 /*  
 =======
 footer
@@ -420,7 +429,7 @@ responsive design
         margin-top: var(--spacing-xs);
     }
 
-     /* table container behavior on small screens */
+    /* table container behavior on small screens */
     table {
         display: table;
         width: 100%;
@@ -460,7 +469,7 @@ responsive design
         border-radius: var(--border-radius-sm);
     }
 }
-  
+
 /* responsive layout below 600px (mobile) */
 @media (max-width: 600px) {
 
@@ -472,12 +481,12 @@ responsive design
         padding: var(--spacing-md);
         position: relative;
     }
-    
+
     /* hide all nav items except hamburger */
     nav ul li {
         display: none;
     }
-    
+
     nav ul li.hamburger {
         display: flex;
         justify-content: center;
@@ -487,13 +496,13 @@ responsive design
         transform: none;
         cursor: pointer;
     }
-    
+
     /* when menu is toggled open */
     nav ul.open li {
         display: block;
         margin-bottom: var(--spacing-sm);
     }
-    
+
     nav ul.open li.hamburger {
         margin-bottom: var(--spacing-sm); /* keep spacing */
     }
@@ -516,7 +525,6 @@ responsive design
 WordPress Content Styling
 =============================
 */
-
 
 /* WordPress Content Fix Styles */
 .wordpress-content-fixed {
@@ -615,4 +623,255 @@ WordPress Content Styling
 .wordpress-content-fixed.debug-mode * {
     border: 1px dotted #ccc !important;
     padding: 2px !important;
+}
+
+/*
+=============================
+WordPress API Checker Styles
+=============================
+*/
+
+/* Debug toggle button */
+.debug-toggle-btn {
+    background: #007cba;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.debug-toggle-btn:hover {
+    background: #005a87;
+}
+
+/* Main debug container */
+.debug-container {
+    font-family: monospace;
+    font-size: 12px;
+    background: #f5f5f5;
+    padding: 20px;
+    border: 2px solid #007cba;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+/* Debug header */
+.debug-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.debug-title {
+    margin: 0;
+    color: #007cba;
+}
+
+.debug-hide-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.debug-hide-btn:hover {
+    background: #c82333;
+}
+
+/* Content analysis section */
+.debug-content-analysis {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.debug-content-analysis.has-content {
+    background: #e7f3ff;
+    border: 1px solid #b3d9ff;
+}
+
+.debug-content-analysis.no-content {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+}
+
+.debug-analysis-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.debug-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+/* Quick links section */
+.debug-links {
+    margin-bottom: 15px;
+}
+
+.debug-link {
+    margin-right: 15px;
+    color: #007cba;
+    text-decoration: none;
+}
+
+.debug-link:hover {
+    text-decoration: underline;
+}
+
+/* Content comparison grid */
+.debug-comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.debug-details-summary {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.debug-details-summary.raw-content {
+    background: #fff3cd;
+}
+
+.debug-details-summary.processed-content {
+    background: #e7f3ff;
+}
+
+.debug-details-summary.acf-fields {
+    background: #d4edda;
+}
+
+.debug-details-summary.full-response {
+    background: #007cba;
+    color: white;
+}
+
+.debug-code-block {
+    background: white;
+    padding: 10px;
+    font-size: 10px;
+    max-height: 200px;
+    overflow: auto;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    white-space: pre-wrap;
+}
+
+.debug-code-block.large {
+    max-height: 400px;
+}
+
+/* Troubleshooting section */
+.debug-troubleshooting {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.debug-troubleshooting-title {
+    color: #721c24;
+    margin-top: 0;
+}
+
+.debug-troubleshooting ul {
+    color: #721c24;
+    padding-left: 20px;
+}
+
+/*
+=============================
+WordPress Page Styles
+=============================
+*/
+
+/* WordPress content container */
+.wordpress-content {
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Game section styles */
+.game-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #007cba 0%, #005a87 100%);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 124, 186, 0.3);
+}
+
+.game-section-title {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.game-section-description {
+    color: #e6f3ff;
+    margin-bottom: 20px;
+}
+
+.game-section-disclaimer {
+    color: #b3d9ff;
+    font-size: 0.9em;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+/* Game button styles */
+.game-start-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.4);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.game-start-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.6);
+}
+
+.game-start-btn.simple {
+    font-size: 1.1em;
+    border-radius: 5px;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+/* No content available section */
+.no-content-section {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.no-content-title {
+    margin-bottom: 10px;
 }
