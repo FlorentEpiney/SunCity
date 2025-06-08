@@ -6,10 +6,11 @@ import { BrowserRouter, NavLink, Navigate, Route, Routes } from "react-router-do
 import WordPressPage from "./WordPressPage";
 import { getWordPressPageId } from "../config/wordpressConfig";
 
-// Keep your existing Game component since it's not WordPress-managed
-
-
 function RouteApp() {
+    // Enable debug mode in development or when needed
+    const isDebugMode = process.env.NODE_ENV === 'development' ||
+        window.location.search.includes('debug=true');
+
     useEffect(() => {
         // Hamburger menu functionality
         const burger = document.querySelector("li.hamburger");
@@ -26,7 +27,6 @@ function RouteApp() {
         // Total time calculation
         const timeSpan = document.getElementById("total-time");
         if (timeSpan) {
-
             timeSpan.textContent = "20h 30m"; // UPDATE !!!
         }
 
@@ -65,16 +65,18 @@ function RouteApp() {
                         <li>
                             <NavLink to="/game">Game</NavLink>
                         </li>
+
                     </ul>
                 </nav>
                 <Routes>
-                    {/* WordPress-powered pages */}
+                    {/* WordPress-powered pages with optional debug */}
                     <Route
                         path="/description"
                         element={
                             <WordPressPage
                                 pageId={getWordPressPageId('description')}
                                 fallbackTitle="Description"
+                                showDebug={isDebugMode}
                             />
                         }
                     />
@@ -84,6 +86,7 @@ function RouteApp() {
                             <WordPressPage
                                 pageId={getWordPressPageId('models')}
                                 fallbackTitle="Visual Models of the Project"
+                                showDebug={isDebugMode}
                             />
                         }
                     />
@@ -93,6 +96,7 @@ function RouteApp() {
                             <WordPressPage
                                 pageId={getWordPressPageId('mockup')}
                                 fallbackTitle="Mockup of the Project"
+                                showDebug={isDebugMode}
                             />
                         }
                     />
@@ -102,6 +106,7 @@ function RouteApp() {
                             <WordPressPage
                                 pageId={getWordPressPageId('flow')}
                                 fallbackTitle="Game Flow and Interaction"
+                                showDebug={isDebugMode}
                             />
                         }
                     />
@@ -111,15 +116,22 @@ function RouteApp() {
                             <WordPressPage
                                 pageId={getWordPressPageId('logbook')}
                                 fallbackTitle="Project Logbook"
+                                showDebug={isDebugMode}
                             />
                         }
                     />
 
-                    {/* Keep your existing Game component */}
-                    <Route path="/game" element={<WordPressPage
-                        pageId={getWordPressPageId('game')}
-                        fallbackTitle="Game"
-                    />}/>
+                    {/* Game page */}
+                    <Route
+                        path="/game"
+                        element={
+                            <WordPressPage
+                                pageId={getWordPressPageId('game')}
+                                fallbackTitle="Game"
+                                showDebug={isDebugMode}
+                            />
+                        }
+                    />
 
                     {/* Default redirect */}
                     <Route path="*" element={<Navigate to="/description" replace/>}/>
