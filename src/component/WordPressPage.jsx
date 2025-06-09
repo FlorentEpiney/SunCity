@@ -171,7 +171,6 @@ const ProjectSidebar = () => (
     <aside>
         <div>
             <h3>Summary of the project data</h3>
-            <p>Total time of project so far: <span id="total-time">0h 0m</span></p>
             <p><strong>Development team:</strong></p>
             <ul>
                 <li><p><strong>Fernandes Walter</strong>: Design & Gameplay</p></li>
