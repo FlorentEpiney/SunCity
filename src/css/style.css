@@ -90,10 +90,10 @@ header {
 }
 
 /* main site title in header */
-header h1 {
+body h1 {
     margin: 0;
     font-size: var(--font-size-xl);
-    text-align: left;
+    text-align: center;
     background-image: url("../../public/resources/images/header_background2.png");
     background-size: cover;
     background-position: center;
@@ -113,6 +113,12 @@ img{
 .wordpress-content figure:nth-of-type(5) img,
 .wordpress-content figure:nth-of-type(6) img{
     background-color: #B8A992;
+}
+.white-image{
+    background-color:#888888;
+}
+.upgrade-image{
+    margin: 1em;
 }
 
 /* navigation bar */
@@ -153,7 +159,7 @@ nav ul li a {
 }
 
 /* active nav item (currently selected page) */
-nav ul li.active a {
+nav ul li a.active {
     background-color: var(--color-background);
     color: var(--color-primary);
     border-radius: 0;
